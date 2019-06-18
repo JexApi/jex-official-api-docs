@@ -169,9 +169,9 @@ There is no & between "GTC" and "quantity=1".
 
 **交易对类型:**
 
-* SPOT 现货
+* SPOT 币币
 * OPTION 期权
-* CONTRACT 期货
+* CONTRACT 合约
 
 **订单状态:**
 
@@ -233,7 +233,7 @@ m -> 分钟; h -> 小时; d -> 天; w -> 周; M -> 月
 * MINUTE
 * DAY
 
-**期货账单接口(type)**
+**合约账单接口(type)**
 * transfer       资金划转
 * fee            手续费
 * funding        资金费用
@@ -423,7 +423,7 @@ NONE
     "status": "TRADING",
     "type": "LONGS",
     "exertionTime": 1551344400000,
-    "optionDesc": "www.baidu.com",
+    "optionDesc": "www.jex.com",
     "canRelease": true,
     "releaseOption": {
       "convertRatio": 0.1,
@@ -438,14 +438,14 @@ NONE
     "status": "TRADING",
     "type": "SHORTS",
     "exertionTime": 1551172087000,
-    "optionDesc": "www.baidu.com",
+    "optionDesc": "www.jex.com",
     "canRelease": false,
     "releaseOption": null
   }
 ]
 ```
 
-### 期货交易对信息
+### 合约交易对信息
 ```
 GET /api/v1/contractInfo
 ```
@@ -484,7 +484,7 @@ NONE
 
 
 ## 行情接口
-### 现货深度信息
+### 币币深度信息
 ```
 GET /api/v1/spot/depth
 ```
@@ -526,21 +526,63 @@ GET /api/v1/option/depth
 ```
 **权重:1**  
 **参数:**  
-与现货一致  
+名称 | 类型 | 是否必须 | 描述
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+limit | INT | NO | 默认 60; 最大 60. 可选值:[5, 10, 20, 50, 60]
 **响应:**  
-与现货一致
-### 期货深度信息
+```javascript
+{
+  "lastUpdateId": 1027024,
+  "bids": [
+    [
+      "4.00000000",     // 价位
+      "431.00000000",   // 挂单量
+      []                // 请忽略.
+    ]
+  ],
+  "asks": [
+    [
+      "4.00000200",
+      "12.00000000",
+      []
+    ]
+  ]
+}
+```
+### 合约深度信息
 ```
 GET /api/v1/contract/depth
 ```
 **权重:1**  
 **参数:**  
-与现货一致  
+名称 | 类型 | 是否必须 | 描述
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+limit | INT | NO | 默认 60; 最大 60. 可选值:[5, 10, 20, 50, 60]  
 **响应:**  
-与现货一致
+```javascript
+{
+  "lastUpdateId": 1027024,
+  "bids": [
+    [
+      "4.00000000",     // 价位
+      "431.00000000",   // 挂单量
+      []                // 请忽略.
+    ]
+  ],
+  "asks": [
+    [
+      "4.00000200",
+      "12.00000000",
+      []
+    ]
+  ]
+}
+```
 
 
-### 现货近期成交
+### 币币近期成交
 ```
 GET /api/v1/spot/trades
 ```
@@ -582,22 +624,65 @@ GET /api/v1/option/trades
 ```
 **权重:1**  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+limit | INT | NO | Default 60; max 60.
+  
 **响应:**  
-与现货一致
-### 期货近期成交
+```javascript
+[
+  {
+    "price": "81.230000000000000000",
+    "qty": "0.001000000000000000",
+    "time": 0
+  },
+  {
+    "price": "81.230000000000000000",
+    "qty": "0.000400000000000000",
+    "time": 0
+  },
+  {
+    "price": "81.240000000000000000",
+    "qty": "0.001100000000000000",
+    "time": 0
+  }
+]
+```
+### 合约近期成交
 ```
 GET /api/v1/contract/trades
 ```
 **权重:1**  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+limit | INT | NO | Default 60; max 60.  
 **响应:**  
-与现货一致
+```javascript
+[
+  {
+    "price": "81.230000000000000000",
+    "qty": "0.001000000000000000",
+    "time": 0
+  },
+  {
+    "price": "81.230000000000000000",
+    "qty": "0.000400000000000000",
+    "time": 0
+  },
+  {
+    "price": "81.240000000000000000",
+    "qty": "0.001100000000000000",
+    "time": 0
+  }
+]
+```
 
 
 
-### 查询现货历史成交(MARKET_DATA)
+### 查询币币历史成交(MARKET_DATA)
 ```
 GET /api/v1/spot/historicalTrades
 ```
@@ -638,22 +723,65 @@ GET /api/v1/option/historicalTrades
 ```
 **权重:5**  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+limit | INT | NO | Default 200; max 500.
+fromId | LONG | NO | 从哪一条成交id开始返回. 缺省返回最近的成交记录
+  
 **响应:**  
-与现货一致
-### 查询期货历史成交(MARKET_DATA)
+```javascript
+[
+  {
+    "id": "3489",
+    "price": "0.00001457",
+    "qty": "6",
+    "time": 1551129538000,
+    "buyerMaker": false
+  },
+  {
+    "id": "3488",
+    "price": "0.00001464",
+    "qty": "2",
+    "time": 1551129500000,
+    "buyerMaker": true
+  }
+]
+```
+### 查询合约历史成交(MARKET_DATA)
 ```
 GET /api/v1/contract/historicalTrades
 ```
 **权重:5**  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+limit | INT | NO | Default 200; max 500.
+fromId | LONG | NO | 从哪一条成交id开始返回. 缺省返回最近的成交记录  
 **响应:**  
-与现货一致
+```javascript
+[
+  {
+    "id": "3489",
+    "price": "0.00001457",
+    "qty": "6",
+    "time": 1551129538000,
+    "buyerMaker": false
+  },
+  {
+    "id": "3488",
+    "price": "0.00001464",
+    "qty": "2",
+    "time": 1551129500000,
+    "buyerMaker": true
+  }
+]
+```
 
 
 
-### 现货K线数据
+### 币币K线数据
 ```
 GET /api/v1/spot/klines
 ```
@@ -699,24 +827,76 @@ GET /api/v1/option/klines
 ```
 **权重:1**  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+interval | ENUM | YES | "1m":分钟"3m":分钟"5m":分钟"15m":分钟"30m":分钟"1h":小时"2h":小时"4h":小时"6h":小时"12h":小时"1d":天"3d":天"1w":星期  
+startTime | LONG | NO |
+endTime | LONG | NO |
+limit | INT | NO | Default 500; max 1000.
+
+* 缺省返回最近的数据
+  
 **响应:**  
-与现货一致
-### 查询期货K线数据
+```javascript
+[
+  [
+    1499040000000,      // 开盘时间
+    "0.01634790",       // 开盘价
+    "0.80000000",       // 最高价
+    "0.01575800",       // 最低价
+    "0.01577100",       // 收盘价(当前K线未结束的即为最新价)
+    "148976.11427815",  // 成交量
+    1499644799999,      // 收盘时间
+    "2434.19055334",    // 成交额
+    308,                // 成交笔数
+    "1756.87402397",    // 主动买入成交量
+    "28.46694368",      // 主动买入成交额
+    "17928899.62484339" // 请忽略该参数
+  ]
+]
+```
+### 查询合约K线数据
 ```
 GET /api/v1/contract/klines
 ```
 **权重:1**  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+interval | ENUM | YES | "1m":分钟"3m":分钟"5m":分钟"15m":分钟"30m":分钟"1h":小时"2h":小时"4h":小时"6h":小时"12h":小时"1d":天"3d":天"1w":星期  
+startTime | LONG | NO |
+endTime | LONG | NO |
+limit | INT | NO | Default 500; max 1000.
+
+* 缺省返回最近的数据
+  
 **响应:**  
-与现货一致
+```javascript
+[
+  [
+    1499040000000,      // 开盘时间
+    "0.01634790",       // 开盘价
+    "0.80000000",       // 最高价
+    "0.01575800",       // 最低价
+    "0.01577100",       // 收盘价(当前K线未结束的即为最新价)
+    "148976.11427815",  // 成交量
+    1499644799999,      // 收盘时间
+    "2434.19055334",    // 成交额
+    308,                // 成交笔数
+    "1756.87402397",    // 主动买入成交量
+    "28.46694368",      // 主动买入成交额
+    "17928899.62484339" // 请忽略该参数
+  ]
+]
+```
 
 
 
 
 
-### 现货当前平均价格
+### 币币当前平均价格
 ```
 GET /api/v1/spot/avgPrice
 ```
@@ -739,18 +919,32 @@ GET /api/v1/option/avgPrice
 ```
 **权重:1**  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |  
 **响应:**  
-与现货一致
-### 查询期货当前平均价格
+```javascript
+{
+  "mins": 5,
+  "price": "9.35751834"
+}
+```
+### 查询合约当前平均价格
 ```
 GET /api/v1/contract/avgPrice
 ```
 **权重:1**  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |  
 **响应:**  
-与现货一致
+```javascript
+{
+  "mins": 5,
+  "price": "9.35751834"
+}
+```
 
 
 
@@ -758,7 +952,7 @@ GET /api/v1/contract/avgPrice
 
 
 
-### 现货24hr价格变动情况
+### 币币24hr价格变动情况
 ```
 GET /api/v1/spot/ticker/24hr
 ```
@@ -827,10 +1021,56 @@ GET /api/v1/option/ticker/24hr
 带symbol为1
 不带为40  
 **参数:**  
-与现货一致  
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | NO |
+  
 **响应:**  
-与现货一致
-### 查询期货24hr价格变动情况
+```javascript
+{
+  "symbol": "BNBBTC",
+  "priceChange": "1.00000000",
+  "priceChangePercent": "50.00000000",
+  "weightedAvgPrice": "1.88",
+  "lastPrice": "3.00000000",
+  "bidPrice": "1.00000000",
+  "bidQty": "5.00000000",
+  "askPrice": "3.00000000",
+  "askQty": "9.00000000",
+  "openPrice": "2.00000000",
+  "highPrice": "18.00000000",
+  "lowPrice": "1.00000000",
+  "volume": "8.00000000",
+  "quoteVolume": "15.00000000",
+  "openTime": 1551174049782,
+  "closeTime": 1551173957144
+}
+```
+OR
+```javascript
+[
+  {
+    "symbol": "BNBBTC",
+    "priceChange": "1.00000000",
+    "priceChangePercent": "50.00000000",
+    "weightedAvgPrice": "1.88",
+    "lastPrice": "3.00000000",
+    "bidPrice": "1.00000000",
+    "bidQty": "5.00000000",
+    "askPrice": "3.00000000",
+    "askQty": "9.00000000",
+    "openPrice": "2.00000000",
+    "highPrice": "18.00000000",
+    "lowPrice": "1.00000000",
+    "volume": "8.00000000",
+    "quoteVolume": "15.00000000",
+    "openTime": 1551174049782,
+    "closeTime": 1551173957144
+  }
+]
+```
+### 查询合约24hr价格变动情况
 ```
 GET /api/v1/contract/ticker/24hr
 ```
@@ -838,9 +1078,55 @@ GET /api/v1/contract/ticker/24hr
 带symbol为1
 不带为40  
 **参数:**  
-与现货一致  
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | NO |
+  
 **响应:**  
-与现货一致
+```javascript
+{
+  "symbol": "BNBBTC",
+  "priceChange": "1.00000000",
+  "priceChangePercent": "50.00000000",
+  "weightedAvgPrice": "1.88",
+  "lastPrice": "3.00000000",
+  "bidPrice": "1.00000000",
+  "bidQty": "5.00000000",
+  "askPrice": "3.00000000",
+  "askQty": "9.00000000",
+  "openPrice": "2.00000000",
+  "highPrice": "18.00000000",
+  "lowPrice": "1.00000000",
+  "volume": "8.00000000",
+  "quoteVolume": "15.00000000",
+  "openTime": 1551174049782,
+  "closeTime": 1551173957144
+}
+```
+OR
+```javascript
+[
+  {
+    "symbol": "BNBBTC",
+    "priceChange": "1.00000000",
+    "priceChangePercent": "50.00000000",
+    "weightedAvgPrice": "1.88",
+    "lastPrice": "3.00000000",
+    "bidPrice": "1.00000000",
+    "bidQty": "5.00000000",
+    "askPrice": "3.00000000",
+    "askQty": "9.00000000",
+    "openPrice": "2.00000000",
+    "highPrice": "18.00000000",
+    "lowPrice": "1.00000000",
+    "volume": "8.00000000",
+    "quoteVolume": "15.00000000",
+    "openTime": 1551174049782,
+    "closeTime": 1551173957144
+  }
+]
+```
 
 
 
@@ -850,7 +1136,7 @@ GET /api/v1/contract/ticker/24hr
 
 
 
-### 现货最新价格接口
+### 币币最新价格接口
 ```
 GET /api/v1/spot/ticker/price
 ```
@@ -891,26 +1177,72 @@ OR
 ```
 ### 查询期权最新价格接口
 ```
-GET /api/v1/option/ticker/24hr
+GET /api/v1/option/ticker/price
 ```
 **权重:**  
 单交易对1
 无交易对2  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | NO |
+
+* 不发送交易对参数，则会返回所有交易对信息
+  
 **响应:**  
-与现货一致
-### 查询期货最新价格接口
+```javascript
+{
+  "symbol": "LTCBTC",
+  "price": "4.00000200"
+}
 ```
-GET /api/v1/contract/ticker/24hr
+OR
+```javascript
+[
+  {
+    "symbol": "LTCBTC",
+    "price": "4.00000200"
+  },
+  {
+    "symbol": "ETHBTC",
+    "price": "0.07946600"
+  }
+]
+```
+### 查询合约最新价格接口
+```
+GET /api/v1/contract/ticker/price
 ```
 **权重:**  
 单交易对1
 无交易对2  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | NO |
+
+* 不发送交易对参数，则会返回所有交易对信息
+  
 **响应:**  
-与现货一致
+```javascript
+{
+  "symbol": "LTCBTC",
+  "price": "4.00000200"
+}
+```
+OR
+```javascript
+[
+  {
+    "symbol": "LTCBTC",
+    "price": "4.00000200"
+  },
+  {
+    "symbol": "ETHBTC",
+    "price": "0.07946600"
+  }
+]
+```
 
 
 
@@ -918,7 +1250,7 @@ GET /api/v1/contract/ticker/24hr
 
 
 
-### 现货最优挂单接口
+### 币币最优挂单接口
 ```
 GET /api/v1/spot/ticker/bookTicker
 ```
@@ -969,26 +1301,90 @@ OR
 ```
 GET /api/v1/option/ticker/bookTicker
 ```
+返回当前最优的挂单(最高买单，最低卖单)
 **权重:**  
 单交易对1
 无交易对2  
 **参数:**  
-与现货一致  
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | NO |
+
+* 不发送交易对参数，则会返回所有交易对信息  
 **响应:**  
-与现货一致
-### 查询期货最优挂单接口
+```javascript
+{
+  "symbol": "LTCBTC",
+  "bidPrice": "4.00000000",//最优买单价
+  "bidQty": "431.00000000",//挂单量
+  "askPrice": "4.00000200",//最优卖单价
+  "askQty": "9.00000000"//挂单量
+}
+```
+OR
+```javascript
+[
+  {
+    "symbol": "LTCBTC",
+    "bidPrice": "4.00000000",
+    "bidQty": "431.00000000",
+    "askPrice": "4.00000200",
+    "askQty": "9.00000000"
+  },
+  {
+    "symbol": "ETHBTC",
+    "bidPrice": "0.07946700",
+    "bidQty": "9.00000000",
+    "askPrice": "100000.00000000",
+    "askQty": "1000.00000000"
+  }
+]
+```
+### 查询合约最优挂单接口
 ```
 GET /api/v1/contract/ticker/bookTicker
 ```
+返回当前最优的挂单(最高买单，最低卖单)
 **权重:**  
 单交易对1
 无交易对2  
 **参数:**  
-与现货一致  
-**响应:**  
-与现货一致
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | NO |
 
-### 期货的指数价格，标记价格
+* 不发送交易对参数，则会返回所有交易对信息  
+**响应:**  
+```javascript
+{
+  "symbol": "LTCBTC",
+  "bidPrice": "4.00000000",//最优买单价
+  "bidQty": "431.00000000",//挂单量
+  "askPrice": "4.00000200",//最优卖单价
+  "askQty": "9.00000000"//挂单量
+}
+```
+OR
+```javascript
+[
+  {
+    "symbol": "LTCBTC",
+    "bidPrice": "4.00000000",
+    "bidQty": "431.00000000",
+    "askPrice": "4.00000200",
+    "askQty": "9.00000000"
+  },
+  {
+    "symbol": "ETHBTC",
+    "bidPrice": "0.07946700",
+    "bidQty": "9.00000000",
+    "askPrice": "100000.00000000",
+    "askQty": "1000.00000000"
+  }
+]
+```
+
+### 合约的指数价格，标记价格
 ```
 GET /api/v1/contract/ticker/indicesPrice
 ```
@@ -1037,7 +1433,7 @@ OR
 
 
 ## 账户接口
-### 现货下单  (TRADE)
+### 币币下单  (TRADE)
 ```
 POST /api/v1/spot/order  (HMAC SHA256)
 ```
@@ -1120,10 +1516,45 @@ newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 **响应:**  
-与现货一致
+根据 order `type`的不同，某些参数强制要求，具体如下:
+
+Type | 强制要求的参数
+------------ | ------------
+`LIMIT` | `timeInForce`, `quantity`, `price`
 
 
-### 期货下单  (TRADE)
+关于 newOrderRespType的俩种选择
+
+**Response ACK:**
+返回速度快，不包含成交信息，信息量最少
+```javascript
+{
+  "symbol": "JEXBTC",
+  "orderId": 28,
+  "transactTime": 1507725176595
+}
+```
+
+**Response RESULT:**
+返回速度慢，返回吃单成交的少量信息
+```javascript
+{
+  "symbol": "JEXBTC",
+  "orderId": 2208,
+  "transactTime": 1551184078060,
+  "price": "0.00001464",
+  "origQty": "1",
+  "executedQty": "0",
+  "cummulativeQuoteQty": "0.00000000",
+  "status": "NEW",
+  "timeInForce": "GTC",
+  "type": "LIMIT",
+  "side": "BUY"
+}
+```
+
+
+### 合约下单  (TRADE)
 ```
 POST /api/v1/contract/order  (HMAC SHA256)
 ```
@@ -1174,7 +1605,7 @@ timestamp | LONG | YES |
 
 
 
-### 现货测试下单接口 (TRADE)
+### 币币测试下单接口 (TRADE)
 ```
 POST /api/v1/spot/order/test (HMAC SHA256)
 ```
@@ -1211,7 +1642,7 @@ POST /api/v1/option/order/test (HMAC SHA256)
 ```javascript
 {}
 ```
-### 期货测试下单接口 (TRADE)
+### 合约测试下单接口 (TRADE)
 ```
 POST /api/v1/contract/order/test (HMAC SHA256)
 ```
@@ -1234,7 +1665,7 @@ POST /api/v1/contract/order/test (HMAC SHA256)
 
 
 
-### 现货查询订单 (USER_DATA)
+### 币币查询订单 (USER_DATA)
 ```
 GET /api/v1/spot/order (HMAC SHA256)
 ```
@@ -1318,7 +1749,7 @@ timestamp | LONG | YES |
 }
 ```
 
-### 期货查询订单 (USER_DATA)
+### 合约查询订单 (USER_DATA)
 ```
 GET /api/v1/contract/order (HMAC SHA256)
 ```
@@ -1363,7 +1794,7 @@ timestamp | LONG | YES |
 
 
 
-### 现货撤销订单 (TRADE)
+### 币币撤销订单 (TRADE)
 ```
 DELETE /api/v1/spot/order  (HMAC SHA256)
 ```
@@ -1410,7 +1841,21 @@ DELETE /api/v1/option/order  (HMAC SHA256)
 1
 
 **Parameters:**  
-与现货一致
+```javascript
+{
+  "symbol": "JEXBTC",
+  "orderId": 75,
+  "transactTime": 1551238738296,
+  "price": "0.00001407",
+  "origQty": "4",
+  "executedQty": "0",
+  "cummulativeQuoteQty": "0.00000000",
+  "status": "CANCELED",
+  "timeInForce": "GTC",
+  "type": "LIMIT",
+  "side": "BUY"
+}
+```
 
 
 **响应:**
@@ -1430,7 +1875,7 @@ DELETE /api/v1/option/order  (HMAC SHA256)
 }
 ```
 
-### 期货撤销订单 (TRADE)
+### 合约撤销订单 (TRADE)
 ```
 DELETE /api/v1/contract/order  (HMAC SHA256)
 ```
@@ -1440,7 +1885,17 @@ DELETE /api/v1/contract/order  (HMAC SHA256)
 
 **Parameters:**
 
-与现货一致
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+orderId | LONG | NO |
+origClientOrderId | STRING | NO |
+newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+`orderId` 与 `origClientOrderId` 必须至少发送一个
+
 
 
 **响应:**
@@ -1464,7 +1919,7 @@ DELETE /api/v1/contract/order  (HMAC SHA256)
 
 
 
-### 查看账户当前现货挂单 (USER_DATA)
+### 查看账户当前币币挂单 (USER_DATA)
 ```
 GET /api/v1/spot/openOrders  (HMAC SHA256)
 ```
@@ -1549,7 +2004,7 @@ timestamp | LONG | YES |
 ]
 ```
 
-### 查看账户当前期货挂单 (USER_DATA)
+### 查看账户当前合约挂单 (USER_DATA)
 ```
 GET /api/v1/contract/openOrders  (HMAC SHA256)
 ```
@@ -1591,7 +2046,7 @@ timestamp | LONG | YES |
 ]
 ```
 
-### 期货平仓 (TRADE)
+### 合约平仓 (TRADE)
 ```
 POST /api/v1/contract/liquidation  (HMAC SHA256)
 ```
@@ -1620,7 +2075,7 @@ timestamp | LONG | YES |
 }
 ```
 
-### 查看账户期货平仓单 (MARKET_DATA	)
+### 查看账户合约平仓单 (MARKET_DATA	)
 ```
 GET /api/v1/contract/liquidationOrder  
 ```
@@ -1661,7 +2116,7 @@ timestamp | LONG | YES |
 ]
 ```
 
-### 查看账户期货仓位 (USER_DATA)
+### 查看账户合约仓位 (USER_DATA)
 ```
 GET /api/v1/contract/position  (HMAC SHA256)
 ```
@@ -1702,7 +2157,7 @@ timestamp | LONG | YES |
 ]
 ```
 
-### 调整账户期货杠杆 (USER_DATA)
+### 调整账户合约杠杆 (USER_DATA)
 ```
 GET /api/v1/contract/position/leverage  (HMAC SHA256)
 ```
@@ -1779,125 +2234,8 @@ timestamp | LONG | YES |
 }
 ```
 
-### 账户现货成交历史 (USER_DATA)
-```
-GET /api/v1/spot/myTrades  (HMAC SHA256)
-```
-获取某交易对的成交历史
 
-**权重:**
-5
-
-**参数:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-startTime | LONG | NO |
-endTime | LONG | NO |
-fromId | LONG | NO |返回该fromId之后的成交，缺省返回最近的成交
-limit | INT | NO | Default 500; max 500.
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
-
-**响应:**
-```javascript
-[
-    {
-        "buyer": true,
-        "commission": "0.0020",
-        "commissionAsset": "BTC",
-        "id": 17,
-        "maker": false,
-        "orderId": 17,
-        "price": "0.00001490",
-        "qty": "2",
-        "symbol": "JEXBTC",
-        "time": 1550643809000
-    }
-]
-```
-
-### 账户期权成交历史 (USER_DATA)
-```
-GET /api/v1/option/myTrades  (HMAC SHA256)
-```
-获取某交易对的成交历史
-
-**权重:**
-5
-
-**参数:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-startTime | LONG | NO |
-endTime | LONG | NO |
-fromId | LONG | NO |返回该fromId之后的成交，缺省返回最近的成交
-limit | INT | NO | Default 500; max 1000.
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
-
-**响应:**
-```javascript
-[
-    {
-        "buyer": true,
-        "commission": "0.0000",
-        "commissionAsset": "USDT",
-        "id": 4548869,
-        "maker": false,
-        "orderId": 4548869,
-        "price": "3.00",
-        "qty": "1",
-        "symbol": "BTCCALLM",
-        "time": 1550655122000
-    }
-]
-```
-
-### 账户期货成交历史 (USER_DATA)
-```
-GET /api/v1/contract/myTrades  (HMAC SHA256)
-```
-获取某交易对的成交历史
-
-**权重:**
-5
-
-**参数:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-startTime | LONG | NO |
-endTime | LONG | NO |
-fromId | LONG | NO |返回该fromId之后的成交，缺省返回最近的成交
-limit | INT | NO | Default 500; max 1000.
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
-
-**响应:**
-```javascript
-[
-  {
-    "symbol": BTCUSDT,
-    "orderId": "4613007631403974659",
-    "price": "0",
-    "qty": "0.0000",
-    "commission": "0",
-    "commissionAsset": "usdt",
-    "maker": false,
-    "buyer": true
-  }
-]
-```
-
-
-
-
-### 账户现货历史委托 (USER_DATA)
+### 账户币币历史委托 (USER_DATA)
 ```
 GET /api/v1/spot/historyOrders  (HMAC SHA256)
 ```
@@ -1981,7 +2319,7 @@ timestamp | LONG | YES |
 ]
 ```
 
-### 账户期货历史委托 (USER_DATA)
+### 账户合约历史委托 (USER_DATA)
 ```
 GET /api/v1/contract/historyOrders  (HMAC SHA256)
 ```
@@ -2026,7 +2364,7 @@ timestamp | LONG | YES |
 
 ### 用户发行期权 (TRADE)
 ```
-GET /api/v1/option/release  (HMAC SHA256)
+POST /api/v1/option/release  (HMAC SHA256)
 ```
 发行某个交易对的期权
 
@@ -2038,7 +2376,7 @@ GET /api/v1/option/release  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-amount | INT | NO |
+amount | INT | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -2061,7 +2399,7 @@ timestamp | LONG | YES |
 
 ### 用户赎回期权 (TRADE)
 ```
-GET /api/v1/option/back  (HMAC SHA256)
+POST /api/v1/option/back  (HMAC SHA256)
 ```
 赎回某个交易对的期权
 
@@ -2073,7 +2411,7 @@ GET /api/v1/option/back  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-amount | INT | NO |
+amount | INT | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -2204,11 +2542,11 @@ timestamp | LONG | YES |
 
 
 
-### 账户期货账单 (USER_DATA)
+### 账户合约账单 (USER_DATA)
 ```
 GET /api/v1/contract/bill  (HMAC SHA256)
 ```
-获取账户的期货账单
+获取账户的合约账单
 
 **权重:**
 1
@@ -2217,7 +2555,6 @@ GET /api/v1/contract/bill  (HMAC SHA256)
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-symbol | STRING | YES |
 startTime | LONG | NO |
 endTime | LONG | NO |
 fromId | LONG | NO |返回该orderId之后的成交，Default -1(返回最近的成交)
@@ -2245,11 +2582,11 @@ timestamp | LONG | YES |
 ]
 ```
 
-### 期货资金费率
+### 合约资金费率
 ```
 GET /api/v1/contract/historyRate  
 ```
-获取某期货的资金费率
+获取某合约的资金费率
 
 **权重:**
 1
@@ -2287,11 +2624,11 @@ timestamp | LONG | YES |
 ```
 
 
-### 期货保护基金 
+### 合约保护基金 
 ```
 GET /api/v1/contract/protectionFund  
 ```
-获取某期货的保护基金
+获取某合约的保护基金
 
 **权重:**
 1
@@ -2331,7 +2668,7 @@ timestamp | LONG | YES |
 ```
 POST /api/v1/contract/transferMargin  (HMAC SHA256)
 ```
-现货余额转移到某期货的保证金
+币币余额转移到某合约的保证金
 
 **权重:**
 1
@@ -2358,7 +2695,7 @@ timestamp | LONG | YES |
 ```
 POST /api/v1/contract/turnoutMargin  (HMAC SHA256)
 ```
-某期货的保证金转移到现货余额
+某合约的保证金转移到币币余额
 
 **权重:**
 1
@@ -2643,7 +2980,3 @@ timestamp |	LONG |	YES
   "success": true
 }
 ```
-
-
-
-
