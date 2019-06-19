@@ -1403,7 +1403,7 @@ OR
 ```
 GET /api/v1/contract/ticker/indicesPrice
 ```
-返回当前最优的挂单(最高买单，最低卖单)
+返回指数价格，标记价格
 
 **权重:**
 1
