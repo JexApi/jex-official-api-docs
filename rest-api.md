@@ -1502,7 +1502,7 @@ Type | 强制要求的参数
   "price": "0.00001464",
   "origQty": "1",
   "executedQty": "0",
-  "cummulativeQuoteQty": "0.00000000",
+  "cummulativeQuoteQty": "0.00000000",  //成交金额
   "status": "NEW",
   "timeInForce": "GTC",
   "type": "LIMIT",
@@ -1560,7 +1560,7 @@ Type | 强制要求的参数
   "price": "0.00001464",
   "origQty": "1",
   "executedQty": "0",
-  "cummulativeQuoteQty": "0.00000000",
+  "cummulativeQuoteQty": "0.00000000",  //成交金额
   "status": "NEW",
   "timeInForce": "GTC",
   "type": "LIMIT",
@@ -1712,7 +1712,7 @@ timestamp | LONG | YES |
   "price": "0.00001464",
   "origQty": "1.00000000",
   "executedQty": "1.00000000",
-  "cummulativeQuoteQty": "0.00001464",
+  "cummulativeQuoteQty": "0.00001464",   //成交金额
   "status": "FILLED",
   "timeInForce": "GTC",
   "type": "LIMIT",
@@ -1754,7 +1754,7 @@ timestamp | LONG | YES |
   "price": "2.00",
   "origQty": "1.00",
   "executedQty": "1.00",
-  "cummulativeQuoteQty": "2.00",
+  "cummulativeQuoteQty": "2.00",    //成交金额
   "status": "FILLED",
   "timeInForce": "GTC",
   "type": "LIMIT",
@@ -1840,7 +1840,7 @@ timestamp | LONG | YES |
   "price": "0.00001407",
   "origQty": "4",
   "executedQty": "0",
-  "cummulativeQuoteQty": "0.00000000",
+  "cummulativeQuoteQty": "0.00000000",   //成交金额
   "status": "CANCELED",
   "timeInForce": "GTC",
   "type": "LIMIT",
@@ -1881,7 +1881,7 @@ timestamp | LONG | YES |
   "price": "2.00",
   "origQty": "1",
   "executedQty": "0",
-  "cummulativeQuoteQty": "0.00",
+  "cummulativeQuoteQty": "0.00",    //成交金额
   "status": "CANCELED",
   "timeInForce": "GTC",
   "type": "LIMIT",
@@ -1964,7 +1964,7 @@ timestamp | LONG | YES |
     "price": "0.00001406",
     "origQty": "5.00000000",
     "executedQty": "0.00000000",
-    "cummulativeQuoteQty": "0.00000000",
+    "cummulativeQuoteQty": "0.00000000",   //成交金额
     "status": "NEW",
     "timeInForce": "GTC",
     "type": "LIMIT",
@@ -2006,7 +2006,7 @@ timestamp | LONG | YES |
     "price": "0.00001406",
     "origQty": "5.00000000",
     "executedQty": "0.00000000",
-    "cummulativeQuoteQty": "0.00000000",
+    "cummulativeQuoteQty": "0.00000000",  //成交金额
     "status": "NEW",
     "timeInForce": "GTC",
     "type": "LIMIT",
@@ -2048,7 +2048,7 @@ timestamp | LONG | YES |
     "price": "0.00001406",
     "origQty": "5.00000000",
     "executedQty": "0.00000000",
-    "cummulativeQuoteQty": "0.00000000",
+    "cummulativeQuoteQty": "0.00000000",  //成交金额
     "status": "NEW",
     "timeInForce": "GTC",
     "type": "LIMIT",
@@ -2279,7 +2279,7 @@ timestamp | LONG | YES |
     "price": "0.00001490",
     "origQty": "3.00000000",
     "executedQty": "3.00000000",
-    "cummulativeQuoteQty": "0.00004470",
+    "cummulativeQuoteQty": "0.00004470",  //成交金额
     "status": "FILLED",
     "timeInForce": "GTC",
     "type": "LIMIT",
@@ -2321,7 +2321,7 @@ timestamp | LONG | YES |
     "price": "0.02",
     "origQty": "2.00",
     "executedQty": "0.00",
-    "cummulativeQuoteQty": "0.00",
+    "cummulativeQuoteQty": "0.00",  //成交金额
     "status": "CANCELED",
     "timeInForce": "GTC",
     "type": "LIMIT",
