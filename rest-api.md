@@ -1857,6 +1857,7 @@ DELETE /api/v1/option/order  (HMAC SHA256)
 1
 
 **Parameters:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
