@@ -526,10 +526,11 @@ GET /api/v1/option/depth
 ```
 **权重:1**  
 **参数:**  
-名称 | 类型 | 是否必须 | 描述
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-limit | INT | NO | 默认 60; 最大 60. 可选值:[5, 10, 20, 50, 60]
+
+名称 | 类型 | 是否必须 | 描述  
+------------ | ------------ | ------------ | ------------  
+symbol | STRING | YES |  
+limit | INT | NO | 默认 60; 最大 60. 可选值:[5, 10, 20, 50, 60]  
 **响应:**  
 ```javascript
 {
@@ -556,6 +557,7 @@ GET /api/v1/contract/depth
 ```
 **权重:1**  
 **参数:**  
+
 名称 | 类型 | 是否必须 | 描述
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
@@ -624,6 +626,7 @@ GET /api/v1/option/trades
 ```
 **权重:1**  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
@@ -655,6 +658,7 @@ GET /api/v1/contract/trades
 ```
 **权重:1**  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
@@ -723,6 +727,7 @@ GET /api/v1/option/historicalTrades
 ```
 **权重:5**  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
@@ -754,6 +759,7 @@ GET /api/v1/contract/historicalTrades
 ```
 **权重:5**  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
@@ -827,6 +833,7 @@ GET /api/v1/option/klines
 ```
 **权重:1**  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
@@ -862,6 +869,7 @@ GET /api/v1/contract/klines
 ```
 **权重:1**  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
@@ -903,6 +911,7 @@ GET /api/v1/spot/avgPrice
 **权重:**
 1
 **参数:**
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
@@ -919,6 +928,7 @@ GET /api/v1/option/avgPrice
 ```
 **权重:1**  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |  
@@ -935,6 +945,7 @@ GET /api/v1/contract/avgPrice
 ```
 **权重:1**  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |  
@@ -1183,6 +1194,7 @@ GET /api/v1/option/ticker/price
 单交易对1
 无交易对2  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
@@ -1217,6 +1229,7 @@ GET /api/v1/contract/ticker/price
 单交易对1
 无交易对2  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
@@ -1306,6 +1319,7 @@ GET /api/v1/option/ticker/bookTicker
 单交易对1
 无交易对2  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
@@ -1349,6 +1363,7 @@ GET /api/v1/contract/ticker/bookTicker
 单交易对1
 无交易对2  
 **参数:**  
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
@@ -1562,6 +1577,7 @@ POST /api/v1/contract/order  (HMAC SHA256)
 **权重:**
 1
 **参数:**
+
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
@@ -1841,21 +1857,18 @@ DELETE /api/v1/option/order  (HMAC SHA256)
 1
 
 **Parameters:**  
-```javascript
-{
-  "symbol": "JEXBTC",
-  "orderId": 75,
-  "transactTime": 1551238738296,
-  "price": "0.00001407",
-  "origQty": "4",
-  "executedQty": "0",
-  "cummulativeQuoteQty": "0.00000000",
-  "status": "CANCELED",
-  "timeInForce": "GTC",
-  "type": "LIMIT",
-  "side": "BUY"
-}
-```
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+orderId | LONG | NO |
+origClientOrderId | STRING | NO |
+newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+`orderId` 与 `origClientOrderId` 必须至少发送一个
+
+
 
 
 **响应:**
