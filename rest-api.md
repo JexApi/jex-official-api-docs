@@ -2541,7 +2541,7 @@ timestamp | LONG | YES |
   {
     "createdDate": 1551668069000,
     "name": "BTCCALLM",
-    "status": 2,
+    "status": "releasing",
     "amount": "2",
     "convertRatio": "0.10000000",
     "rateMargin": "0.10",
