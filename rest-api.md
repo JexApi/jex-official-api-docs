@@ -2582,14 +2582,14 @@ timestamp | LONG | YES |
   {
     "id": 854797,
     "amount": 0.662,
-    "createdDate": "2019-02-27 13:54:46",
+    "createdDate": 1551668069000,
     "symbol": "BTCUSDT",
     "type": "positionSize"
   },
   {
     "id": 854875,
     "amount": 1.338,
-    "createdDate": "2019-02-27 13:55:32",
+    "createdDate": 1551668059000,
     "symbol": "BTCUSDT",
     "type": "positionSize"
   }
