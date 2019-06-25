@@ -1466,7 +1466,7 @@ type | ENUM | YES | 目前只有LIMIT
 timeInForce | ENUM | NO | 暂时没用
 quantity | DECIMAL | YES |
 price | DECIMAL | NO |
-newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
+newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值，目前是保留字段，无需传
 stopPrice | DECIMAL | NO | 暂时没用
 icebergQty | DECIMAL | NO | 暂时没用
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
@@ -1526,7 +1526,7 @@ type | ENUM | YES | `LIMIT`,`MARKET`
 timeInForce | ENUM | NO | 暂时没用
 quantity | DECIMAL | YES |
 price | DECIMAL | NO |
-newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
+newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值，目前是保留字段，无需传
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -1586,7 +1586,7 @@ type | ENUM | YES | `LIMIT`,`MARKET`
 timeInForce | ENUM | NO | 暂时没用
 quantity | DECIMAL | YES |
 price | DECIMAL | NO |
-newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
+newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值，目前是保留字段，无需传
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -1824,8 +1824,8 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 orderId | LONG | NO |
-origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
+origClientOrderId | STRING | NO | 保留字段，目前只须传orderId
+newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。目前是保留字段，无需传
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -1862,8 +1862,8 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 orderId | LONG | NO |
-origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
+origClientOrderId | STRING | NO | 保留字段，目前只须传orderId
+newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。目前是保留字段，无需传
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -1903,8 +1903,8 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 orderId | LONG | NO |
-origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
+origClientOrderId | STRING | NO | 保留字段，目前只须传orderId
+newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。目前是保留字段，无需传
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
