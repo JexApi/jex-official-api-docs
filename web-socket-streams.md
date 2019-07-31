@@ -21,7 +21,7 @@
 
 ### Playload
 
-```json
+```javascript
 [{
   "e": "spotTrade",     // 事件类型
   "E": 123456789,       // 事件时间
@@ -61,7 +61,7 @@
 
 ### Playload
 
-```json
+```javascript
 {
   "e": "spotKline",     // 事件类型
   "E": 123456789,       // 事件时间
@@ -96,7 +96,7 @@
 
 ### Playload
 
-```json
+```javascript
 {
     "e": "24hrSpotMiniTicker",   // 事件类型
     "E": 123456789,              // 事件时间
@@ -125,7 +125,7 @@
 
 ### Playload
 
-```json
+```javascript
 
 [
   {
@@ -149,7 +149,7 @@
 
 ### Playload
 
-```json
+```javascript
 {
   "e": "24hrSpotTicker",  // 事件类型
   "E": 123456789,         // 事件时间
@@ -173,7 +173,7 @@
 
 ### Payload:
 
-```json
+```javascript
 [
   {
     //数组每一个元素对应一个交易对，内容与 按Symbol的完整Ticker 相同
@@ -193,7 +193,7 @@
 ### Stream 名称: \<symbol\>@\<depthType\>\<levels\>
 
 ### Playload:
-```json
+```javascript
 {
   "bids": [             // 买单
     [
@@ -216,7 +216,7 @@
 ### Stream 名称: \<symbol\>@\<depthType\>
 
 ### Payload:
-```json
+```javascript
 {
   "e": "spotDepthUpdate", // 事件类型
   "s": "JEXBTC",          // 交易对
@@ -265,7 +265,7 @@
 当对应资产信息有变动时，会推送相应的事件
 
 ### Playload:
-```json
+```javascript
 {
   "e": "accountSpotInfo",       // 事件类型
   "E": 1499405658849,           // 事件时间
@@ -310,7 +310,7 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
 具体内容需要读取 `x`字段 判断执行类型
 
 ### 现货 和 期权的Playload:
-```json
+```javascript
 {
   "E": 1499405658849,            // 事件时间
   "e": "execSpotReport",         // 事件类型
@@ -335,7 +335,7 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
 
 
 ### 期货的Playload:
-```json
+```javascript
 {
   "E": 1499405658849,            // 事件时间
   "e": "execContractReport",     // 事件类型
@@ -364,7 +364,7 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
 
 #### playload
 
-```json
+```javascript
 {
 	"E": 1553050064078,
 	"e": "contractPositions",
