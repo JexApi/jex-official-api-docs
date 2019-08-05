@@ -248,7 +248,7 @@
 # 用户私有数据 User Data Streams
 
 ## 基本信息
-* 本篇所列出REST接口的baseurl **https://api.jex.com**
+* 本篇所列出REST接口的baseurl **https://www.jex.com**
 * 用于订阅账户数据的 `listenKey` 从创建时刻起有效期为60分钟
 * 可以通过`PUT`一个`listenKey`延长60分钟有效期
 * `DELETE`一个 `listenKey` 立即关闭当前数据流
