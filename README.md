@@ -107,9 +107,9 @@ Stream名称 | 说明
 [accountSpotInfo](./web-socket-streams.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 现货资产变动
 [accountSpotInfo](./web-socket-streams.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 期权资产变动
 [accountContractInfo](./web-socket-streams.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 合约资产变动
-[execSpotReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%2F%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 现货订单/交易更新
-[execOptionReport](./web-socket-streams.md%23%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 期权订单/交易更新
-[execContractReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%2F%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 合约订单/交易更新
+[execSpotReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 现货订单/交易更新
+[execOptionReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 期权订单/交易更新
+[execContractReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 合约订单/交易更新
 [contractPositions](./web-socket-streams.md#%E5%90%88%E7%BA%A6%E6%8C%81%E4%BB%93) | 合约持仓
 
 
