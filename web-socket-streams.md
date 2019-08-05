@@ -2,7 +2,7 @@
 
 ## 基本信息
 
-- 本篇所列出的所有wss接口的baseurl为: wss://stream.jex.com:9443
+- 本篇所列出的所有wss接口的baseurl为: wss://ws.jex.com
 - 所有stream均可以直接访问，或者作为组合streams的一部分。
 - 直接访问时URL格式为 /ws/\<streamName\>
 - 组合streams的URL格式为 /stream?streams=\<streamName1\>/\<streamName2\>/\<streamName3\>
@@ -252,7 +252,7 @@
 * 用于订阅账户数据的 `listenKey` 从创建时刻起有效期为60分钟
 * 可以通过`PUT`一个`listenKey`延长60分钟有效期
 * `DELETE`一个 `listenKey` 立即关闭当前数据流
-* 本篇所列出的websocket接口baseurl: **wss://stream.jex.com:9443**
+* 本篇所列出的websocket接口baseurl: **wss://ws.jex.com**
 * 订阅账户数据流的stream名称为 **/ws/\<listenKey\>**
 * 每个到stream.binance.com的链接有效期不超过24小时，请妥善处理断线重连。
 * 账户数据流的消息**不保证**严格时间序; **请使用 E 字段进行排序**
@@ -305,7 +305,7 @@
 
 > 当有新订单创建、订单有新成交或者新的状态变化时会推送此类事件
 
-event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractReport` 分别对应现货、期权、期货的事件类型
+event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractReport` 分别对应现货、期权、合约的事件类型
 
 具体内容需要读取 `x`字段 判断执行类型
 
@@ -325,7 +325,7 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
   "Z": "0.00000000",             // 订单累计已成交金额
 }
 ```
-#### 期货可能的执行类型(X字段):
+#### 合约可能的执行类型(X字段):
 
 * NEW 等待成交
 * PARTIALLY_FILLED  部分成交 
@@ -334,7 +334,7 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
 * FAIL 下单失败
 
 
-### 期货的Playload:
+### 合约的Playload:
 ```javascript
 {
   "E": 1499405658849,            // 事件时间
@@ -350,16 +350,16 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
 }
 ```
 
-#### 期货可能的执行类型(X字段):
+#### 合约可能的执行类型(X字段):
 * ENTRUSTED   已委托
 * FAIL        下单失败
 * PARTFILLED  部分成交
 * FILLED      完全成交
 * CANCE       撤单
 
-### 期货持仓
+### 合约持仓
 
-> 当期货持仓有变化时，信息推送
+> 当合约持仓有变化时，信息推送
 > event type 为 contractPositions
 
 #### playload

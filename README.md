@@ -89,3 +89,12 @@
 [GET /api/v1/contract/protectionFund](./rest-api.md#%E5%90%88%E7%BA%A6%E4%BF%9D%E6%8A%A4%E5%9F%BA%E9%87%91) | 合约保护基金
 [POST /api/v1/contract/transferMargin  (HMAC SHA256)](./rest-api.md#%E8%BD%AC%E7%A7%BB%E4%BF%9D%E8%AF%81%E9%87%91-user_data) | 转移保证金 
 [POST /api/v1/contract/turnoutMargin  (HMAC SHA256)](./rest-api.md#%E8%BD%AC%E5%87%BA%E4%BF%9D%E8%AF%81%E9%87%91-user_data) | 转出保证金
+
+
+### webSocket
+接口 | 说明
+-------------- | -------------- 
+[<symbol>@<tradeType>](./rest-api.md#%E5%90%88%E7%BA%A6%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | 最近成交
+[<symbol>@<tradeType>](./rest-api.md#%E5%90%88%E7%BA%A6%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | 最近成交
+[<symbol>@<tradeType>](./rest-api.md#%E5%90%88%E7%BA%A6%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | 最近成交
+[<symbol>@<tradeType>](./rest-api.md#%E5%90%88%E7%BA%A6%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | 最近成交
