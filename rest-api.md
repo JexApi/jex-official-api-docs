@@ -60,7 +60,7 @@ MARKET_DATA | Endpoint requires sending a valid API-Key.
 * `totalParams` is defined as the `query string` concatenated with the
   `request body`.
 
-## 时间同步安全
+## Timing security
 * A `SIGNED` endpoint also requires a parameter, `timestamp`, to be sent which
   should be the millisecond timestamp of when the request was created and sent.
 * An additional parameter, `recvWindow`, may be sent to specify the number of
@@ -74,8 +74,6 @@ MARKET_DATA | Endpoint requires sending a valid API-Key.
     // reject request
   }
   ```
-
-**关于交易时效性** 
 **Serious trading is about timing.** Networks can be unstable and unreliable,
 which can lead to requests taking varying amounts of time to reach the
 servers. With `recvWindow`, you can specify that the request must be

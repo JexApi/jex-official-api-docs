@@ -6,7 +6,7 @@ Name | Description
 ------------ | ------------ 
 [rest-api.md](./rest-api.md) | Details on the Rest API (/api)
 [errors.md](./errors_CN.md) | Descriptions of possible error messages from the Rest API
-[web-socket-streams.md](./web-socket-streams_CN.md) | Details on available streams and payloads
+[web-socket-streams_CN.md](./web-socket-streams_CN.md) | Details on available streams and payloads
 
 ## Public API for JEX Exchange
 ### General API
@@ -40,87 +40,87 @@ API | Description
 [GET /api/v1/spot/ticker/price](./rest-api.md#price-ticker-for-spot) | Latest price
 [GET /api/v1/spot/ticker/bookTicker](./rest-api.md#symbol-order-book-ticker-for-spot) | Optimal entry order
 [POST /api/v1/spot/order/test (HMAC SHA256)](./rest-api.md#test-placing-order-api-of-coins-transactiontrade) | Test placing order
-[POST /api/v1/spot/order  (HMAC SHA256)](./rest-api.md#check-orders-of-coins-transactionuser_data) | Place order 
-[GET /api/v1/spot/order (HMAC SHA256)](./rest-api.md#cancel-order-for-coins-transactiontrade) | Check orders
-[DELETE /api/v1/spot/order  (HMAC SHA256)](./rest-api.md#post-apiv1spotorder-examples-for-post) | Cancel order 
+[POST /api/v1/spot/order  (HMAC SHA256)](./rest-api.md#place-order-in-coins-transactiontrade) | Place order 
+[GET /api/v1/spot/order (HMAC SHA256)](./rest-api.md#check-orders-of-coins-transactionuser_data) | Check orders
+[DELETE /api/v1/spot/order  (HMAC SHA256)](./rest-api.md#cancel-order-for-coins-transactiontrade) | Cancel order 
 [GET /api/v1/spot/openOrders  (HMAC SHA256)](./rest-api.md#check-entry-orders-of-coins-transaction-of-this-accountuser_data) | Check entry orders 
-[GET /api/v1/spot/historyOrders  (HMAC SHA256)](./rest-api.md#%historical-coins-entry-order-of-the-account-user_data) | Historical entry orders
+[GET /api/v1/spot/historyOrders  (HMAC SHA256)](./rest-api.md#historical-coins-entry-order-of-the-account-user_data) | Historical entry orders
  
 
 
 ### Options Transaction API
 API | Description
 -------------- | -------------- 
-[GET /api/v1/option/depth](./rest-api.md#%E6%9C%9F%E6%9D%83%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | Depth
-[GET /api/v1/option/trades](./rest-api.md#%E6%9C%9F%E6%9D%83%E8%BF%91%E6%9C%9F%E6%88%90%E4%BA%A4) | Recent trades
-[GET /api/v1/option/historicalTrades](./rest-api.md#%E6%9F%A5%E8%AF%A2%E6%9C%9F%E6%9D%83%E5%8E%86%E5%8F%B2%E6%88%90%E4%BA%A4market_data) | Historical trades
-[GET /api/v1/option/klines](./rest-api.md#%E6%9F%A5%E8%AF%A2%E6%9C%9F%E6%9D%83k%E7%BA%BF%E6%95%B0%E6%8D%AE) | K-line
-[GET /api/v1/option/avgPrice](./rest-api.md#%E6%9F%A5%E8%AF%A2%E6%9C%9F%E6%9D%83%E5%BD%93%E5%89%8D%E5%B9%B3%E5%9D%87%E4%BB%B7%E6%A0%BC) | Average price now
-[GET /api/v1/option/ticker/24hr](./rest-api.md#%E6%9F%A5%E8%AF%A2%E6%9C%9F%E6%9D%8324hr%E4%BB%B7%E6%A0%BC%E5%8F%98%E5%8A%A8%E6%83%85%E5%86%B5) | Price change in 24 hours
-[GET /api/v1/option/ticker/price](./rest-api.md#%E6%9F%A5%E8%AF%A2%E6%9C%9F%E6%9D%83%E6%9C%80%E6%96%B0%E4%BB%B7%E6%A0%BC%E6%8E%A5%E5%8F%A3) | Latest price
-[GET /api/v1/option/ticker/bookTicker](./rest-api.md#%E6%9F%A5%E8%AF%A2%E6%9C%9F%E6%9D%83%E6%9C%80%E4%BC%98%E6%8C%82%E5%8D%95%E6%8E%A5%E5%8F%A3) | Optimal entry order
-[POST /api/v1/option/order/test (HMAC SHA256)](./rest-api.md#%E6%9C%9F%E6%9D%83%E6%B5%8B%E8%AF%95%E4%B8%8B%E5%8D%95%E6%8E%A5%E5%8F%A3-trade) | Test placing order
-[POST /api/v1/option/order  (HMAC SHA256)](./rest-api.md#%E6%9C%9F%E6%9D%83%E4%B8%8B%E5%8D%95--trade) | Place order 
-[GET /api/v1/option/order (HMAC SHA256)](./rest-api.md#%E6%9C%9F%E6%9D%83%E6%9F%A5%E8%AF%A2%E8%AE%A2%E5%8D%95-user_data) | Check orders
-[DELETE /api/v1/option/order  (HMAC SHA256)](./rest-api.md#%E6%9C%9F%E6%9D%83%E6%92%A4%E9%94%80%E8%AE%A2%E5%8D%95-trade) | Cancel order 
-[GET /api/v1/option/openOrders  (HMAC SHA256)](./rest-api.md#%E6%9F%A5%E7%9C%8B%E8%B4%A6%E6%88%B7%E5%BD%93%E5%89%8D%E6%9C%9F%E6%9D%83%E6%8C%82%E5%8D%95-user_data) | Check entry orders
-[GET /api/v1/option/historyOrders  (HMAC SHA256)](./rest-api.md#%E8%B4%A6%E6%88%B7%E6%9C%9F%E6%9D%83%E5%8E%86%E5%8F%B2%E5%A7%94%E6%89%98-user_data) | Historical entry orders 
-[POST /api/v1/option/release  (HMAC SHA256)](./rest-api.md#%E7%94%A8%E6%88%B7%E5%8F%91%E8%A1%8C%E6%9C%9F%E6%9D%83-trade) | Users short options
-[POST /api/v1/option/back  (HMAC SHA256)](./rest-api.md#%E7%94%A8%E6%88%B7%E8%B5%8E%E5%9B%9E%E6%9C%9F%E6%9D%83-trade) | Users call options
-[GET /api/v1/option/position  (HMAC SHA256)](./rest-api.md#%E8%B4%A6%E6%88%B7%E6%9C%9F%E6%9D%83%E6%8C%81%E4%BB%93-user_data) | Options positions of the account
-[GET /api/v1/option/info  (HMAC SHA256)](./rest-api.md#%E8%B4%A6%E6%88%B7%E6%9C%9F%E6%9D%83%E5%8F%91%E8%A1%8C%E8%B5%8E%E5%9B%9E%E4%BF%A1%E6%81%AF-user_data) | Short & call options info of the account
-[GET /api/v1/option/record  (HMAC SHA256)](./rest-api.md#%E8%B4%A6%E6%88%B7%E6%9C%9F%E6%9D%83%E5%8F%91%E8%A1%8C%E8%B5%8E%E5%9B%9E%E8%AE%B0%E5%BD%95-user_data) | Short & call options records of the account 
+[GET /api/v1/option/depth](./rest-api.md#depth-information-for-options) | Depth
+[GET /api/v1/option/trades](./rest-api.md#recent-trades-for-options) | Recent trades
+[GET /api/v1/option/historicalTrades](./rest-api.md#old-trade-lookup-for-options-market_data) | Historical trades
+[GET /api/v1/option/klines](./rest-api.md#kline-data-lookup-for-options) | K-line
+[GET /api/v1/option/avgPrice](./rest-api.md#look-up-current-average-price-for-options) | Average price now
+[GET /api/v1/option/ticker/24hr](./rest-api.md#look-up-24hr-ticker-price-change-statistics-for-options) | Price change in 24 hours
+[GET /api/v1/option/ticker/price](./rest-api.md#look-up-price-ticker-for-options) | Latest price
+[GET /api/v1/option/ticker/bookTicker](./rest-api.md#look-up-symbol-order-book-ticker-for-options) | Optimal entry order
+[POST /api/v1/option/order/test (HMAC SHA256)](./rest-api.md#test-placing-order-api-of-options-transactiontrade) | Test placing order
+[POST /api/v1/option/order  (HMAC SHA256)](./rest-api.md#place-order-in-contract-transactiontrade) | Place order 
+[GET /api/v1/option/order (HMAC SHA256)](./rest-api.md#check-orders-of-contract-transactionuser_data) | Check orders
+[DELETE /api/v1/option/order  (HMAC SHA256)](./rest-api.md#cancel-order-for-options-transactiontrade) | Cancel order 
+[GET /api/v1/option/openOrders  (HMAC SHA256)](./rest-api.md#check-entry-orders-of-options-transaction-of-this-account-user_data) | Check entry orders
+[GET /api/v1/option/historyOrders  (HMAC SHA256)](./rest-api.md#historical-options-entry-order-of-the-account-user_data) | Historical entry orders 
+[POST /api/v1/option/release  (HMAC SHA256)](./rest-api.md#users-short-optionstrade) | Users short options
+[POST /api/v1/option/back  (HMAC SHA256)](./rest-api.md#users-call-optionstrade) | Users call options
+[GET /api/v1/option/position  (HMAC SHA256)](./rest-api.md#options-positions-of-the-accountuser_data) | Options positions of the account
+[GET /api/v1/option/info  (HMAC SHA256)](./rest-api.md#short--call-options-information-of-the-accountuser_data) | Short & call options info of the account
+[GET /api/v1/option/record  (HMAC SHA256)](./rest-api.md#historical-records-of-short--call-options-of-the-account-user_data) | Short & call options records of the account 
 
 
 ### Contract Transaction API
 API | Description
 -------------- | -------------- 
-[GET /api/v1/contract/depth](./rest-api.md#%E5%90%88%E7%BA%A6%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | Depth
-[GET /api/v1/contract/trades](./rest-api.md#%E5%90%88%E7%BA%A6%E8%BF%91%E6%9C%9F%E6%88%90%E4%BA%A4) | Recent trades
-[GET /api/v1/contract/historicalTrades](./rest-api.md#%E6%9F%A5%E8%AF%A2%E5%90%88%E7%BA%A6%E5%8E%86%E5%8F%B2%E6%88%90%E4%BA%A4market_data) | Historical trades
-[GET /api/v1/contract/klines](./rest-api.md#%E6%9F%A5%E8%AF%A2%E5%90%88%E7%BA%A6k%E7%BA%BF%E6%95%B0%E6%8D%AE) | K-line
-[GET /api/v1/contract/avgPrice](./rest-api.md#%E6%9F%A5%E8%AF%A2%E5%90%88%E7%BA%A6%E5%BD%93%E5%89%8D%E5%B9%B3%E5%9D%87%E4%BB%B7%E6%A0%BC) | Average price now
-[GET /api/v1/contract/ticker/24hr](./rest-api.md#%E6%9F%A5%E8%AF%A2%E5%90%88%E7%BA%A624hr%E4%BB%B7%E6%A0%BC%E5%8F%98%E5%8A%A8%E6%83%85%E5%86%B5) | Price change in 24 hours
-[GET /api/v1/contract/ticker/price](./rest-api.md#%E6%9F%A5%E8%AF%A2%E5%90%88%E7%BA%A6%E6%9C%80%E6%96%B0%E4%BB%B7%E6%A0%BC%E6%8E%A5%E5%8F%A3) | Latest price
-[GET /api/v1/contract/ticker/bookTicker](./rest-api.md#%E6%9F%A5%E8%AF%A2%E5%90%88%E7%BA%A6%E6%9C%80%E4%BC%98%E6%8C%82%E5%8D%95%E6%8E%A5%E5%8F%A3) | Optimal entry order
-[GET /api/v1/contract/ticker/indicesPrice](./rest-api.md#%E5%90%88%E7%BA%A6%E7%9A%84%E6%8C%87%E6%95%B0%E4%BB%B7%E6%A0%BC%E6%A0%87%E8%AE%B0%E4%BB%B7%E6%A0%BC) | Indices Price, marked price
-[POST /api/v1/contract/order/test (HMAC SHA256)](./rest-api.md#%E5%90%88%E7%BA%A6%E6%B5%8B%E8%AF%95%E4%B8%8B%E5%8D%95%E6%8E%A5%E5%8F%A3-trade) | Test placing order
-[POST /api/v1/contract/order  (HMAC SHA256)](./rest-api.md#%E5%90%88%E7%BA%A6%E4%B8%8B%E5%8D%95--trade) | Place order
-[GET /api/v1/contract/order (HMAC SHA256)](./rest-api.md#%E5%90%88%E7%BA%A6%E6%9F%A5%E8%AF%A2%E8%AE%A2%E5%8D%95-user_data) | Cancel order
-[DELETE /api/v1/contract/order  (HMAC SHA256)](./rest-api.md#%E5%90%88%E7%BA%A6%E6%92%A4%E9%94%80%E8%AE%A2%E5%8D%95-trade) | Check entry orders
-[GET /api/v1/contract/openOrders  (HMAC SHA256)](./rest-api.md#%E6%9F%A5%E7%9C%8B%E8%B4%A6%E6%88%B7%E5%BD%93%E5%89%8D%E5%90%88%E7%BA%A6%E6%8C%82%E5%8D%95-user_data) | Contract liquidation
-[POST /api/v1/contract/liquidation  (HMAC SHA256)](./rest-api.md#%E5%90%88%E7%BA%A6%E5%B9%B3%E4%BB%93-trade) | Contract liquidation
-[GET /api/v1/contract/liquidationOrder](./rest-api.md#%E6%9F%A5%E7%9C%8B%E8%B4%A6%E6%88%B7%E5%90%88%E7%BA%A6%E5%B9%B3%E4%BB%93%E5%8D%95-market_data) | Check liquidation orders
-[GET /api/v1/contract/position  (HMAC SHA256)](./rest-api.md#%E6%9F%A5%E7%9C%8B%E8%B4%A6%E6%88%B7%E5%90%88%E7%BA%A6%E4%BB%93%E4%BD%8D-user_data) | Check contract positions of the account
-[GET /api/v1/contract/position/leverage  (HMAC SHA256)](./rest-api.md#%E8%B0%83%E6%95%B4%E8%B4%A6%E6%88%B7%E5%90%88%E7%BA%A6%E6%9D%A0%E6%9D%86-user_data) | Adjust contract leverage of the account
-[GET /api/v1/contract/historyOrders  (HMAC SHA256)](./rest-api.md#%E8%B4%A6%E6%88%B7%E5%90%88%E7%BA%A6%E5%8E%86%E5%8F%B2%E5%A7%94%E6%89%98-user_data) | Historical entry orders of the account
-[GET /api/v1/contract/bill  (HMAC SHA256)](./rest-api.md#%E8%B4%A6%E6%88%B7%E5%90%88%E7%BA%A6%E8%B4%A6%E5%8D%95-user_data) | Contract bill
-[GET /api/v1/contract/historyRate](./rest-api.md#%E5%90%88%E7%BA%A6%E8%B5%84%E9%87%91%E8%B4%B9%E7%8E%87) | Contract capital fee
-[GET /api/v1/contract/protectionFund](./rest-api.md#%E5%90%88%E7%BA%A6%E4%BF%9D%E6%8A%A4%E5%9F%BA%E9%87%91) | Contract protection fund
-[POST /api/v1/contract/transferMargin  (HMAC SHA256)](./rest-api.md#%E8%BD%AC%E7%A7%BB%E4%BF%9D%E8%AF%81%E9%87%91-user_data) | Transfer margin 
-[POST /api/v1/contract/turnoutMargin  (HMAC SHA256)](./rest-api.md#%E8%BD%AC%E5%87%BA%E4%BF%9D%E8%AF%81%E9%87%91-user_data) | Turn out margin
+[GET /api/v1/contract/depth](./rest-api.md#depth-information-for-futures) | Depth
+[GET /api/v1/contract/trades](./rest-api.md#recent-trades-for-futures) | Recent trades
+[GET /api/v1/contract/historicalTrades](./rest-api.md#old-trade-lookup-for-futures-market_data) | Historical trades
+[GET /api/v1/contract/klines](./rest-api.md#kline-data-lookup-for-futures) | K-line
+[GET /api/v1/contract/avgPrice](./rest-api.md#look-up-current-average-price-for-futures) | Average price now
+[GET /api/v1/contract/ticker/24hr](./rest-api.md#look-up-24hr-ticker-price-change-statistics-for-futrues) | Price change in 24 hours
+[GET /api/v1/contract/ticker/price](./rest-api.md#look-up-price-ticker-for-futures) | Latest price
+[GET /api/v1/contract/ticker/bookTicker](./rest-api.md#look-up-symbol-order-book-ticker-for-futures) | Optimal entry order
+[GET /api/v1/contract/ticker/indicesPrice](./rest-api.md#index-price-and-mark-price-for-futures) | Indices Price, marked price
+[POST /api/v1/contract/order/test (HMAC SHA256)](./rest-api.md#test-placing-order-api-of-contract-transactiontrade) | Test placing order
+[POST /api/v1/contract/order  (HMAC SHA256)](./rest-api.md#place-order-in-contract-transactiontrade) | Place order
+[GET /api/v1/contract/order (HMAC SHA256)](./rest-api.md#cancel-order-for-contract-transaction-trade) | Cancel order
+[DELETE /api/v1/contract/order  (HMAC SHA256)](./rest-api.md#check-orders-of-contract-transactionuser_data) | Check entry orders
+[GET /api/v1/contract/openOrders  (HMAC SHA256)](./rest-api.md#check-entry-orders-of-contract-transaction-of-this-accountuser_data) | Contract liquidation
+[POST /api/v1/contract/liquidation  (HMAC SHA256)](./rest-api.md#close-positions-for-contracttrade) | Contract liquidation
+[GET /api/v1/contract/liquidationOrder](./rest-api.md#check-orders-of-closed-positions-of-the-account-market_data-) | Check liquidation orders
+[GET /api/v1/contract/position  (HMAC SHA256)](./rest-api.md#check-contract-positions-of-the-accountuser_data) | Check contract positions of the account
+[GET /api/v1/contract/position/leverage  (HMAC SHA256)](./rest-api.md#adjust-contract-leverage-of-the-accountuser_data) | Adjust contract leverage of the account
+[GET /api/v1/contract/historyOrders  (HMAC SHA256)](./rest-api.md#historical-contract-entry-order-of-the-account-user_data) | Historical entry orders of the account
+[GET /api/v1/contract/bill  (HMAC SHA256)](./rest-api.md#contract-bill-of-the-accountuser_data) | Contract bill
+[GET /api/v1/contract/historyRate](./rest-api.md#capital-fee-rate-of-contract) | Contract capital fee
+[GET /api/v1/contract/protectionFund](./rest-api.md#contract-protection-fund) | Contract protection fund
+[POST /api/v1/contract/transferMargin  (HMAC SHA256)](./rest-api.md#transfer-marginuser_data) | Transfer margin 
+[POST /api/v1/contract/turnoutMargin  (HMAC SHA256)](./rest-api.md#turn-out-marginuser_data) | Turn out margin
 
 
 ### WebSocket Common Data
 Stream | Description
 -------------- | -------------- 
-[\<symbol\>@\<tradeType\>](./web-socket-streams.md#%E6%9C%80%E8%BF%91%E6%88%90%E4%BA%A4) | Recent trades
-[\<symbol\>@\<klineType\>_\<interval\>](./web-socket-streams.md#K%E7%BA%BF) | K-line
-[\<symbol\>@\<miniTickerType\>](./web-socket-streams.md#%E6%8C%89Symbol%E7%9A%84%E7%B2%BE%E7%AE%80Ticker) | Simplified Ticker
-[\<symbol\>@\<tradeType\>](./web-socket-streams.md#%E6%8C%89Symbol%E7%9A%84%E5%AE%8C%E6%95%B4Ticker) | Complete Ticker
-[\<symbol\>@\<depthType\>\<levels\>](./web-socket-streams.md#%E6%9C%89%E9%99%90%E6%A1%A3%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | Depth information
-[\<symbol\>@\<depthType\>](./web-socket-streams.md#%E5%A2%9E%E9%87%8F%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AFstream) | Depth information stream
+[\<symbol\>@\<tradeType\>](./web-socket-streams_CN.md#%E6%9C%80%E8%BF%91%E6%88%90%E4%BA%A4) | Recent trades
+[\<symbol\>@\<klineType\>_\<interval\>](./web-socket-streams_CN.md#K%E7%BA%BF) | K-line
+[\<symbol\>@\<miniTickerType\>](./web-socket-streams_CN.md#%E6%8C%89Symbol%E7%9A%84%E7%B2%BE%E7%AE%80Ticker) | Simplified Ticker
+[\<symbol\>@\<tradeType\>](./web-socket-streams_CN.md#%E6%8C%89Symbol%E7%9A%84%E5%AE%8C%E6%95%B4Ticker) | Complete Ticker
+[\<symbol\>@\<depthType\>\<levels\>](./web-socket-streams_CN.md#%E6%9C%89%E9%99%90%E6%A1%A3%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | Depth information
+[\<symbol\>@\<depthType\>](./web-socket-streams_CN.md#%E5%A2%9E%E9%87%8F%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AFstream) | Depth information stream
 
 ### webSocket User Data
 Stream | Description
 -------------- | -------------- 
-[accountSpotInfo](./web-socket-streams.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | Change of spot assets
-[accountSpotInfo](./web-socket-streams.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | Change of options assets
-[accountContractInfo](./web-socket-streams.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | Change of contract assets
-[execSpotReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | Update spot orders/ trades
-[execOptionReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | Update options orders/ trades
-[execContractReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | Update contract orders/ trades
-[contractPositions](./web-socket-streams.md#%E5%90%88%E7%BA%A6%E6%8C%81%E4%BB%93) | Positions of contract
+[accountSpotInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | Change of spot assets
+[accountSpotInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | Change of options assets
+[accountContractInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | Change of contract assets
+[execSpotReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | Update spot orders/ trades
+[execOptionReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | Update options orders/ trades
+[execContractReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | Update contract orders/ trades
+[contractPositions](./web-socket-streams_CN.md#%E5%90%88%E7%BA%A6%E6%8C%81%E4%BB%93) | Positions of contract
 
 
 

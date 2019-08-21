@@ -6,7 +6,7 @@
 ------------ | ------------ 
 [rest-api.md](./rest-api_CN.md) | 通用Rest接口定义 (/api)
 [errors.md](./errors_CN.md) |错误代码及含义 
-[web-socket-streams.md](./web-socket-streams_CN.md) |行情数据流接口的描述
+[web-socket-streams_CN.md](./web-socket-streams_CN.md) |行情数据流接口的描述
 
 ## Public API for JEX Exchange
 
@@ -107,23 +107,23 @@
 ### webSocket共有数据
 Stream名称 | 说明
 -------------- | -------------- 
-[\<symbol\>@\<tradeType\>](./web-socket-streams.md#%E6%9C%80%E8%BF%91%E6%88%90%E4%BA%A4) | 最近成交
-[\<symbol\>@\<klineType\>_\<interval\>](./web-socket-streams.md#K%E7%BA%BF) | K线
-[\<symbol\>@\<miniTickerType\>](./web-socket-streams.md#%E6%8C%89Symbol%E7%9A%84%E7%B2%BE%E7%AE%80Ticker) | 精简Ticker
-[\<symbol\>@\<tradeType\>](./web-socket-streams.md#%E6%8C%89Symbol%E7%9A%84%E5%AE%8C%E6%95%B4Ticker) | 完整Ticker
-[\<symbol\>@\<depthType\>\<levels\>](./web-socket-streams.md#%E6%9C%89%E9%99%90%E6%A1%A3%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | 深度信息
-[\<symbol\>@\<depthType\>](./web-socket-streams.md#%E5%A2%9E%E9%87%8F%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AFstream) | 增量深度信息stream
+[\<symbol\>@\<tradeType\>](./web-socket-streams_CN.md#%E6%9C%80%E8%BF%91%E6%88%90%E4%BA%A4) | 最近成交
+[\<symbol\>@\<klineType\>_\<interval\>](./web-socket-streams_CN.md#K%E7%BA%BF) | K线
+[\<symbol\>@\<miniTickerType\>](./web-socket-streams_CN.md#%E6%8C%89Symbol%E7%9A%84%E7%B2%BE%E7%AE%80Ticker) | 精简Ticker
+[\<symbol\>@\<tradeType\>](./web-socket-streams_CN.md#%E6%8C%89Symbol%E7%9A%84%E5%AE%8C%E6%95%B4Ticker) | 完整Ticker
+[\<symbol\>@\<depthType\>\<levels\>](./web-socket-streams_CN.md#%E6%9C%89%E9%99%90%E6%A1%A3%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | 深度信息
+[\<symbol\>@\<depthType\>](./web-socket-streams_CN.md#%E5%A2%9E%E9%87%8F%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AFstream) | 增量深度信息stream
 
 ### webSocket用户数据 
 Stream名称 | 说明
 -------------- | -------------- 
-[accountSpotInfo](./web-socket-streams.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 现货资产变动
-[accountSpotInfo](./web-socket-streams.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 期权资产变动
-[accountContractInfo](./web-socket-streams.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 合约资产变动
-[execSpotReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 现货订单/交易更新
-[execOptionReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 期权订单/交易更新
-[execContractReport](./web-socket-streams.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 合约订单/交易更新
-[contractPositions](./web-socket-streams.md#%E5%90%88%E7%BA%A6%E6%8C%81%E4%BB%93) | 合约持仓
+[accountSpotInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 现货资产变动
+[accountSpotInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 期权资产变动
+[accountContractInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 合约资产变动
+[execSpotReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 现货订单/交易更新
+[execOptionReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 期权订单/交易更新
+[execContractReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 合约订单/交易更新
+[contractPositions](./web-socket-streams_CN.md#%E5%90%88%E7%BA%A6%E6%8C%81%E4%BB%93) | 合约持仓
 
 
 
