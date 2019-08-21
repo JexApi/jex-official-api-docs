@@ -16,17 +16,17 @@ API | Description
 [GET /api/v1/time](./rest-api.md#Check%20server%20time) | Get server time
 [GET /api/v1/exchangeInfo](./rest-api.md#exchange-information) | Get restriction info and trading pair info 
 [GET /api/v1/optionInfo](./rest-api.md#exchange-information-for-options) | Get trading pair information of options transaction
-[GET /api/v1/contractInfo](./rest-api.md#%exchange-information-for-futures) | Get trading pair information of contract transaction
+[GET /api/v1/contractInfo](./rest-api.md#exchange-information-for-futures) | Get trading pair information of contract transaction
 [GET /api/v1/account (HMAC SHA256)](./rest-api.md#account-informationuser_data) | Asset information of the account 
 [POST /api/v1/userDataStream](./rest-api.md#start-user-data-stream-user_stream) | Create user data stream
 [PUT /api/v1/userDataStream](./rest-api.md#keepalive-user_stream) | Extend the period of validity of user data stream
 [DELETE /api/v1/userDataStream](./rest-api.md#close-user-data-stream-user_stream) | Close user data stream
 [GET /wapi/v1/assetDetail](./rest-api.md#users-assets-user_data) | Details of user assets
-[GET /wapi/v1/depositAddress](./rest-api.md#%depositing-address-of-the-useruser_data) | User's deposit address
+[GET /wapi/v1/depositAddress](./rest-api.md#depositing-address-of-the-useruser_data) | User's deposit address
 [GET /wapi/v1/depositHistory](./rest-api.md#historical-depositing-records-of-the-user-user_data) | Deposit history 
-[GET /wapi/v1/tradeFee](./rest-api.md#%service-fee-of-the-trading-user_data) | Transaction fee 
-[GET /wapi/v1/withdraw](./rest-api.md#%withdrawal-of-the-useruser_data) | Withdraw 
-[GET /wapi/v1/withdrawHistory](./rest-api.md#%historical-withdrawal-records-of-the-useruser_data) | Withdraw History 
+[GET /wapi/v1/tradeFee](./rest-api.md#service-fee-of-the-trading-user_data) | Transaction fee 
+[GET /wapi/v1/withdraw](./rest-api.md#withdrawal-of-the-useruser_data) | Withdraw 
+[GET /wapi/v1/withdrawHistory](./rest-api.md#historical-withdrawal-records-of-the-useruser_data) | Withdraw History 
 
 ### Coins Transaction API
 API | Description
