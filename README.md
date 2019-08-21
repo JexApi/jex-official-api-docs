@@ -86,9 +86,9 @@ API | Description
 [GET /api/v1/contract/ticker/indicesPrice](./rest-api.md#index-price-and-mark-price-for-futures) | Indices Price, marked price
 [POST /api/v1/contract/order/test (HMAC SHA256)](./rest-api.md#test-placing-order-api-of-contract-transactiontrade) | Test placing order
 [POST /api/v1/contract/order  (HMAC SHA256)](./rest-api.md#place-order-in-contract-transactiontrade) | Place order
-[GET /api/v1/contract/order (HMAC SHA256)](./rest-api.md#cancel-order-for-contract-transaction-trade) | Cancel order
-[DELETE /api/v1/contract/order  (HMAC SHA256)](./rest-api.md#check-orders-of-contract-transactionuser_data) | Check entry orders
-[GET /api/v1/contract/openOrders  (HMAC SHA256)](./rest-api.md#check-entry-orders-of-contract-transaction-of-this-accountuser_data) | Contract liquidation
+[GET /api/v1/contract/order (HMAC SHA256)](./rest-api.md#check-orders-of-contract-transactionuser_data) | Check orders
+[DELETE /api/v1/contract/order  (HMAC SHA256)](./rest-api.md#cancel-order-for-contract-transaction-trade) | Cancel order
+[GET /api/v1/contract/openOrders  (HMAC SHA256)](./rest-api.md#check-entry-orders-of-contract-transaction-of-this-accountuser_data) | Check entry orders
 [POST /api/v1/contract/liquidation  (HMAC SHA256)](./rest-api.md#close-positions-for-contracttrade) | Contract liquidation
 [GET /api/v1/contract/liquidationOrder](./rest-api.md#check-orders-of-closed-positions-of-the-account-market_data-) | Check liquidation orders
 [GET /api/v1/contract/position  (HMAC SHA256)](./rest-api.md#check-contract-positions-of-the-accountuser_data) | Check contract positions of the account
