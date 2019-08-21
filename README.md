@@ -6,7 +6,7 @@ Name | Description
 ------------ | ------------ 
 [rest-api.md](./rest-api.md) | Details on the Rest API (/api)
 [errors.md](./errors_CN.md) | Descriptions of possible error messages from the Rest API
-[web-socket-streams_cn.md](./web-socket-streams_CN.md) | Details on available streams and payloads
+[web-socket-streams.md](./web-socket-streams.md) | Details on available streams and payloads
 
 ## Public API for JEX Exchange
 ### General API
@@ -104,23 +104,23 @@ API | Description
 ### WebSocket Common Data
 Stream | Description
 -------------- | -------------- 
-[\<symbol\>@\<tradeType\>](./web-socket-streams_CN.md#%E6%9C%80%E8%BF%91%E6%88%90%E4%BA%A4) | Recent trades
-[\<symbol\>@\<klineType\>_\<interval\>](./web-socket-streams_CN.md#K%E7%BA%BF) | K-line
-[\<symbol\>@\<miniTickerType\>](./web-socket-streams_CN.md#%E6%8C%89Symbol%E7%9A%84%E7%B2%BE%E7%AE%80Ticker) | Simplified Ticker
-[\<symbol\>@\<tradeType\>](./web-socket-streams_CN.md#%E6%8C%89Symbol%E7%9A%84%E5%AE%8C%E6%95%B4Ticker) | Complete Ticker
-[\<symbol\>@\<depthType\>\<levels\>](./web-socket-streams_CN.md#%E6%9C%89%E9%99%90%E6%A1%A3%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | Depth information
-[\<symbol\>@\<depthType\>](./web-socket-streams_CN.md#%E5%A2%9E%E9%87%8F%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AFstream) | Depth information stream
+[\<symbol\>@\<tradeType\>](./web-socket-streams.md#stream-name-symboltradetype) | Recent trades
+[\<symbol\>@\<klineType\>_\<interval\>](./web-socket-streams.md#klinecandlestick-streams) | K-line
+[\<symbol\>@\<miniTickerType\>](./web-socket-streams.md#stream-name-symbolminitickertype) | Simplified Ticker
+[\<symbol\>@\<tradeType\>](./web-socket-streams.md#all-market-tickers-stream) | Complete Ticker
+[\<symbol\>@\<depthType\>\<levels\>](./web-socket-streams.md#partial-book-depth-streams) | Depth information
+[\<symbol\>@\<depthType\>](./web-socket-streams.md#stream-name-symboldepthtypelevels) | Depth information stream
 
 ### webSocket User Data
 Stream | Description
 -------------- | -------------- 
-[accountSpotInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | Change of spot assets
-[accountSpotInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | Change of options assets
-[accountContractInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | Change of contract assets
-[execSpotReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | Update spot orders/ trades
-[execOptionReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | Update options orders/ trades
-[execContractReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | Update contract orders/ trades
-[contractPositions](./web-socket-streams_CN.md#%E5%90%88%E7%BA%A6%E6%8C%81%E4%BB%93) | Positions of contract
+[accountSpotInfo](./web-socket-streams.md#account-updates) | Change of spot assets
+[accountOptionInfo](./web-socket-streams.md#account-updates) | Change of options assets
+[accountContractInfo](./web-socket-streams.md#account-updates) | Change of contract assets
+[execSpotReport](./web-socket-streams.md#update-of-orders) | Update spot orders/ trades
+[execOptionReport](./web-socket-streams.md#update-of-orders) | Update options orders/ trades
+[execContractReport](./web-socket-streams.md#update-of-orders) | Update contract orders/ trades
+[contractPositions](./web-socket-streams.md#contract-positions) | Positions of contract
 
 
 

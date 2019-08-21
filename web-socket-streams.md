@@ -255,7 +255,6 @@
 * Doing a `DELETE` on a `listenKey` will close the stream.
 * The base websocket endpoint is: **wss://ws.jex.com**
 * User Data Streams are accessed at **/ws/\<listenKey\>**
-* User Data Streams are accessed at **/ws/\<listenKey\>**
 * A single connection to **stream.jex.com** is only valid for 24 hours; expect to be disconnected at the 24 hour mark
 * User data stream payloads are **not guaranteed** to be in order during heavy periods; **make sure to order your updates using E**
 

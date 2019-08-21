@@ -118,7 +118,7 @@ Stream名称 | 说明
 Stream名称 | 说明
 -------------- | -------------- 
 [accountSpotInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 现货资产变动
-[accountSpotInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 期权资产变动
+[accountoptionInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 期权资产变动
 [accountContractInfo](./web-socket-streams_CN.md#%E8%B4%A6%E6%88%B7%E6%9B%B4%E6%96%B0) | 合约资产变动
 [execSpotReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 现货订单/交易更新
 [execOptionReport](./web-socket-streams_CN.md#%E8%AE%A2%E5%8D%95%E4%BA%A4%E6%98%93%E6%9B%B4%E6%96%B0) | 期权订单/交易更新
