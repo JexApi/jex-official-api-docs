@@ -254,7 +254,7 @@
 * `DELETE`一个 `listenKey` 立即关闭当前数据流
 * 本篇所列出的websocket接口baseurl: **wss://ws.jex.com**
 * 订阅账户数据流的stream名称为 **/ws/\<listenKey\>**
-* 每个到stream.binance.com的链接有效期不超过24小时，请妥善处理断线重连。
+* 每个到stream.jex.com的链接有效期不超过24小时，请妥善处理断线重连。
 * 账户数据流的消息**不保证**严格时间序; **请使用 E 字段进行排序**
 
 
