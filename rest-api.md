@@ -502,7 +502,7 @@ NONE
 
 
 ## Market Data endpoints
-### 币币深度信息
+### Depth information for spot
 ```
 GET /api/v1/spot/depth
 ```
@@ -538,7 +538,7 @@ limit | INT | NO | Default  60; Max 60. Available:[5, 10, 20, 50, 60]
   ]
 }
 ```
-### 期权深度信息
+### Depth information for options
 ```
 GET /api/v1/option/depth
 ```
@@ -569,7 +569,7 @@ limit | INT | NO | Default  60; Max 60. Available:[5, 10, 20, 50, 60]
   ]
 }
 ```
-### Depth information for options
+### Depth information for futures
 ```
 GET /api/v1/contract/depth
 ```

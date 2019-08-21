@@ -13,20 +13,20 @@ Name | Description
 API | Description
 -------------- | -------------- 
 [GET /api/v1/ping](./rest-api.md#test-connectivity-ping) | Test server connectivity PING 
-[GET /api/v1/time](./rest-api.md#Check server time) | Get server time
-[GET /api/v1/exchangeInfo](./rest-api.md#%Exchange information) | Get restriction info and trading pair info 
-[GET /api/v1/optionInfo](./rest-api.md#%E6%9C%9F%E6%9D%83%E4%BA%A4%E6%98%93%E5%AF%B9%E4%BF%A1%E6%81%AF) | Get trading pair information of options transaction
-[GET /api/v1/contractInfo](./rest-api.md#%E5%90%88%E7%BA%A6%E4%BA%A4%E6%98%93%E5%AF%B9%E4%BF%A1%E6%81%AF) | Get trading pair information of contract transaction
-[GET /api/v1/account (HMAC SHA256)](./rest-api.md#%E8%B4%A6%E6%88%B7%E4%BF%A1%E6%81%AF-user_data) | Asset information of the account 
-[POST /api/v1/userDataStream](./rest-api.md#%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%B5%81-user_stream) | Create user data stream
+[GET /api/v1/time](./rest-api.md#Check%20server%20time) | Get server time
+[GET /api/v1/exchangeInfo](./rest-api.md#exchange-information) | Get restriction info and trading pair info 
+[GET /api/v1/optionInfo](./rest-api.md#exchange-information-for-options) | Get trading pair information of options transaction
+[GET /api/v1/contractInfo](./rest-api.md#%exchange-information-for-futures) | Get trading pair information of contract transaction
+[GET /api/v1/account (HMAC SHA256)](./rest-api.md#account-informationuser_data) | Asset information of the account 
+[POST /api/v1/userDataStream](./rest-api.md#start-user-data-stream-user_stream) | Create user data stream
 [PUT /api/v1/userDataStream](./rest-api.md#keepalive-user_stream) | Extend the period of validity of user data stream
-[DELETE /api/v1/userDataStream](./rest-api.md#%E5%85%B3%E9%97%AD%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%B5%81-user_stream) | Close user data stream
-[GET /wapi/v1/assetDetail](./rest-api.md#%E7%94%A8%E6%88%B7%E8%B5%84%E4%BA%A7%E8%AF%A6%E6%83%85-user_data) | Details of user assets
-[GET /wapi/v1/depositAddress](./rest-api.md#%E7%94%A8%E6%88%B7%E5%85%85%E5%80%BC%E5%9C%B0%E5%9D%80-user_data) | User's deposit address
-[GET /wapi/v1/depositHistory](./rest-api.md#%E7%94%A8%E6%88%B7%E5%85%85%E5%80%BC%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95-user_data) | Deposit history 
-[GET /wapi/v1/tradeFee](./rest-api.md#%E7%94%A8%E6%88%B7%E4%BA%A4%E6%98%93%E6%89%8B%E7%BB%AD%E8%B4%B9-user_data) | Transaction fee 
-[GET /wapi/v1/withdraw](./rest-api.md#%E7%94%A8%E6%88%B7%E6%8F%90%E7%8E%B0-user_data) | Withdraw 
-[GET /wapi/v1/withdrawHistory](./rest-api.md#%E7%94%A8%E6%88%B7%E6%8F%90%E7%8E%B0%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95-user_data) | Withdraw History 
+[DELETE /api/v1/userDataStream](./rest-api.md#close-user-data-stream-user_stream) | Close user data stream
+[GET /wapi/v1/assetDetail](./rest-api.md#users-assets-user_data) | Details of user assets
+[GET /wapi/v1/depositAddress](./rest-api.md#%depositing-address-of-the-useruser_data) | User's deposit address
+[GET /wapi/v1/depositHistory](./rest-api.md#historical-depositing-records-of-the-user-user_data) | Deposit history 
+[GET /wapi/v1/tradeFee](./rest-api.md#%service-fee-of-the-trading-user_data) | Transaction fee 
+[GET /wapi/v1/withdraw](./rest-api.md#%withdrawal-of-the-useruser_data) | Withdraw 
+[GET /wapi/v1/withdrawHistory](./rest-api.md#%historical-withdrawal-records-of-the-useruser_data) | Withdraw History 
 
 ### Coins Transaction API
 API | Description
