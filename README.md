@@ -31,20 +31,20 @@ API | Description
 ### Coins Transaction API
 API | Description
 -------------- | -------------- 
-[GET /api/v1/spot/depth](./rest-api.md#%E5%B8%81%E5%B8%81%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF) | Depth
-[GET /api/v1/spot/trades](./rest-api.md#%E5%B8%81%E5%B8%81%E8%BF%91%E6%9C%9F%E6%88%90%E4%BA%A4) | Recent trades
-[GET /api/v1/spot/historicalTrades](./rest-api.md#%E6%9F%A5%E8%AF%A2%E5%B8%81%E5%B8%81%E5%8E%86%E5%8F%B2%E6%88%90%E4%BA%A4market_data) | Historical trades
-[GET /api/v1/spot/klines](./rest-api.md#%E5%B8%81%E5%B8%81k%E7%BA%BF%E6%95%B0%E6%8D%AE) | K-line
-[GET /api/v1/spot/avgPrice](./rest-api.md#%E5%B8%81%E5%B8%81%E5%BD%93%E5%89%8D%E5%B9%B3%E5%9D%87%E4%BB%B7%E6%A0%BC) | Average price now
-[GET /api/v1/spot/ticker/24hr](./rest-api.md#%E5%B8%81%E5%B8%8124hr%E4%BB%B7%E6%A0%BC%E5%8F%98%E5%8A%A8%E6%83%85%E5%86%B5) | Price change in 24 hours
-[GET /api/v1/spot/ticker/price](./rest-api.md#%E5%B8%81%E5%B8%81%E6%9C%80%E6%96%B0%E4%BB%B7%E6%A0%BC%E6%8E%A5%E5%8F%A3) | Latest price
-[GET /api/v1/spot/ticker/bookTicker](./rest-api.md#%E5%B8%81%E5%B8%81%E6%9C%80%E4%BC%98%E6%8C%82%E5%8D%95%E6%8E%A5%E5%8F%A3) | Optimal entry order
-[POST /api/v1/spot/order/test (HMAC SHA256)](./rest-api.md#%E5%B8%81%E5%B8%81%E6%B5%8B%E8%AF%95%E4%B8%8B%E5%8D%95%E6%8E%A5%E5%8F%A3-trade) | Test placing order
-[POST /api/v1/spot/order  (HMAC SHA256)](./rest-api.md#%E5%B8%81%E5%B8%81%E4%B8%8B%E5%8D%95--trade) | Place order 
-[GET /api/v1/spot/order (HMAC SHA256)](./rest-api.md#%E5%B8%81%E5%B8%81%E6%9F%A5%E8%AF%A2%E8%AE%A2%E5%8D%95-user_data) | Check orders
-[DELETE /api/v1/spot/order  (HMAC SHA256)](./rest-api.md#%E5%B8%81%E5%B8%81%E6%92%A4%E9%94%80%E8%AE%A2%E5%8D%95-trade) | Cancel order 
-[GET /api/v1/spot/openOrders  (HMAC SHA256)](./rest-api.md#%E6%9F%A5%E7%9C%8B%E8%B4%A6%E6%88%B7%E5%BD%93%E5%89%8D%E5%B8%81%E5%B8%81%E6%8C%82%E5%8D%95-user_data) | Check entry orders 
-[GET /api/v1/spot/historyOrders  (HMAC SHA256)](./rest-api.md#%E8%B4%A6%E6%88%B7%E5%B8%81%E5%B8%81%E5%8E%86%E5%8F%B2%E5%A7%94%E6%89%98-user_data) | Historical entry orders
+[GET /api/v1/spot/depth](./rest-api.md#depth-information-for-spot) | Depth
+[GET /api/v1/spot/trades](./rest-api.md#recent-trades-for-spot) | Recent trades
+[GET /api/v1/spot/historicalTrades](./rest-api.md#old-trade-lookup-market_data) | Historical trades
+[GET /api/v1/spot/klines](./rest-api.md#klinecandlestick-data) | K-line
+[GET /api/v1/spot/avgPrice](./rest-api.md#current-average-price) | Average price now
+[GET /api/v1/spot/ticker/24hr](./rest-api.md#24hr-ticker-price-change-statistics) | Price change in 24 hours
+[GET /api/v1/spot/ticker/price](./rest-api.md#price-ticker-for-spot) | Latest price
+[GET /api/v1/spot/ticker/bookTicker](./rest-api.md#symbol-order-book-ticker-for-spot) | Optimal entry order
+[POST /api/v1/spot/order/test (HMAC SHA256)](./rest-api.md#test-placing-order-api-of-coins-transactiontrade) | Test placing order
+[POST /api/v1/spot/order  (HMAC SHA256)](./rest-api.md#check-orders-of-coins-transactionuser_data) | Place order 
+[GET /api/v1/spot/order (HMAC SHA256)](./rest-api.md#cancel-order-for-coins-transactiontrade) | Check orders
+[DELETE /api/v1/spot/order  (HMAC SHA256)](./rest-api.md#post-apiv1spotorder-examples-for-post) | Cancel order 
+[GET /api/v1/spot/openOrders  (HMAC SHA256)](./rest-api.md#check-entry-orders-of-coins-transaction-of-this-accountuser_data) | Check entry orders 
+[GET /api/v1/spot/historyOrders  (HMAC SHA256)](./rest-api.md#%historical-coins-entry-order-of-the-account-user_data) | Historical entry orders
  
 
 
