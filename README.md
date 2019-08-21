@@ -1,10 +1,20 @@
+## Official Documentation for the JEX APIs and Streams.
+* Streams, endpoints, parameters, payloads, etc. described in the documents in this repository are considered **official** and **supported**.
+* The use of any other streams, endpoints, parameters, or payloads, etc. is **not supported**; **use them at your own risk and with no guarantees.**
+
+Name | Description
+------------ | ------------ 
+[rest-api.md](./rest-api.md) | Details on the Rest API (/api)
+[errors.md](./errors_CN.md) | Descriptions of possible error messages from the Rest API
+[web-socket-streams.md](./web-socket-streams_CN.md) | Details on available streams and payloads
+
 ## Public API for JEX Exchange
 ### General API
 API | Description
 -------------- | -------------- 
-[GET /api/v1/ping](./rest-api.md#%E6%B5%8B%E8%AF%95%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9E%E9%80%9A%E6%80%A7-ping) | Test server connectivity PING 
-[GET /api/v1/time](./rest-api.md#%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%97%B6%E9%97%B4) | Get server time
-[GET /api/v1/exchangeInfo](./rest-api.md#%E4%BA%A4%E6%98%93%E5%AF%B9%E4%BF%A1%E6%81%AF) | Get restriction info and trading pair info 
+[GET /api/v1/ping](./rest-api.md#test-connectivity-ping) | Test server connectivity PING 
+[GET /api/v1/time](./rest-api.md#Check server time) | Get server time
+[GET /api/v1/exchangeInfo](./rest-api.md#%Exchange information) | Get restriction info and trading pair info 
 [GET /api/v1/optionInfo](./rest-api.md#%E6%9C%9F%E6%9D%83%E4%BA%A4%E6%98%93%E5%AF%B9%E4%BF%A1%E6%81%AF) | Get trading pair information of options transaction
 [GET /api/v1/contractInfo](./rest-api.md#%E5%90%88%E7%BA%A6%E4%BA%A4%E6%98%93%E5%AF%B9%E4%BF%A1%E6%81%AF) | Get trading pair information of contract transaction
 [GET /api/v1/account (HMAC SHA256)](./rest-api.md#%E8%B4%A6%E6%88%B7%E4%BF%A1%E6%81%AF-user_data) | Asset information of the account 
