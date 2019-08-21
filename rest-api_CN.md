@@ -1,16 +1,14 @@
-# General API Information
-* The base endpoint is:  https://www.jex.com
-* All endpoints return either a JSON object or array.
-* Data is returned in ascending order. Oldest first, newest last。
-* All time and timestamp related fields are in milliseconds
-* HTTP `4XX` return codes are used for malformed requests; the issue is on the sender's side
-* HTTP `429` return code is used when breaking a request rate limit.
-* HTTP `418` return code is used when an IP has been auto-banned for continuing to send requests after receiving `429` codes.
-* HTTP `5XX` return codes are used for internal errors; the issue is on
-  jex's side.
-  It is important to **NOT** treat this as a failure operation; the execution status is
-  **UNKNOWN** and could have been a success.
-* Any endpoint can return an ERROR; the error payload is as follows:
+# 基本信息
+* 本篇列出REST接口的baseurl  https://www.jex.com
+* 所有接口的响应都是JSON格式
+* 响应中如有数组，数组元素以时间升序排列，越早的数据越提前。
+* 所有时间、时间戳均为UNIX时间，单位为毫秒
+* HTTP `4XX` 错误码用于指示错误的请求内容、行为、格式。
+* HTTP `429` 错误码表示警告访问频次超限，即将被封IP
+* HTTP `418` 表示收到429后继续访问，于是被封了。
+* HTTP `5XX` 错误码用于指示服务器侧的问题。 
+* HTTP `504` 表示API服务端已经向业务核心提交了请求但未能获取响应，特别需要注意的是`504`代码不代表请求失败，而是未知。很可能已经得到了执行，也有可能执行失败，需要做进一步确认。
+* 每个接口都有可能抛出异常，异常响应格式如下：
 ```javascript
 {
   "code": -1121,
@@ -18,55 +16,45 @@
 }
 ```
 
-* Specific error codes and messages defined in another document.
-* For `GET` endpoints, parameters must be sent as a `query string`.
-* For `POST`, `PUT`, and `DELETE` endpoints, the parameters may be sent as a
-  `query string` or in the `request body` with content type
-  `application/x-www-form-urlencoded`. You may mix parameters between both the
-  `query string` and `request body` if you wish to do so.
-* Parameters may be sent in any order.
-* If a parameter sent in both the `query string` and `request body`, the
-  `query string` parameter will be used.
+* 具体的错误码及其解释在[错误代码汇总.md](./错误代码汇总.md)
+* `GET`方法的接口, 参数必须在`query string`中发送.
+* `POST`, `PUT`, 和 `DELETE` 方法的接口, 参数可以在 `query string`中发送，也可以在 `request body`中发送(content type `application/x-www-form-urlencoded`。允许混合这两种方式发送参数。但如果同一个参数名在query string和request body中都有，query string中的会被优先采用。
+* 对参数的顺序不做要求。
 
+# 访问限制
+* 在 `/api/v1/exchangeInfo`接口中`rateLimits`数组里包含有REST接口(不限于本篇的REST接口)的访问限制。包括带权重的访问频次限制、下单速率限制。本篇`枚举定义`章节有限制类型的进一步说明。
+* 违反上述任何一个访问限制都会收到HTTP 429，这是一个警告.
+* 每一个接口均有一个相应的权重(weight)，有的接口根据参数不同可能拥有不同的权重。越消耗资源的接口权重就会越大。
+* 当收到429告警时，调用者应当降低访问频率或者停止访问。
+* **收到429后仍然继续违反访问限制，会被封禁IP，并收到418错误码**
+* 频繁违反限制，封禁时间会逐渐延长，**从最短2分钟到最长3天**.
 
-# LIMITS
-* The `/api/v1/exchangeInfo` `rateLimits` array contains objects related to the exchange's `RAW_REQUEST`, `REQUEST_WEIGHT`, and `ORDER` rate limits. These are further defined in the `ENUM definitions` section under `Rate limiters (rateLimitType)`.
-* When a 429 is recieved, it's your obligation as an API to back off and not spam the API
-* Repeatedly violating rate limits and/or failing to back off after receiving 429s will result in an automated IP ban (http status 418).
-* IP bans are tracked and scale in duration for repeat offenders, from 2 minutes to 3 days
+# 接口鉴权类型
+* 每个接口都有自己的鉴权类型，鉴权类型决定了访问时应当进行何种鉴权
+* 如果需要 API-key，应当在HTTP头中以`X-JEX-APIKEY`字段传递
+* API-key 与 API-secret 是大小写敏感的
+* 可以在网页用户中心修改API-key 所具有的权限，例如读取账户信息、发送交易指令、发送提现指令
 
-
-# Endpoint security type
-* Each endpoint has a security type that determines the how you will interact with it
-* API-keys are passed into the Rest API via the `X-JEX-APIKEY` header
-* API-keys and secret-keys are case sensitive
-* API-keys can be configured to only access certain types of secure endpoints. For example, one API-key could be used for TRADE only, while another API-key can access everything except for TRADE routes.
-
-Security Type | Description
+鉴权类型 | 描述
 ------------ | ------------
-NONE | Endpoint can be accessed freely.
-TRADE | Endpoint requires sending a valid API-Key and signature
-USER_DATA | Endpoint requires sending a valid API-Key and signature.
-USER_STREAM | Endpoint requires sending a valid API-Key.
-MARKET_DATA | Endpoint requires sending a valid API-Key.
+NONE | 不需要鉴权的接口
+TRADE | 需要有效的API-KEY和签名
+USER_DATA | 需要有效的API-KEY和签名
+USER_STREAM | 需要有效的API-KEY
+MARKET_DATA | 需要有效的API-KEY
 
 
-# SIGNED (TRADE and USER_DATA) Endpoint security
-* `SIGNED` endpoints require an additional parameter, `signature`, to be
-  sent in the  `query string` or `request body`.
-* Endpoints use `HMAC SHA256` signatures. The `HMAC SHA256 signature` is a keyed `HMAC SHA256` operation.
-  Use your `secretKey` as the key and `totalParams` as the value for the HMAC operation.
-* The `signature` is **not case sensitive**.
-* `totalParams` is defined as the `query string` concatenated with the
-  `request body`.
+# 需要签名的接口 (TRADE 与 USER_DATA)
+* 调用这些接口时，除了接口本身所需的参数外，还需要传递`signature`即签名参数。
+* 签名使用`HMAC SHA256`算法. API-KEY所对应的API-Secret作为 `HMAC SHA256` 的密钥，其他所有参数作为`HMAC SHA256`的操作对象，得到的输出即为签名。
+* 签名大小写不敏感。
+* 当同时使用query string和request body时，`HMAC SHA256`的输入query string在前，request body在后
 
 ## 时间同步安全
-* A `SIGNED` endpoint also requires a parameter, `timestamp`, to be sent which
-  should be the millisecond timestamp of when the request was created and sent.
-* An additional parameter, `recvWindow`, may be sent to specify the number of
-  milliseconds after `timestamp` the request is valid for. If `recvWindow`
-  is not sent, **it defaults to 5000**.
-* The logic is as follows:
+* 签名接口均需要传递`timestamp`参数, 其值应当是请求发送时刻的unix时间戳（毫秒）
+* 服务器收到请求时会判断请求中的时间戳，如果是5000毫秒之前发出的，则请求会被认为无效。这个时间窗口值可以通过发送可选参数`recvWindow`来自定义。
+* 另外，如果服务器计算得出客户端时间戳在服务器时间的‘未来’一秒以上，也会拒绝请求。
+* 逻辑伪代码：
   ```javascript
   if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
     // process request
@@ -76,20 +64,15 @@ MARKET_DATA | Endpoint requires sending a valid API-Key.
   ```
 
 **关于交易时效性** 
-**Serious trading is about timing.** Networks can be unstable and unreliable,
-which can lead to requests taking varying amounts of time to reach the
-servers. With `recvWindow`, you can specify that the request must be
-processed within a certain number of milliseconds or be rejected by the
-server.
+互联网状况并不100%可靠，不可完全依赖,因此你的程序本地到服务器的时延会有抖动.
+这是我们设置`recvWindow`的目的所在，如果你从事高频交易，对交易时效性有较高的要求，可以灵活设置recvWindow以达到你的要求。
+**不推荐使用5秒以上的recvWindow**
 
 
-**It recommended to use a small recvWindow of 5000 or less! The max cannot go beyond 60,000!**
+## POST /api/v1/spot/order 的示例
 
-
-## POST /api/v1/spot/order Examples for POST
-
-Here is a step-by-step example of how to send a vaild signed payload from the
-Linux command line using `echo`, `openssl`, and `curl`.
+以下是在linux bash环境下使用 echo openssl 和curl工具实现的一个调用接口下单的示例
+apikey、secret仅供示范
 
 Key | Value
 ------------ | ------------
@@ -97,7 +80,7 @@ apiKey | vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A
 secretKey | NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j
 
 
-Parameters | Value
+参数 | 取值
 ------------ | ------------
 symbol | LTCBTC
 side | BUY
@@ -109,9 +92,9 @@ recvWindow | 5000
 timestamp | 1499827319559
 
 
-### Example 1: As a query string
+### 示例 1: 所有参数通过 query string 发送
 * **queryString:** symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
-* **HMAC SHA256 signature:**
+* **HMAC SHA256 签名:**
 
     ```
     [linux]$ echo -n "symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
@@ -119,16 +102,16 @@ timestamp | 1499827319559
     ```
 
 
-* **curl command:**
+* **curl 调用:**
 
     ```
     (HMAC SHA256)
     [linux]$ curl -H "X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://www.jex.com/api/v1/order?symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'
     ```
 
-### Example 2: As a request body
+### 示例 2: 所有参数通过 request body 发送
 * **requestBody:** symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
-* **HMAC SHA256 signature:**
+* **HMAC SHA256 签名:**
 
     ```
     [linux]$ echo -n "symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
@@ -136,17 +119,17 @@ timestamp | 1499827319559
     ```
 
 
-* **curl command:**
+* **curl 调用:**
 
     ```
     (HMAC SHA256)
     [linux]$ curl -H "X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A" -X POST 'https://www.jex.com/api/v1/order' -d 'symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'
     ```
 
-### Example 3: Mixed query string and request body
+### 示例 3: 混合使用 query string 与 request body
 * **queryString:** symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC
 * **requestBody:** quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
-* **HMAC SHA256 signature:**
+* **HMAC SHA256 签名:**
 
     ```
     [linux]$ echo -n "symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTCquantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"
@@ -154,7 +137,7 @@ timestamp | 1499827319559
     ```
 
 
-* **curl command:**
+* **curl 调用:**
 
     ```
     (HMAC SHA256)
@@ -167,64 +150,63 @@ There is no & between "GTC" and "quantity=1".
 
 
 
-# Public API Endpoints
-## Terminology
-* `base asset` refers to the asset that is the `quantity` of a symbol.
-* `quote asset` refers to the asset that is the `price` of a symbol.
+# 公开API接口
+## 术语解释
+* `base asset` 指一个交易对的交易对象，即写在靠前部分的资产名
+* `quote asset` 指一个交易对的定价资产，即写在靠后部分资产名
 
 
+## 枚举定义
+**交易对状态:**
 
-## ENUM definitions
-**Symbol status (status):**
+* PRE_TRADING 盘前交易
+* TRADING 正常交易中
+* POST_TRADING 盘后交易
+* END_OF_DAY 收盘
+* HALT 交易终止(该交易对已下线)
+* AUCTION_MATCH 集合竞价
+* BREAK 交易暂停
 
-* PRE_TRADING 
-* TRADING 
-* POST_TRADING 
-* END_OF_DAY 
-* HALT 
-* AUCTION_MATCH 
-* BREAK 
+**交易对类型:**
 
-**Symbol type:**
+* SPOT 币币
+* OPTION 期权
+* CONTRACT 合约
 
-* SPOT 
-* OPTION 
-* CONTRACT 
+**订单状态:**
 
-**Order status (status):**
+* NEW 新建订单
+* PARTIALLY_FILLED  部分成交
+* FILLED  全部成交
+* CANCELED  已撤销
+* PENDING_CANCEL 正在撤销中(目前不会遇到这个状态)
+* REJECTED 订单被拒绝
+* EXPIRED 订单过期(根据timeInForce参数规则)
 
-* NEW 
-* PARTIALLY_FILLED  
-* FILLED  
-* CANCELED  
-* PENDING_CANCEL (currently unused))
-* REJECTED 
-* EXPIRED
+**订单种类:**
 
-**Order types (orderTypes, type):**
+* LIMIT 限价单
+* MARKET  市价单
+* STOP_LOSS 止损单
+* STOP_LOSS_LIMIT 限价止损单
+* TAKE_PROFIT 止盈单
+* TAKE_PROFIT_LIMIT 限价止盈单
+* LIMIT_MAKER 限价做市单
 
-* LIMIT 
-* MARKET  
-* STOP_LOSS 
-* STOP_LOSS_LIMIT 
-* TAKE_PROFIT 
-* TAKE_PROFIT_LIMIT 
-* LIMIT_MAKER 
+**订单方向:**
 
-**Order side (side):**
-
-* BUY 
-* SELL 
+* BUY 买入
+* SELL 卖出
 
 **Time in force:**
 
-* GTC - Good Till Cancel 
-* IOC - Immediate or Cancel 
-* FOK - Fill or Kill 
+* GTC - Good Till Cancel 成交为止
+* IOC - Immediate or Cancel 无法立即成交(吃单)的部分就撤销
+* FOK - Fill or Kill 无法全部立即成交就撤销
 
-**Kline/Candlestick chart intervals:**
+**K线间隔:**
 
-m -> minutes; h -> hours; d -> days; w -> weeks; M -> months
+m -> 分钟; h -> 小时; d -> 天; w -> 周; M -> 月
 
 * 1m
 * 3m
@@ -239,80 +221,80 @@ m -> minutes; h -> hours; d -> days; w -> weeks; M -> months
 * 1d
 * 1w
 
-**Rate limiters (rateLimitType)**
+**限制种类 (rateLimitType)**
 
-* REQUESTS_WEIGHT  
-* ORDERS    
-* RAW_REQUESTS 
+* REQUESTS_WEIGHT  单位时间请求权重之和上限
+* ORDERS    单位时间下单(撤单)次数上限
+* RAW_REQUESTS  单位时间请求次数上限
 
-**Rate limit intervals (interval)**
+**限制间隔**
 
 * SECOND
 * MINUTE
 * DAY
 
-**Endpoints for futures account**
-* transfer       
-* fee            
-* funding        
-* closPosition   
-* liquidation    
-* adl            
-* autoMargin     
-* positionSize   
+**合约账单接口(type)**
+* transfer       资金划转
+* fee            手续费
+* funding        资金费用
+* closPosition   平仓
+* liquidation    爆仓平仓
+* adl            强减平仓
+* autoMargin     自动减仓
+* positionSize   持仓变化
 
 
 
-## General endpoints
-### Test connectivity PING
+## 通用接口
+### 测试服务器连通性 PING
 ```
 GET /api/v1/ping
 ```
-Test connectivity 
+测试能否联通
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 NONE
 
-**Response:**
+**响应:**
 ```javascript
 {}
 ```
 
-### Check server time
+### 获取服务器时间
 ```
 GET /api/v1/time
 ```
-Get the current server time.
+获取服务器时间
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 NONE
 
-**Response:**
+**响应:**
 ```javascript
 {
   "serverTime": 1499827319595
 }
 ```
 
-### Exchange information
+### 交易对信息
 ```
 GET /api/v1/exchangeInfo
 ```
-Get the current trading rules and symbol information
+获取此时的限制信息和交易对信息
 
-**Weight:**
+**权重:**
 1
 
 **Parameters:**
 NONE
 
-**Response:**
+**响应:**
 ```javascript
 {
   "timezone": "UTC",
@@ -421,19 +403,19 @@ NONE
 }
 ```
 
-### Exchange information for options
+### 期权交易对信息
 ```
 GET /api/v1/optionInfo
 ```
-Get the current trading rules and symbol information
+获取此时的限制信息和交易对信息
 
-**Weight:**
+**权重:**
 1
 
 **Parameters:**
 NONE
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -463,19 +445,19 @@ NONE
 ]
 ```
 
-### Exchange information for futures
+### 合约交易对信息
 ```
 GET /api/v1/contractInfo
 ```
-Get the current trading rules and symbol information
+获取此时的限制信息和交易对信息
 
-**Weight:**
+**权重:**
 1
 
 **Parameters:**
 NONE
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -501,32 +483,32 @@ NONE
 
 
 
-## Market Data endpoints
+## 行情接口
 ### 币币深度信息
 ```
 GET /api/v1/spot/depth
 ```
 
-**Weight:1**
+**权重:1**
 
 
-**Parameters:**
+**参数:**
 
-Name | Type   | Mandatory  | Description
+名称 | 类型 | 是否必须 | 描述
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-limit | INT | NO | Default  60; Max 60. Available:[5, 10, 20, 50, 60]
+limit | INT | NO | 默认 60; 最大 60. 可选值:[5, 10, 20, 50, 60]
 
 
-**Response:**
+**响应:**
 ```javascript
 {
   "lastUpdateId": 1027024,
   "bids": [
     [
-      "4.00000000",     // PRICE
-      "431.00000000",   // QTY
-      []                // IGNORE.
+      "4.00000000",     // 价位
+      "431.00000000",   // 挂单量
+      []                // 请忽略.
     ]
   ],
   "asks": [
@@ -542,22 +524,22 @@ limit | INT | NO | Default  60; Max 60. Available:[5, 10, 20, 50, 60]
 ```
 GET /api/v1/option/depth
 ```
-**Weight:1**  
-**Parameters:**  
+**权重:1**  
+**参数:**  
 
-Name | Type   | Mandatory  | Description  
+名称 | 类型 | 是否必须 | 描述  
 ------------ | ------------ | ------------ | ------------  
 symbol | STRING | YES |  
-limit | INT | NO | Default  60; Max 60. Available:[5, 10, 20, 50, 60]  
-**Response:**  
+limit | INT | NO | 默认 60; 最大 60. 可选值:[5, 10, 20, 50, 60]  
+**响应:**  
 ```javascript
 {
   "lastUpdateId": 1027024,
   "bids": [
     [
-      "4.00000000",     // PRICE
-      "431.00000000",   // QTY
-      []                // IGNORE.
+      "4.00000000",     // 价位
+      "431.00000000",   // 挂单量
+      []                // 请忽略.
     ]
   ],
   "asks": [
@@ -569,26 +551,26 @@ limit | INT | NO | Default  60; Max 60. Available:[5, 10, 20, 50, 60]
   ]
 }
 ```
-### Depth information for options
+### 合约深度信息
 ```
 GET /api/v1/contract/depth
 ```
-**Weight:1**  
-**Parameters:**  
+**权重:1**  
+**参数:**  
 
-Name | Type   | Mandatory  | Description
+名称 | 类型 | 是否必须 | 描述
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-limit | INT | NO | Default  60; Max 60. Available:[5, 10, 20, 50, 60]  
-**Response:**  
+limit | INT | NO | 默认 60; 最大 60. 可选值:[5, 10, 20, 50, 60]  
+**响应:**  
 ```javascript
 {
   "lastUpdateId": 1027024,
   "bids": [
     [
-      "4.00000000",     // PRICE
-      "431.00000000",   // QTY
-      []                // IGNORE.
+      "4.00000000",     // 价位
+      "431.00000000",   // 挂单量
+      []                // 请忽略.
     ]
   ],
   "asks": [
@@ -602,23 +584,23 @@ limit | INT | NO | Default  60; Max 60. Available:[5, 10, 20, 50, 60]
 ```
 
 
-### Recent trades for spot
+### 币币近期成交
 ```
 GET /api/v1/spot/trades
 ```
-Get recent trades
+获取近期成交
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 limit | INT | NO | Default 60; max 60.
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -638,19 +620,19 @@ limit | INT | NO | Default 60; max 60.
   }
 ]
 ```
-### Recent trades for options
+### 期权近期成交
 ```
 GET /api/v1/option/trades
 ```
-**Weight:1**  
-**Parameters:**  
+**权重:1**  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 limit | INT | NO | Default 60; max 60.
   
-**Response:**  
+**响应:**  
 ```javascript
 [
   {
@@ -670,18 +652,18 @@ limit | INT | NO | Default 60; max 60.
   }
 ]
 ```
-### Recent trades for futures
+### 合约近期成交
 ```
 GET /api/v1/contract/trades
 ```
-**Weight:1**  
-**Parameters:**  
+**权重:1**  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 limit | INT | NO | Default 60; max 60.  
-**Response:**  
+**响应:**  
 ```javascript
 [
   {
@@ -704,23 +686,23 @@ limit | INT | NO | Default 60; max 60.
 
 
 
-### Old trade lookup (MARKET_DATA)
+### 查询币币历史成交(MARKET_DATA)
 ```
 GET /api/v1/spot/historicalTrades
 ```
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 limit | INT | NO | Default 200; max 500.
-fromId | LONG | NO |TradeId to fetch from. Default gets most recent trades.
+fromId | LONG | NO | 从哪一条成交id开始返回. 缺省返回最近的成交记录
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -739,20 +721,20 @@ fromId | LONG | NO |TradeId to fetch from. Default gets most recent trades.
   }
 ]
 ```
-### Old trade lookup for options (MARKET_DATA)
+### 查询期权历史成交(MARKET_DATA)
 ```
 GET /api/v1/option/historicalTrades
 ```
-**Weight:5**  
-**Parameters:**  
+**权重:5**  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 limit | INT | NO | Default 200; max 500.
-fromId | LONG | NO | TradeId to fetch from. Default gets most recent trades
+fromId | LONG | NO | 从哪一条成交id开始返回. 缺省返回最近的成交记录
   
-**Response:**  
+**响应:**  
 ```javascript
 [
   {
@@ -771,19 +753,19 @@ fromId | LONG | NO | TradeId to fetch from. Default gets most recent trades
   }
 ]
 ```
-### Old trade lookup for futures (MARKET_DATA)
+### 查询合约历史成交(MARKET_DATA)
 ```
 GET /api/v1/contract/historicalTrades
 ```
-**Weight:5**  
-**Parameters:**  
+**权重:5**  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 limit | INT | NO | Default 200; max 500.
-fromId | LONG | NO | TradeId to fetch from. Default gets most recent trades  
-**Response:**  
+fromId | LONG | NO | 从哪一条成交id开始返回. 缺省返回最近的成交记录  
+**响应:**  
 ```javascript
 [
   {
@@ -805,115 +787,115 @@ fromId | LONG | NO | TradeId to fetch from. Default gets most recent trades
 
 
 
-### Kline/Candlestick data
+### 币币K线数据
 ```
 GET /api/v1/spot/klines
 ```
-Kline/candlestick bars for a symbol. Klines are uniquely identified by their open time.
+每根K线的开盘时间可视为唯一ID
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-interval | ENUM | YES | "1m":minute"3m": minute"5m": minute"15m":minute"30m":minute"1h":hour"2h":hour"4h":hour"6h":"12h":hour"1d":day"3d":day"1w":week
+interval | ENUM | YES | "1m":分钟"3m":分钟"5m":分钟"15m":分钟"30m":分钟"1h":小时"2h":小时"4h":小时"6h":小时"12h":小时"1d":天"3d":天"1w":星期  
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 1000.
 
-* If startTime and endTime are not sent, the most recent klines are returned.
+* 缺省返回最近的数据
 
-**Response:**
+**响应:**
 ```javascript
 [
   [
-    1499040000000,      // Open time
-    "0.01634790",       // Open
-    "0.80000000",       // High
-    "0.01575800",       // Low
-    "0.01577100",       // Close
-    "148976.11427815",  // Volume
-    1499644799999,      // Close time
-    "2434.19055334",    // Quote asset volume
-    308,                // Number of trades
-    "1756.87402397",    // Taker buy base asset volume
-    "28.46694368",      // Taker buy quote asset volume
-    "17928899.62484339" // Ignore
+    1499040000000,      // 开盘时间
+    "0.01634790",       // 开盘价
+    "0.80000000",       // 最高价
+    "0.01575800",       // 最低价
+    "0.01577100",       // 收盘价(当前K线未结束的即为最新价)
+    "148976.11427815",  // 成交量
+    1499644799999,      // 收盘时间
+    "2434.19055334",    // 成交额
+    308,                // 成交笔数
+    "1756.87402397",    // 主动买入成交量
+    "28.46694368",      // 主动买入成交额
+    "17928899.62484339" // 请忽略该参数
   ]
 ]
 ```
-### Kline data lookup for options
+### 查询期权K线数据
 ```
 GET /api/v1/option/klines
 ```
-**Weight:1**  
-**Parameters:**  
+**权重:1**  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-interval | ENUM | YES | "1m":minute"3m": minute"5m": minute"15m":minute"30m":minute"1h":hour"2h":hour"4h":hour"6h":"12h":hour"1d":day"3d":day"1w":week
+interval | ENUM | YES | "1m":分钟"3m":分钟"5m":分钟"15m":分钟"30m":分钟"1h":小时"2h":小时"4h":小时"6h":小时"12h":小时"1d":天"3d":天"1w":星期  
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 1000.
 
 * 缺省返回最近的数据
   
-**Response:**  
+**响应:**  
 ```javascript
 [
   [
-    1499040000000,      // Open time
-    "0.01634790",       // Open
-    "0.80000000",       // High
-    "0.01575800",       // Low
-    "0.01577100",       // Close
-    "148976.11427815",  // Volume
-    1499644799999,      // Close time
-    "2434.19055334",    // Quote asset volume
-    308,                // Number of trades
-    "1756.87402397",    // Taker buy base asset volume
-    "28.46694368",      // Taker buy quote asset volume
-    "17928899.62484339" // Ignore
+    1499040000000,      // 开盘时间
+    "0.01634790",       // 开盘价
+    "0.80000000",       // 最高价
+    "0.01575800",       // 最低价
+    "0.01577100",       // 收盘价(当前K线未结束的即为最新价)
+    "148976.11427815",  // 成交量
+    1499644799999,      // 收盘时间
+    "2434.19055334",    // 成交额
+    308,                // 成交笔数
+    "1756.87402397",    // 主动买入成交量
+    "28.46694368",      // 主动买入成交额
+    "17928899.62484339" // 请忽略该参数
   ]
 ]
 ```
-### Kline data lookup for futures
+### 查询合约K线数据
 ```
 GET /api/v1/contract/klines
 ```
-**Weight:1**  
-**Parameters:**  
+**权重:1**  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-interval | ENUM | YES | "1m":minute"3m": minute"5m": minute"15m":minute"30m":minute"1h":hour"2h":hour"4h":hour"6h":"12h":hour"1d":day"3d":day"1w":week
+interval | ENUM | YES | "1m":分钟"3m":分钟"5m":分钟"15m":分钟"30m":分钟"1h":小时"2h":小时"4h":小时"6h":小时"12h":小时"1d":天"3d":天"1w":星期  
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 1000.
 
-* If startTime and endTime are not sent, the most recent klines are returned.
+* 缺省返回最近的数据
   
-**Response:**  
+**响应:**  
 ```javascript
 [
   [
-    1499040000000,      // Open time
-    "0.01634790",       // Open
-    "0.80000000",       // High
-    "0.01575800",       // Low
-    "0.01577100",       // Close
-    "148976.11427815",  // Volume
-    1499644799999,      // Close time
-    "2434.19055334",    // Quote asset volume
-    308,                // Number of trades
-    "1756.87402397",    // Taker buy base asset volume
-    "28.46694368",      // Taker buy quote asset volume
-    "17928899.62484339" // Ignore
+    1499040000000,      // 开盘时间
+    "0.01634790",       // 开盘价
+    "0.80000000",       // 最高价
+    "0.01575800",       // 最低价
+    "0.01577100",       // 收盘价(当前K线未结束的即为最新价)
+    "148976.11427815",  // 成交量
+    1499644799999,      // 收盘时间
+    "2434.19055334",    // 成交额
+    308,                // 成交笔数
+    "1756.87402397",    // 主动买入成交量
+    "28.46694368",      // 主动买入成交额
+    "17928899.62484339" // 请忽略该参数
   ]
 ]
 ```
@@ -922,52 +904,52 @@ limit | INT | NO | Default 500; max 1000.
 
 
 
-### Current average price
+### 币币当前平均价格
 ```
 GET /api/v1/spot/avgPrice
 ```
-**Weight:**
+**权重:**
 1
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-**Response:**
+**响应:**
 ```javascript
 {
   "mins": 5,
   "price": "9.35751834"
 }
 ```
-### Look up current average price for options
+### 查询期权当前平均价格
 ```
 GET /api/v1/option/avgPrice
 ```
-**Weight:1**  
-**Parameters:**  
+**权重:1**  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |  
-**Response:**  
+**响应:**  
 ```javascript
 {
   "mins": 5,
   "price": "9.35751834"
 }
 ```
-### Look up current average price for futures
+### 查询合约当前平均价格
 ```
 GET /api/v1/contract/avgPrice
 ```
-**Weight:1**  
-**Parameters:**  
+**权重:1**  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |  
-**Response:**  
+**响应:**  
 ```javascript
 {
   "mins": 5,
@@ -981,24 +963,24 @@ symbol | STRING | YES |
 
 
 
-### 24hr ticker price change statistics
+### 币币24hr价格变动情况
 ```
 GET /api/v1/spot/ticker/24hr
 ```
-24 hour rolling window price change statistics. Careful when accessing this with no symbol.
+请注意，不携带symbol参数会返回全部交易对数据，不仅数据庞大，而且权重极高
 
-**Weight:**
-1 for a single symbol; **40** when the symbol parameter is omitted
+**权重:**
+带symbol为1
+不带为40
 
-
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "BNBBTC",
@@ -1042,20 +1024,20 @@ OR
   }
 ]
 ```
-### Look up 24hr ticker price change statistics for options
+### 查询期权24hr价格变动情况
 ```
 GET /api/v1/option/ticker/24hr
 ```
-**Weight:**  
-1 for a single symbol; **40** when the symbol parameter is omitted
-
-**Parameters:**  
+**权重:**  
+带symbol为1
+不带为40  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
   
-**Response:**  
+**响应:**  
 ```javascript
 {
   "symbol": "BNBBTC",
@@ -1099,20 +1081,20 @@ OR
   }
 ]
 ```
-### Look up 24hr ticker price change statistics for futrues
+### 查询合约24hr价格变动情况
 ```
 GET /api/v1/contract/ticker/24hr
 ```
-**Weight:**  
-1 for a single symbol; **40** when the symbol parameter is omitted
-
-**Parameters:**  
+**权重:**  
+带symbol为1
+不带为40  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
   
-**Response:**  
+**响应:**  
 ```javascript
 {
   "symbol": "BNBBTC",
@@ -1165,25 +1147,26 @@ OR
 
 
 
-### Price ticker for spot
+### 币币最新价格接口
 ```
 GET /api/v1/spot/ticker/price
 ```
-Back to newest price
+返回最近价格
 
-**Weight:**
-1 for a single symbol; **2** when the symbol parameter is omitted
+**权重:**
+单交易对1
+无交易对2
 
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* If the symbol is not sent, prices for all symbols will be returned in an array.
+* 不发送交易对参数，则会返回所有交易对信息
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "LTCBTC",
@@ -1203,20 +1186,22 @@ OR
   }
 ]
 ```
-### Look up price ticker for options
+### 查询期权最新价格接口
 ```
 GET /api/v1/option/ticker/price
 ```
-**Weight:**  
-1 for a single symbol; **2** when the symbol parameter is omitted
-**Parameters:**  
+**权重:**  
+单交易对1
+无交易对2  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* If the symbol is not sent, prices for all symbols will be returned in an array.
-**Response:**  
+* 不发送交易对参数，则会返回所有交易对信息
+  
+**响应:**  
 ```javascript
 {
   "symbol": "LTCBTC",
@@ -1236,22 +1221,22 @@ OR
   }
 ]
 ```
-### Look up price ticker for futures
+### 查询合约最新价格接口
 ```
 GET /api/v1/contract/ticker/price
 ```
-**Weight:**  
-1 for a single symbol; **2** when the symbol parameter is omitted
-
-**Parameters:**  
+**权重:**  
+单交易对1
+无交易对2  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* If the symbol is not sent, prices for all symbols will be returned in an array.
+* 不发送交易对参数，则会返回所有交易对信息
   
-**Response:**  
+**响应:**  
 ```javascript
 {
   "symbol": "LTCBTC",
@@ -1278,31 +1263,32 @@ OR
 
 
 
-### Symbol order book ticker for spot
+### 币币最优挂单接口
 ```
 GET /api/v1/spot/ticker/bookTicker
 ```
-Best price/qty on the order book for a symbol or symbols.
+返回当前最优的挂单(最高买单，最低卖单)
 
-**Weight:**
-1 for a single symbol; **2** when the symbol parameter is omitted
+**权重:**
+单交易对1
+无交易对2
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* If the symbol is not sent, prices for all symbols will be returned in an array.
+* 不发送交易对参数，则会返回所有交易对信息
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "LTCBTC",
-  "bidPrice": "4.00000000",//Best price for buy
-  "bidQty": "431.00000000",//QTY
-  "askPrice": "4.00000200",//Best price for sell
-  "askQty": "9.00000000"//QTY
+  "bidPrice": "4.00000000",//最优买单价
+  "bidQty": "431.00000000",//挂单量
+  "askPrice": "4.00000200",//最优卖单价
+  "askQty": "9.00000000"//挂单量
 }
 ```
 OR
@@ -1324,28 +1310,29 @@ OR
   }
 ]
 ```
-### Look up Symbol order book ticker for options
+### 查询期权最优挂单接口
 ```
 GET /api/v1/option/ticker/bookTicker
 ```
-Best price/qty on the order book for a symbol or symbols.
-**Weight:**  
-1 for a single symbol; **2** when the symbol parameter is omitted 
-**Parameters:**  
+返回当前最优的挂单(最高买单，最低卖单)
+**权重:**  
+单交易对1
+无交易对2  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* If the symbol is not sent, prices for all symbols will be returned in an array.  
-**Response:**  
+* 不发送交易对参数，则会返回所有交易对信息  
+**响应:**  
 ```javascript
 {
   "symbol": "LTCBTC",
-  "bidPrice": "4.00000000",//Best price for buy
-  "bidQty": "431.00000000",//QTY
-  "askPrice": "4.00000200",//Best price for sell
-  "askQty": "9.00000000"//QTY
+  "bidPrice": "4.00000000",//最优买单价
+  "bidQty": "431.00000000",//挂单量
+  "askPrice": "4.00000200",//最优卖单价
+  "askQty": "9.00000000"//挂单量
 }
 ```
 OR
@@ -1367,27 +1354,29 @@ OR
   }
 ]
 ```
-### Look up Symbol order book ticker for futures
+### 查询合约最优挂单接口
 ```
 GET /api/v1/contract/ticker/bookTicker
 ```
-Best price/qty on the order book for a symbol or symbols.
-**Weight:**  
-1 for a single symbol; **2** when the symbol parameter is omitted 
-**Parameters:**  
+返回当前最优的挂单(最高买单，最低卖单)
+**权重:**  
+单交易对1
+无交易对2  
+**参数:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* If the symbol is not sent, prices for all symbols will be returned in an array.  
-**Response:**  
+* 不发送交易对参数，则会返回所有交易对信息  
+**响应:**  
 ```javascript
 {
-  "bidPrice": "4.00000000",//Best price for buy
-  "bidQty": "431.00000000",//QTY
-  "askPrice": "4.00000200",//Best price for sell
-  "askQty": "9.00000000"//QTY
+  "symbol": "LTCBTC",
+  "bidPrice": "4.00000000",//最优买单价
+  "bidQty": "431.00000000",//挂单量
+  "askPrice": "4.00000200",//最优卖单价
+  "askQty": "9.00000000"//挂单量
 }
 ```
 OR
@@ -1410,25 +1399,25 @@ OR
 ]
 ```
 
-### Index price and mark price for futures
+### 合约的指数价格，标记价格
 ```
 GET /api/v1/contract/ticker/indicesPrice
 ```
-Best price/qty on the order book for a symbol or symbols.
+返回当前最优的挂单(最高买单，最低卖单)
 
-**Weight:**
+**权重:**
 1
 
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* If the symbol is not sent, prices for all symbols will be returned in an array.
+* 不发送交易对参数，则会返回所有交易对信息
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "BTCUSDT",
@@ -1458,42 +1447,43 @@ OR
 
 
 
-## Account endpoints
-### Place order in coins transaction（TRADE）
+## 账户接口
+### 币币下单  (TRADE)
 ```
 POST /api/v1/spot/order  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
-type | ENUM | YES | There is only LIMIT for the moment
-timeInForce | ENUM | NO | No use for the moment
+type | ENUM | YES | 目前只有LIMIT
+timeInForce | ENUM | NO | 暂时没用
 quantity | DECIMAL | YES |
 price | DECIMAL | NO |
-newClientOrderId | STRING | NO | User’s self-defined orderid, if empty, the system will automatically assign a value for it
-stopPrice | DECIMAL | NO |No use for the moment
-icebergQty | DECIMAL | NO |No use for the moment
-newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
+newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
+stopPrice | DECIMAL | NO | 暂时没用
+icebergQty | DECIMAL | NO | 暂时没用
+newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-As for different order  `type`, some parameters are compulsively required. Details are as follows
-Type |Compulsively Required Parameters
+根据 order `type`的不同，某些参数强制要求，具体如下:
+
+Type | 强制要求的参数
 ------------ | ------------
 `LIMIT` | `timeInForce`, `quantity`, `price`
 
 
-Two choices for newOrderRespType
+关于 newOrderRespType的俩种选择
 
 **Response ACK:**
-Returning speed is fast, trading information not included, less information 
+返回速度快，不包含成交信息，信息量最少
 ```javascript
 {
   "symbol": "JEXBTC",
@@ -1503,7 +1493,7 @@ Returning speed is fast, trading information not included, less information
 ```
 
 **Response RESULT:**
-Returning speed is slow, returning some information on taking order transaction
+返回速度慢，返回吃单成交的少量信息
 ```javascript
 {
   "symbol": "JEXBTC",
@@ -1519,40 +1509,39 @@ Returning speed is slow, returning some information on taking order transaction
   "side": "BUY"
 }
 ```
-### Place order in options transaction（TRADE）  (TRADE)
+### 期权下单  (TRADE)
 ```
 POST /api/v1/option/order  (HMAC SHA256)
 ```
 
-**Weight:**  
+**权重:**  
 1  
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
 type | ENUM | YES | `LIMIT`,`MARKET`
-timeInForce | ENUM | NO |No use for the moment
+timeInForce | ENUM | NO | 暂时没用
 quantity | DECIMAL | YES |
 price | DECIMAL | NO |
-newClientOrderId | STRING | NO | User’s self-defined orderid, if empty, the system will automatically assign a value for it
-newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
+newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
+newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
-**Response:**  
-As for different order  `type`, some parameters are compulsively required. Details are as follows
+**响应:**  
+根据 order `type`的不同，某些参数强制要求，具体如下:
 
-
-Type |Compulsively Required Parameters
+Type | 强制要求的参数
 ------------ | ------------
 `LIMIT` | `timeInForce`, `quantity`, `price`
 
 
-Two choices for newOrderRespType
+关于 newOrderRespType的俩种选择
 
 **Response ACK:**
-Returning speed is fast, trading information not included, less information 
+返回速度快，不包含成交信息，信息量最少
 ```javascript
 {
   "symbol": "JEXBTC",
@@ -1562,7 +1551,7 @@ Returning speed is fast, trading information not included, less information
 ```
 
 **Response RESULT:**
-Returning speed is slow, returning some information on taking order transaction
+返回速度慢，返回吃单成交的少量信息
 ```javascript
 {
   "symbol": "JEXBTC",
@@ -1580,31 +1569,31 @@ Returning speed is slow, returning some information on taking order transaction
 ```
 
 
-### Place order in contract transaction(TRADE)
+### 合约下单  (TRADE)
 ```
 POST /api/v1/contract/order  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 1
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
 type | ENUM | YES | `LIMIT`,`MARKET`
-timeInForce | ENUM | NO |No use for the moment
+timeInForce | ENUM | NO | 暂时没用
 quantity | DECIMAL | YES |
 price | DECIMAL | NO |
-newClientOrderId | STRING | NO | User’s self-defined orderid, if empty, the system will automatically assign a value for it
-newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
+newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
+newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
 **Response ACK:**
-Returning speed is fast, trading information not included, less information 
+返回速度快，不包含成交信息，信息量最少
 ```javascript
 {
   "symbol": "BTCUSDT",
@@ -1613,7 +1602,7 @@ Returning speed is fast, trading information not included, less information
 ```
 
 **Response RESULT:**
-Returning speed is fast, returning some information on taking order transaction
+返回速度慢，返回吃单成交的少量信息
 ```javascript
 {
   "symbol": "BTCUSDT",
@@ -1632,58 +1621,58 @@ Returning speed is fast, returning some information on taking order transaction
 
 
 
-### Test placing order API of coins transaction(TRADE)
+### 币币测试下单接口 (TRADE)
 ```
 POST /api/v1/spot/order/test (HMAC SHA256)
 ```
-Used for test placing order request, won’t be submitted to matchmaking trading engine
+用于测试订单请求，但不会提交到撮合引擎
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
-Reference   `POST /api/v1/spot/order`
+参考 `POST /api/v1/spot/order`
 
 
-**Response:**
+**响应:**
 ```javascript
 {}
 ```
 
-### Test placing order API of options transaction(TRADE) 
+### 期权测试下单接口 (TRADE)
 ```
 POST /api/v1/option/order/test (HMAC SHA256)
 ```
-Used for test placing order request, won’t be submitted to matchmaking trading engine
+用于测试订单请求，但不会提交到撮合引擎
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
-Reference   `POST /api/v1/option/order`
+参考 `POST /api/v1/option/order`
 
 
-**Response:**
+**响应:**
 ```javascript
 {}
 ```
-### Test placing order API of contract transaction(TRADE)
+### 合约测试下单接口 (TRADE)
 ```
 POST /api/v1/contract/order/test (HMAC SHA256)
 ```
-Used for test placing order request, won’t be submitted to matchmaking trading engine
+用于测试订单请求，但不会提交到撮合引擎
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
-Reference   `POST /api/v1/contract/order`
+参考 `POST /api/v1/contract/order`
 
 
-**Response:**
+**响应:**
 ```javascript
 {}
 ```
@@ -1692,16 +1681,16 @@ Reference   `POST /api/v1/contract/order`
 
 
 
-### Check orders of coins transaction(USER_DATA)
+### 币币查询订单 (USER_DATA)
 ```
 GET /api/v1/spot/order (HMAC SHA256)
 ```
-Check order status
+查询订单状态
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -1711,11 +1700,11 @@ origClientOrderId | STRING | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Note:
- * Either `orderId` or `origClientOrderId` must be sent.
+注意:
+* 至少需要发送 `orderId` 与 `origClientOrderId`中的一个
 
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "JEXBTC",
@@ -1734,16 +1723,16 @@ Note:
 }
 ```
 
-### Check orders of options transaction(USER_DATA) 
+### 期权查询订单 (USER_DATA)
 ```
 GET /api/v1/option/order (HMAC SHA256)
 ```
-Check order status
+查询订单状态
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -1753,11 +1742,11 @@ origClientOrderId | STRING | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Note:
- * Either `orderId` or `origClientOrderId` must be sent.
+注意:
+* 至少需要发送 `orderId` 与 `origClientOrderId`中的一个
 
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "BTCCALLM",
@@ -1776,16 +1765,16 @@ Note:
 }
 ```
 
-### Check orders of contract transaction(USER_DATA) 
+### 合约查询订单 (USER_DATA)
 ```
 GET /api/v1/contract/order (HMAC SHA256)
 ```
-Check order status
+查询订单状态
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -1795,11 +1784,11 @@ origClientOrderId | STRING | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Note:
- * Either `orderId` or `origClientOrderId` must be sent.
+注意:
+* 至少需要发送 `orderId` 与 `origClientOrderId`中的一个
 
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "BTCUSDT",
@@ -1821,12 +1810,12 @@ Note:
 
 
 
-### Cancel order for coins transaction(TRADE) 
+### 币币撤销订单 (TRADE)
 ```
 DELETE /api/v1/spot/order  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 1
 
 **Parameters:**
@@ -1836,13 +1825,13 @@ Name | Type | Mandatory | Description
 symbol | STRING | YES |
 orderId | LONG | NO |
 origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  User’s self-defined ID of this canceling order action.(Note it’s not the self-defined ID of the canceled order) It will be automatically recoded if not assigned a value 
+newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Either `orderId` or `origClientOrderId` must be sent.
+`orderId` 与 `origClientOrderId` 必须至少发送一个
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "JEXBTC",
@@ -1859,12 +1848,12 @@ Either `orderId` or `origClientOrderId` must be sent.
 }
 ```
 
-### Cancel order for options transaction(TRADE) 
+### 期权撤销订单 (TRADE)
 ```
 DELETE /api/v1/option/order  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 1
 
 **Parameters:**  
@@ -1874,16 +1863,16 @@ Name | Type | Mandatory | Description
 symbol | STRING | YES |
 orderId | LONG | NO |
 origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  User’s self-defined ID of this canceling order action.(Note it’s not the self-defined ID of the canceled order) It will be automatically recoded if not assigned a value 
+newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Either `orderId` or `origClientOrderId` must be sent.
+`orderId` 与 `origClientOrderId` 必须至少发送一个
 
 
 
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "BTCCALLM",
@@ -1900,12 +1889,12 @@ Either `orderId` or `origClientOrderId` must be sent.
 }
 ```
 
-### Cancel order for contract transaction (TRADE) 
+### 合约撤销订单 (TRADE)
 ```
 DELETE /api/v1/contract/order  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 1
 
 **Parameters:**
@@ -1915,15 +1904,15 @@ Name | Type | Mandatory | Description
 symbol | STRING | YES |
 orderId | LONG | NO |
 origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  User’s self-defined ID of this canceling order action.(Note it’s not the self-defined ID of the canceled order) It will be automatically recoded if not assigned a value 
+newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Either `orderId` or `origClientOrderId` must be sent.
+`orderId` 与 `origClientOrderId` 必须至少发送一个
 
 
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "BTCUSDT",
@@ -1944,21 +1933,21 @@ Either `orderId` or `origClientOrderId` must be sent.
 
 
 
-### Check entry orders of coins transaction of this account(USER_DATA)
+### 查看账户当前币币挂单 (USER_DATA)
 ```
 GET /api/v1/spot/openOrders  (HMAC SHA256)
 ```
 
-**Weight:**  
+**权重:**  
  5
 
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO | Only orders after this orderID will be returned. Only partial recent orders will be returned
+orderId | LONG | NO | 只返回此orderID之后的订单，缺省返回最近的订单
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 500.
@@ -1966,7 +1955,7 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -1987,20 +1976,20 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Check entry orders of options transaction of this account (USER_DATA) 
+### 查看账户当前期权挂单 (USER_DATA)
 ```
 GET /api/v1/option/openOrders  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO | Only orders after this orderID will be returned. Only partial recent orders will be returned
+orderId | LONG | NO | 只返回此orderID之后的订单，缺省返回最近的订单
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 500.
@@ -2008,7 +1997,7 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2029,20 +2018,20 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Check entry orders of contract transaction of this account(USER_DATA) 
+### 查看账户当前合约挂单 (USER_DATA)
 ```
 GET /api/v1/contract/openOrders  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO | Only orders after this orderID will be returned. Only partial recent orders will be returned
+orderId | LONG | NO | 只返回此orderID之后的订单，缺省返回最近的订单
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 500.
@@ -2050,7 +2039,7 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2071,15 +2060,15 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Close positions for contract(TRADE)
+### 合约平仓 (TRADE)
 ```
 POST /api/v1/contract/liquidation  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2088,7 +2077,7 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
-**Response:**
+**响应:**
 ```javascript
 {
   "symbol": "EOSUSDT",
@@ -2100,20 +2089,20 @@ timestamp | LONG | YES |
 }
 ```
 
-### Check orders of closed positions of the account (MARKET_DATA )
+### 查看账户合约平仓单 (MARKET_DATA	)
 ```
 GET /api/v1/contract/liquidationOrder  
 ```
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO | Only orders after this orderID will be returned. Only partial recent orders will be returned
+orderId | LONG | NO | 只返回此orderID之后的订单，缺省返回最近的订单
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 500.
@@ -2121,7 +2110,7 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2141,15 +2130,15 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Check contract positions of the account(USER_DATA)
+### 查看账户合约仓位 (USER_DATA)
 ```
 GET /api/v1/contract/position  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 2
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2158,7 +2147,7 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2182,15 +2171,15 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Adjust contract leverage of the account(USER_DATA)
+### 调整账户合约杠杆 (USER_DATA)
 ```
 GET /api/v1/contract/position/leverage  (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2200,29 +2189,29 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
-**Response:**
+**响应:**
 ```javascript
 {}
 ```
 
 
 
-### Account information(USER_DATA)
+### 账户信息 (USER_DATA)
 ```
 GET /api/v1/account (HMAC SHA256)
 ```
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 {
     "updateTime": 1523093528000
@@ -2260,28 +2249,28 @@ timestamp | LONG | YES |
 ```
 
 
-### Historical coins entry order of the account (USER_DATA) 
+### 账户币币历史委托 (USER_DATA)
 ```
 GET /api/v1/spot/historyOrders  (HMAC SHA256)
 ```
-Obtain trading history of specified trading pair
+获取某交易对的成交历史
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 startTime | LONG | NO |
 endTime | LONG | NO |
-orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
+orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2302,28 +2291,28 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Historical options entry order of the account (USER_DATA)
+### 账户期权历史委托 (USER_DATA)
 ```
 GET /api/v1/option/historyOrders  (HMAC SHA256)
 ```
-Obtain trading history of specified trading pair
+获取某交易对的成交历史
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 startTime | LONG | NO |
 endTime | LONG | NO |
-orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
+orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2344,28 +2333,28 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Historical contract entry order of the account (USER_DATA)
+### 账户合约历史委托 (USER_DATA)
 ```
 GET /api/v1/contract/historyOrders  (HMAC SHA256)
 ```
-Obtain trading history of specified trading pair
+获取某交易对的成交历史
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 startTime | LONG | NO |
 endTime | LONG | NO |
-orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
+orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2387,16 +2376,16 @@ timestamp | LONG | YES |
 
 
 
-### Users short options(TRADE)
+### 用户发行期权 (TRADE)
 ```
 POST /api/v1/option/release  (HMAC SHA256)
 ```
-Short options of a specified trading pair
+发行某个交易对的期权
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2405,7 +2394,7 @@ amount | INT | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 {
   "assetMargin": "BTC",
@@ -2422,16 +2411,16 @@ timestamp | LONG | YES |
 }
 ```
 
-### Users call options(TRADE) 
+### 用户赎回期权 (TRADE)
 ```
 POST /api/v1/option/back  (HMAC SHA256)
 ```
-Users call options of a specified trading pair
+赎回某个交易对的期权
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2440,7 +2429,7 @@ amount | INT | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 {
   "assetMargin": "BTC",
@@ -2457,16 +2446,16 @@ timestamp | LONG | YES |
 }
 ```
 
-### Options positions of the account(USER_DATA)
+### 账户期权持仓 (USER_DATA)
 ```
 GET /api/v1/option/position  (HMAC SHA256)
 ```
-Get all the positions of one specified options trading pair
+获取某个期权交易对或全部的持仓
 
-**Weight:**
+**权重:**
 2
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2474,7 +2463,7 @@ symbol | STRING | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2492,16 +2481,16 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Short & Call options information of the account(USER_DATA)
+### 账户期权发行赎回信息 (USER_DATA)
 ```
 GET /api/v1/option/info  (HMAC SHA256)
 ```
-Get the the short & call information of one option of the account 
+获取账户某个期权的发行赎回信息
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2509,7 +2498,7 @@ symbol | STRING | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 {
   "assetMargin": "BTC",
@@ -2525,28 +2514,28 @@ timestamp | LONG | YES |
 }
 ```
 
-### Historical records of Short & Call options of the account (USER_DATA)
+### 账户期权发行赎回记录 (USER_DATA)
 ```
 GET /api/v1/option/record  (HMAC SHA256)
 ```
-Short & Call Records of one specified options or all options of the account
+获取账户某个期权或者全部的发行赎回交易记录
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 startTime | LONG | NO |
 endTime | LONG | NO |
-fromId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
+fromId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2567,27 +2556,27 @@ timestamp | LONG | YES |
 
 
 
-### Contract bill of the account(USER_DATA)
+### 账户合约账单 (USER_DATA)
 ```
 GET /api/v1/contract/bill  (HMAC SHA256)
 ```
-Contract bill of obtained account
+获取账户的合约账单
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 startTime | LONG | NO |
 endTime | LONG | NO |
-fromId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
+fromId | LONG | NO |返回该orderId之后的成交，Default -1(返回最近的成交)
 limit | INT | NO | Default 100; max 100.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2607,28 +2596,28 @@ timestamp | LONG | YES |
 ]
 ```
 
-### Capital fee rate of contract
+### 合约资金费率
 ```
 GET /api/v1/contract/historyRate  
 ```
-Get capital fee of one specified contract
+获取某合约的资金费率
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 startTime | LONG | NO |
 endTime | LONG | NO |
-fromId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
+fromId | LONG | NO |返回该fromId之后的记录，Default -1(返回最近的记录)
 limit | INT | NO | Default 100; max 100.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2649,28 +2638,28 @@ timestamp | LONG | YES |
 ```
 
 
-### Contract protection fund
+### 合约保护基金 
 ```
 GET /api/v1/contract/protectionFund  
 ```
-Get contract protection fund of one specified contract
+获取某合约的保护基金
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 startTime | LONG | NO |
 endTime | LONG | NO |
-start | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
+start | LONG | NO |返回该start之后的记录，Default -1(返回最近的记录)
 size | INT | NO | Default 100; max 100.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2689,16 +2678,16 @@ timestamp | LONG | YES |
 ```
 
 
-### Transfer Margin(USER_DATA)
+### 转移保证金 (USER_DATA)
 ```
 POST /api/v1/contract/transferMargin  (HMAC SHA256)
 ```
-The margin transferred to one specified contract from coins account balance
+币币余额转移到某合约的保证金
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2707,7 +2696,7 @@ amount | STRING | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 {
   "asset": "USDT",
@@ -2716,16 +2705,16 @@ timestamp | LONG | YES |
 }
 ```
 
-### Turn out margin(USER_DATA)
+### 转出保证金 (USER_DATA)
 ```
 POST /api/v1/contract/turnoutMargin  (HMAC SHA256)
 ```
-Transfer margin of one specified contract to the balance of coins account
+某合约的保证金转移到币币余额
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2734,7 +2723,7 @@ amount | STRING | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**Response:**
+**响应:**
 ```javascript
 {}
 ```
@@ -2742,24 +2731,22 @@ timestamp | LONG | YES |
 
 
 
-## User Data Stream subscription API
-Specifics on how user data streams work.
-For detailed subscription method, please refer to another websocket document.
+## 用户数据流订阅接口
+此处仅列出如何得到数据流名称及如何维持有效期的接口，具体订阅方式参考另一篇websocket接口文档
 
-
-### Start user data stream (USER_STREAM)
+### 新建用户数据流 (USER_STREAM)
 ```
 POST /api/v1/userDataStream
 ```
-Start a new user data stream. The stream will close after 60 minutes unless a keepalive is sent.
+从创建起60分钟有效
 
-**Weight:**
+**权重:**
 1
 
 **Parameters:**
 NONE
 
-**Response:**
+**响应:**
 ```javascript
 {
   "listenKey": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s61cv6a81va65sdf19v8a65a1" //用于订阅的数据流名
@@ -2770,58 +2757,58 @@ NONE
 ```
 PUT /api/v1/userDataStream
 ```
-Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It's recommended to send a ping about every 30 minutes.
+延长用户数据流有效期到60分钟之后。 建议每30分钟调用一次
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 listenKey | STRING | YES
 
-**Response:**
+**响应:**
 ```javascript
 {}
 ```
 
-### Close user data stream (USER_STREAM)
+### 关闭用户数据流 (USER_STREAM)
 ```
 DELETE /api/v1/userDataStream
 ```
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 listenKey | STRING | YES
 
-**Response:**
+**响应:**
 ```javascript
 {}
 ```
 
 
 
-### User’s assets (USER_DATA)
+### 用户资产详情 (USER_DATA)
 ```
 GET /wapi/v1/assetDetail
 ```
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 recvWindow |	LONG |	NO	
 timestamp |	LONG |	YES	
-**Response:**
+**响应:**
 ```javascript
 {
   "ADC": {
@@ -2840,21 +2827,21 @@ timestamp |	LONG |	YES
 ```
 
 
-### Depositing address of the user(USER_DATA)
+### 用户充值地址 (USER_DATA)
 ```
 GET /wapi/v1/depositAddress
 ```
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 recvWindow |	LONG |	NO	
 timestamp |	LONG |	YES	
-**Response:**
+**响应:**
 ```javascript
 {
   "address": "chongzhidizhichongzhidizhi",
@@ -2865,15 +2852,15 @@ timestamp |	LONG |	YES
 
 
 
-### Historical depositing records of the user (USER_DATA)
+### 用户充值历史记录 (USER_DATA)
 ```
 GET /wapi/v1/depositHistory
 ```
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2883,7 +2870,7 @@ startTime | LONG | NO |
 endTime | LONG | NO |
 recvWindow |	LONG |	NO	
 timestamp |	LONG |	YES	
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2906,22 +2893,22 @@ timestamp |	LONG |	YES
 
 ```
 
-### Service fee of the trading (USER_DATA)
+### 用户交易手续费 (USER_DATA)
 ```
 GET /wapi/v1/tradeFee
 ```
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol |	STRING |	NO	|
 recvWindow |	LONG |	NO	
 timestamp |	LONG |	YES	
-**Response:**
+**响应:**
 ```javascript
 [
   {
@@ -2937,41 +2924,41 @@ timestamp |	LONG |	YES
 ]
 ```
 
-### Withdrawal of the user(USER_DATA)
+### 用户提现 (USER_DATA)
 ```
 GET /wapi/v1/withdraw
 ```
 
-**Weight:**
+**权重:**
 1
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-asset |	STRING |	YES	| Asset name
-address | STRING | YES | Withdrawal address
-addressTag | STRING | NO | Address tag 
-amount | BIGDECIMAL | YES | Withdrawal amount
-name | STRING | NO | Address name
+asset |	STRING |	YES	| 资产名称
+address | STRING | YES | 提现地址
+addressTag | STRING | NO | 地址标识符
+amount | BIGDECIMAL | YES | 提现数量
+name | STRING | NO | 地址别名
 recvWindow |	LONG |	NO	
 timestamp |	LONG |	YES	
-**Response:**
+**响应:**
 ```javascript
 {
   "id": "660A0D4AEB32BE67"
 }
 ```
 
-### Historical withdrawal records of the user(USER_DATA)
+### 用户提现历史记录 (USER_DATA)
 ```
 GET /wapi/v1/withdrawHistory
 ```
 
-**Weight:**
+**权重:**
 5
 
-**Parameters:**
+**参数:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -2981,7 +2968,7 @@ startTime | LONG | NO |
 endTime | LONG | NO |
 recvWindow |	LONG |	NO	
 timestamp |	LONG |	YES	
-**Response:**
+**响应:**
 ```javascript
 {
   "withdrawRecordList": [
