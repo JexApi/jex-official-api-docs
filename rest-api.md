@@ -2244,9 +2244,9 @@ Obtain trading history of specified trading pair
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
+orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 startTime | LONG | NO |
 endTime | LONG | NO |
-orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |

@@ -2230,9 +2230,9 @@ GET /api/v1/spot/historyOrders  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
+orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 startTime | LONG | NO |
 endTime | LONG | NO |
-orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
