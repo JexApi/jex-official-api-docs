@@ -2641,59 +2641,6 @@ endTime | LONG | NO |
 ```
 
 
-### 转移保证金 (USER_DATA)
-```
-POST /api/v1/contract/transferMargin  (HMAC SHA256)
-```
-币币余额转移到某合约的保证金
-
-**权重:**
-1
-
-**参数:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-amount | STRING | NO |
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
-
-**响应:**
-```javascript
-{
-  "asset": "USDT",
-  "balance": 889486,
-  "lockBalance": 1.6
-}
-```
-
-### 转出保证金 (USER_DATA)
-```
-POST /api/v1/contract/turnoutMargin  (HMAC SHA256)
-```
-某合约的保证金转移到币币余额
-
-**权重:**
-1
-
-**参数:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-amount | STRING | NO |
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
-
-**响应:**
-```javascript
-{}
-```
-
-
-
-
 ## 用户数据流订阅接口
 此处仅列出如何得到数据流名称及如何维持有效期的接口，具体订阅方式参考另一篇websocket接口文档
 
@@ -2802,6 +2749,7 @@ GET /wapi/v1/depositAddress
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
+asset |	STRING |	YES	
 recvWindow |	LONG |	NO	
 timestamp |	LONG |	YES	
 **响应:**
@@ -2887,31 +2835,6 @@ timestamp |	LONG |	YES
 ]
 ```
 
-### 用户提现 (USER_DATA)
-```
-GET /wapi/v1/withdraw
-```
-
-**权重:**
-1
-
-**参数:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-asset |	STRING |	YES	| 资产名称
-address | STRING | YES | 提现地址
-addressTag | STRING | NO | 地址标识符
-amount | BIGDECIMAL | YES | 提现数量
-name | STRING | NO | 地址别名
-recvWindow |	LONG |	NO	
-timestamp |	LONG |	YES	
-**响应:**
-```javascript
-{
-  "id": "660A0D4AEB32BE67"
-}
-```
 
 ### 用户提现历史记录 (USER_DATA)
 ```
