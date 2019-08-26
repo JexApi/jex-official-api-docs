@@ -1874,7 +1874,7 @@ DELETE /api/v1/contract/order  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
+orderId | LONG | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 

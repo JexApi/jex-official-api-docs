@@ -1583,7 +1583,6 @@ side | ENUM | YES |
 type | ENUM | YES | `LIMIT`
 quantity | DECIMAL | YES |
 price | DECIMAL | YES |
-
 newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -1774,7 +1773,6 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 orderId | LONG | YES |
-
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -1851,7 +1849,6 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 orderId | LONG | YES |
-
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -1888,7 +1885,6 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 orderId | LONG | YES |
-
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
