@@ -59,6 +59,7 @@ MARKET_DATA | Endpoint requires sending a valid API-Key.
 * The `signature` is **not case sensitive**.
 * `totalParams` is defined as the `query string` concatenated with the
   `request body`.
+* The parameters of signature must be transmitted in the order of interface documents.
 
 ## Timing security
 * A `SIGNED` endpoint also requires a parameter, `timestamp`, to be sent which
@@ -931,6 +932,7 @@ GET /api/v1/spot/avgPrice
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
+
 **Response:**
 ```javascript
 {
@@ -947,7 +949,8 @@ GET /api/v1/option/avgPrice
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-symbol | STRING | YES |  
+symbol | STRING | YES | 
+
 **Response:**  
 ```javascript
 {
@@ -1472,20 +1475,12 @@ Name | Type | Mandatory | Description
 symbol | STRING | YES |
 side | ENUM | YES |
 type | ENUM | YES | There is only LIMIT for the moment
-timeInForce | ENUM | NO | No use for the moment
 quantity | DECIMAL | YES |
-price | DECIMAL | NO |
-newClientOrderId | STRING | NO | User’s self-defined orderid, if empty, the system will automatically assign a value for it
-stopPrice | DECIMAL | NO |No use for the moment
-icebergQty | DECIMAL | NO |No use for the moment
+price | DECIMAL | YES |
 newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-As for different order  `type`, some parameters are compulsively required. Details are as follows
-Type |Compulsively Required Parameters
------------- | ------------
-`LIMIT` | `timeInForce`, `quantity`, `price`
 
 
 Two choices for newOrderRespType
@@ -1530,21 +1525,15 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
-type | ENUM | YES | `LIMIT`,`MARKET`
-timeInForce | ENUM | NO |No use for the moment
+type | ENUM | YES | `LIMIT`
 quantity | DECIMAL | YES |
-price | DECIMAL | NO |
-newClientOrderId | STRING | NO | User’s self-defined orderid, if empty, the system will automatically assign a value for it
+price | DECIMAL | YES |
 newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 **Response:**  
-As for different order  `type`, some parameters are compulsively required. Details are as follows
 
 
-Type |Compulsively Required Parameters
------------- | ------------
-`LIMIT` | `timeInForce`, `quantity`, `price`
 
 
 Two choices for newOrderRespType
@@ -1591,11 +1580,10 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
-type | ENUM | YES | `LIMIT`,`MARKET`
+type | ENUM | YES | `LIMIT`
 quantity | DECIMAL | YES |
-price | DECIMAL | NO |
-newClientOrderId | STRING | NO | User’s self-defined orderid, if empty, the system will automatically assign a value for it
-timeInForce | ENUM | NO |No use for the moment
+price | DECIMAL | YES |
+
 newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -1704,13 +1692,11 @@ Check order status
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO | 
+orderId | LONG | YES |
+
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Note:
- * Either `orderId` or `origClientOrderId` must be sent.
 
 
 **Response:**
@@ -1746,13 +1732,12 @@ Check order status
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO | 
+orderId | LONG | YES |
+
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Note:
- * Either `orderId` or `origClientOrderId` must be sent.
+
 
 
 **Response:**
@@ -1788,13 +1773,12 @@ Check order status
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO | 
+orderId | LONG | YES |
+
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Note:
- * Either `orderId` or `origClientOrderId` must be sent.
+
 
 
 **Response:**
@@ -1832,13 +1816,9 @@ DELETE /api/v1/spot/order  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  User’s self-defined ID of this canceling order action.(Note it’s not the self-defined ID of the canceled order) It will be automatically recoded if not assigned a value 
+orderId | LONG | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
-
-Either `orderId` or `origClientOrderId` must be sent.
 
 **Response:**
 ```javascript
@@ -1870,14 +1850,10 @@ DELETE /api/v1/option/order  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  User’s self-defined ID of this canceling order action.(Note it’s not the self-defined ID of the canceled order) It will be automatically recoded if not assigned a value 
+orderId | LONG | YES |
+
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
-
-Either `orderId` or `origClientOrderId` must be sent.
-
 
 
 
@@ -1911,13 +1887,11 @@ DELETE /api/v1/contract/order  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  User’s self-defined ID of this canceling order action.(Note it’s not the self-defined ID of the canceled order) It will be automatically recoded if not assigned a value 
+orderId | LONG | YES |
+
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-Either `orderId` or `origClientOrderId` must be sent.
 
 
 
