@@ -1592,9 +1592,9 @@ Name | Type | Mandatory | Description
 symbol | STRING | YES |
 side | ENUM | YES |
 type | ENUM | YES | `LIMIT`,`MARKET`
-timeInForce | ENUM | NO |No use for the moment
 quantity | DECIMAL | YES |
 price | DECIMAL | NO |
+timeInForce | ENUM | NO |No use for the moment
 newClientOrderId | STRING | NO | User’s self-defined orderid, if empty, the system will automatically assign a value for it
 newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
 recvWindow | LONG | NO |
