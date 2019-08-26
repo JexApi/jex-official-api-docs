@@ -1721,7 +1721,6 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 orderId | LONG | YES |
-
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -1761,7 +1760,6 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 orderId | LONG | YES |
-
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
