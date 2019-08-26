@@ -2272,9 +2272,9 @@ GET /api/v1/option/historyOrders  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
+orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 startTime | LONG | NO |
 endTime | LONG | NO |
-orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -2314,9 +2314,9 @@ GET /api/v1/contract/historyOrders  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
+orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 startTime | LONG | NO |
 endTime | LONG | NO |
-orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -2536,10 +2536,10 @@ GET /api/v1/contract/bill  (HMAC SHA256)
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-startTime | LONG | NO |
-endTime | LONG | NO |
 fromId | LONG | NO |返回该orderId之后的成交，Default -1(返回最近的成交)
 limit | INT | NO | Default 100; max 100.
+startTime | LONG | NO |
+endTime | LONG | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -2577,12 +2577,10 @@ GET /api/v1/contract/historyRate
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-startTime | LONG | NO |
-endTime | LONG | NO |
 fromId | LONG | NO |返回该fromId之后的记录，Default -1(返回最近的记录)
 limit | INT | NO | Default 100; max 100.
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
+startTime | LONG | NO |
+endTime | LONG | NO |
 
 **响应:**
 ```javascript
@@ -2619,12 +2617,10 @@ GET /api/v1/contract/protectionFund
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-startTime | LONG | NO |
-endTime | LONG | NO |
 start | LONG | NO |返回该start之后的记录，Default -1(返回最近的记录)
 size | INT | NO | Default 100; max 100.
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
+startTime | LONG | NO |
+endTime | LONG | NO |
 
 **响应:**
 ```javascript

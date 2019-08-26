@@ -28,7 +28,6 @@
 [GET /wapi/v1/depositAddress](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E5%85%85%E5%80%BC%E5%9C%B0%E5%9D%80-user_data) | 用户充值地址
 [GET /wapi/v1/depositHistory](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E5%85%85%E5%80%BC%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95-user_data) | 充值历史记录 
 [GET /wapi/v1/tradeFee](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E4%BA%A4%E6%98%93%E6%89%8B%E7%BB%AD%E8%B4%B9-user_data) | 交易手续费 
-[GET /wapi/v1/withdraw](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E6%8F%90%E7%8E%B0-user_data) | 提现 
 [GET /wapi/v1/withdrawHistory](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E6%8F%90%E7%8E%B0%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95-user_data) | 提现历史记录 
 
 ### 币币接口
@@ -100,8 +99,7 @@
 [GET /api/v1/contract/bill  (HMAC SHA256)](./rest-api_CN.md#%E8%B4%A6%E6%88%B7%E5%90%88%E7%BA%A6%E8%B4%A6%E5%8D%95-user_data) | 合约账单
 [GET /api/v1/contract/historyRate](./rest-api_CN.md#%E5%90%88%E7%BA%A6%E8%B5%84%E9%87%91%E8%B4%B9%E7%8E%87) | 合约资金费率
 [GET /api/v1/contract/protectionFund](./rest-api_CN.md#%E5%90%88%E7%BA%A6%E4%BF%9D%E6%8A%A4%E5%9F%BA%E9%87%91) | 合约保护基金
-[POST /api/v1/contract/transferMargin  (HMAC SHA256)](./rest-api_CN.md#%E8%BD%AC%E7%A7%BB%E4%BF%9D%E8%AF%81%E9%87%91-user_data) | 转移保证金 
-[POST /api/v1/contract/turnoutMargin  (HMAC SHA256)](./rest-api_CN.md#%E8%BD%AC%E5%87%BA%E4%BF%9D%E8%AF%81%E9%87%91-user_data) | 转出保证金
+
 
 
 ### webSocket共有数据

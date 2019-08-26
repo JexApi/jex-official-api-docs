@@ -25,7 +25,6 @@ API | Description
 [GET /wapi/v1/depositAddress](./rest-api.md#depositing-address-of-the-useruser_data) | User's deposit address
 [GET /wapi/v1/depositHistory](./rest-api.md#historical-depositing-records-of-the-user-user_data) | Deposit history 
 [GET /wapi/v1/tradeFee](./rest-api.md#service-fee-of-the-trading-user_data) | Transaction fee 
-[GET /wapi/v1/withdraw](./rest-api.md#withdrawal-of-the-useruser_data) | Withdraw 
 [GET /wapi/v1/withdrawHistory](./rest-api.md#historical-withdrawal-records-of-the-useruser_data) | Withdraw History 
 
 ### Coins Transaction API
@@ -97,9 +96,6 @@ API | Description
 [GET /api/v1/contract/bill  (HMAC SHA256)](./rest-api.md#contract-bill-of-the-accountuser_data) | Contract bill
 [GET /api/v1/contract/historyRate](./rest-api.md#capital-fee-rate-of-contract) | Contract capital fee
 [GET /api/v1/contract/protectionFund](./rest-api.md#contract-protection-fund) | Contract protection fund
-[POST /api/v1/contract/transferMargin  (HMAC SHA256)](./rest-api.md#transfer-marginuser_data) | Transfer margin 
-[POST /api/v1/contract/turnoutMargin  (HMAC SHA256)](./rest-api.md#turn-out-marginuser_data) | Turn out margin
-
 
 ### WebSocket Common Data
 Stream | Description

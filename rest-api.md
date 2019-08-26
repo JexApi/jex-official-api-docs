@@ -2286,9 +2286,9 @@ Obtain trading history of specified trading pair
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
+orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 startTime | LONG | NO |
 endTime | LONG | NO |
-orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -2328,9 +2328,9 @@ Obtain trading history of specified trading pair
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
+orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 startTime | LONG | NO |
 endTime | LONG | NO |
-orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -2550,10 +2550,10 @@ Contract bill of obtained account
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-startTime | LONG | NO |
-endTime | LONG | NO |
 fromId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 limit | INT | NO | Default 100; max 100.
+startTime | LONG | NO |
+endTime | LONG | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -2591,12 +2591,10 @@ Get capital fee of one specified contract
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-startTime | LONG | NO |
-endTime | LONG | NO |
 fromId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 limit | INT | NO | Default 100; max 100.
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
+startTime | LONG | NO |
+endTime | LONG | NO |
 
 **Response:**
 ```javascript
@@ -2617,99 +2615,6 @@ timestamp | LONG | YES |
   }
 ]
 ```
-
-
-### Contract protection fund
-```
-GET /api/v1/contract/protectionFund  
-```
-Get contract protection fund of one specified contract
-
-**Weight:**
-1
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-startTime | LONG | NO |
-endTime | LONG | NO |
-start | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
-size | INT | NO | Default 100; max 100.
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
-
-**Response:**
-```javascript
-[
-  {
-    "id": 1879095,
-    "createdDate": 1551083545000,
-    "symbol": "EOSUSDT",
-    "insuranceFund": 218.47009356847536
-  },
-  {
-    "id": 1879097,
-    "createdDate": 1551083545000,
-    "symbol": "EOSUSDT",
-    "insuranceFund": 661.414109510817
-  }
-]
-```
-
-
-### Transfer Margin(USER_DATA)
-```
-POST /api/v1/contract/transferMargin  (HMAC SHA256)
-```
-The margin transferred to one specified contract from coins account balance
-
-**Weight:**
-1
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-amount | STRING | NO |
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
-
-**Response:**
-```javascript
-{
-  "asset": "USDT",
-  "balance": 889486,
-  "lockBalance": 1.6
-}
-```
-
-### Turn out margin(USER_DATA)
-```
-POST /api/v1/contract/turnoutMargin  (HMAC SHA256)
-```
-Transfer margin of one specified contract to the balance of coins account
-
-**Weight:**
-1
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-symbol | STRING | YES |
-amount | STRING | NO |
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
-
-**Response:**
-```javascript
-{}
-```
-
-
 
 
 ## User Data Stream subscription API
@@ -2822,6 +2727,7 @@ GET /wapi/v1/depositAddress
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
+asset |	STRING |	YES	
 recvWindow |	LONG |	NO	
 timestamp |	LONG |	YES	
 **Response:**
@@ -2905,32 +2811,6 @@ timestamp |	LONG |	YES
     "taker": -0.1
   }
 ]
-```
-
-### Withdrawal of the user(USER_DATA)
-```
-GET /wapi/v1/withdraw
-```
-
-**Weight:**
-1
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-asset |	STRING |	YES	| Asset name
-address | STRING | YES | Withdrawal address
-addressTag | STRING | NO | Address tag 
-amount | BIGDECIMAL | YES | Withdrawal amount
-name | STRING | NO | Address name
-recvWindow |	LONG |	NO	
-timestamp |	LONG |	YES	
-**Response:**
-```javascript
-{
-  "id": "660A0D4AEB32BE67"
-}
 ```
 
 ### Historical withdrawal records of the user(USER_DATA)
