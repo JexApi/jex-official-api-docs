@@ -2089,8 +2089,6 @@ orderId | LONG | NO | Only orders after this orderID will be returned. Only part
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 500.
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
 
 
 **Response:**

@@ -2075,8 +2075,6 @@ orderId | LONG | NO | 只返回此orderID之后的订单，缺省返回最近的
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 500.
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
 
 
 **响应:**
