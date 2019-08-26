@@ -49,6 +49,7 @@ MARKET_DATA | 需要有效的API-KEY
 * 签名使用`HMAC SHA256`算法. API-KEY所对应的API-Secret作为 `HMAC SHA256` 的密钥，其他所有参数作为`HMAC SHA256`的操作对象，得到的输出即为签名。
 * 签名大小写不敏感。
 * 当同时使用query string和request body时，`HMAC SHA256`的输入query string在前，request body在后
+* 签名的参数一定按照接口文档顺序传参
 
 ## 时间同步安全
 * 签名接口均需要传递`timestamp`参数, 其值应当是请求发送时刻的unix时间戳（毫秒）
@@ -915,6 +916,7 @@ GET /api/v1/spot/avgPrice
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
+
 **响应:**
 ```javascript
 {
@@ -932,6 +934,7 @@ GET /api/v1/option/avgPrice
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |  
+
 **响应:**  
 ```javascript
 {
@@ -949,6 +952,7 @@ GET /api/v1/contract/avgPrice
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |  
+
 **响应:**  
 ```javascript
 {
@@ -1462,22 +1466,12 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
-type | ENUM | YES | 目前只有LIMIT
-timeInForce | ENUM | NO | 暂时没用
+type | ENUM | YES | `LIMIT`
 quantity | DECIMAL | YES |
-price | DECIMAL | NO |
-newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
-stopPrice | DECIMAL | NO | 暂时没用
-icebergQty | DECIMAL | NO | 暂时没用
+price | DECIMAL | YES |
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
-
-根据 order `type`的不同，某些参数强制要求，具体如下:
-
-Type | 强制要求的参数
------------- | ------------
-`LIMIT` | `timeInForce`, `quantity`, `price`
 
 
 关于 newOrderRespType的俩种选择
@@ -1522,20 +1516,14 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
-type | ENUM | YES | `LIMIT`,`MARKET`
-timeInForce | ENUM | NO | 暂时没用
+type | ENUM | YES | `LIMIT`
 quantity | DECIMAL | YES |
-price | DECIMAL | NO |
-newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
+price | DECIMAL | YES |
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 **响应:**  
-根据 order `type`的不同，某些参数强制要求，具体如下:
 
-Type | 强制要求的参数
------------- | ------------
-`LIMIT` | `timeInForce`, `quantity`, `price`
 
 
 关于 newOrderRespType的俩种选择
@@ -1582,11 +1570,9 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
-type | ENUM | YES | `LIMIT`,`MARKET`
+type | ENUM | YES | `LIMIT`
 quantity | DECIMAL | YES |
-price | DECIMAL | NO |
-newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
-timeInForce | ENUM | NO | 暂时没用
+price | DECIMAL | YES |
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -1695,13 +1681,10 @@ GET /api/v1/spot/order (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO | 
+orderId | LONG | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-注意:
-* 至少需要发送 `orderId` 与 `origClientOrderId`中的一个
 
 
 **响应:**
@@ -1737,13 +1720,11 @@ GET /api/v1/option/order (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO | 
+orderId | LONG | YES |
+
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-注意:
-* 至少需要发送 `orderId` 与 `origClientOrderId`中的一个
 
 
 **响应:**
@@ -1779,13 +1760,12 @@ GET /api/v1/contract/order (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO | 
+orderId | LONG | YES |
+
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-注意:
-* 至少需要发送 `orderId` 与 `origClientOrderId`中的一个
+
 
 
 **响应:**
@@ -1823,13 +1803,10 @@ DELETE /api/v1/spot/order  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
+orderId | LONG | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-`orderId` 与 `origClientOrderId` 必须至少发送一个
 
 **响应:**
 ```javascript
@@ -1861,13 +1838,10 @@ DELETE /api/v1/option/order  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |
-origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
+orderId | LONG | YES |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-`orderId` 与 `origClientOrderId` 必须至少发送一个
 
 
 
@@ -1903,12 +1877,9 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 orderId | LONG | NO |
-origClientOrderId | STRING | NO |
-newClientOrderId | STRING | NO |  用户自定义的本次撤销操作的ID(注意不是被撤销的订单的自定义ID)。如无指定会自动赋值。
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-`orderId` 与 `origClientOrderId` 必须至少发送一个
 
 
 

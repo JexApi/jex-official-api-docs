@@ -1474,7 +1474,7 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
-type | ENUM | YES | There is only LIMIT for the moment
+type | ENUM | YES |  `LIMIT`
 quantity | DECIMAL | YES |
 price | DECIMAL | YES |
 newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
