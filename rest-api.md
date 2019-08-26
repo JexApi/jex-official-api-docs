@@ -1594,8 +1594,8 @@ side | ENUM | YES |
 type | ENUM | YES | `LIMIT`,`MARKET`
 quantity | DECIMAL | YES |
 price | DECIMAL | NO |
-timeInForce | ENUM | NO |No use for the moment
 newClientOrderId | STRING | NO | User’s self-defined orderid, if empty, the system will automatically assign a value for it
+timeInForce | ENUM | NO |No use for the moment
 newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
