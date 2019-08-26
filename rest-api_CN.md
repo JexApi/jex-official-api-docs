@@ -1585,8 +1585,8 @@ side | ENUM | YES |
 type | ENUM | YES | `LIMIT`,`MARKET`
 quantity | DECIMAL | YES |
 price | DECIMAL | NO |
-timeInForce | ENUM | NO | 暂时没用
 newClientOrderId | STRING | NO | 用户自定义的orderid，如空缺系统会自动赋值
+timeInForce | ENUM | NO | 暂时没用
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
