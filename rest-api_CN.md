@@ -2641,6 +2641,34 @@ endTime | LONG | NO |
 ```
 
 
+### 转移保证金 (USER_DATA)
+```
+POST /api/v1/contract/transferMargin  (HMAC SHA256)
+```
+币币余额转移到某合约的保证金
+
+**权重:**
+1
+
+**参数:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+amount | STRING | NO |
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+**响应:**
+```javascript
+{
+  "asset": "USDT",
+  "balance": 889486,
+  "lockBalance": 1.6
+}
+```
+
+
 ## 用户数据流订阅接口
 此处仅列出如何得到数据流名称及如何维持有效期的接口，具体订阅方式参考另一篇websocket接口文档
 

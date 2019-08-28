@@ -96,6 +96,9 @@ API | Description
 [GET /api/v1/contract/bill  (HMAC SHA256)](./rest-api.md#contract-bill-of-the-accountuser_data) | Contract bill
 [GET /api/v1/contract/historyRate](./rest-api.md#capital-fee-rate-of-contract) | Contract capital fee
 [GET /api/v1/contract/protectionFund](./rest-api.md#contract-protection-fund) | Contract protection fund
+[POST /api/v1/contract/transferMargin  (HMAC SHA256)](./rest-api.md#transfer-marginuser_data) | Transfer margin 
+
+
 
 ### WebSocket Common Data
 Stream | Description

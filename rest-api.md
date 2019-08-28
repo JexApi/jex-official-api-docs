@@ -2611,6 +2611,70 @@ endTime | LONG | NO |
 ]
 ```
 
+### Contract protection fund
+```
+GET /api/v1/contract/protectionFund  
+```
+Get contract protection fund of one specified contract
+
+**Weight:**
+1
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+start | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
+size | INT | NO | Default 100; max 100.
+startTime | LONG | NO |
+endTime | LONG | NO |
+
+**Response:**
+```javascript
+[
+  {
+    "id": 1879095,
+    "createdDate": 1551083545000,
+    "symbol": "EOSUSDT",
+    "insuranceFund": 218.47009356847536
+  },
+  {
+    "id": 1879097,
+    "createdDate": 1551083545000,
+    "symbol": "EOSUSDT",
+    "insuranceFund": 661.414109510817
+  }
+]
+```
+
+### Transfer Margin(USER_DATA)
+```
+POST /api/v1/contract/transferMargin  (HMAC SHA256)
+```
+The margin transferred to one specified contract from coins account balance
+
+**Weight:**
+1
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+amount | STRING | NO |
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+**Response:**
+```javascript
+{
+  "asset": "USDT",
+  "balance": 889486,
+  "lockBalance": 1.6
+}
+```
+
 
 ## User Data Stream subscription API
 Specifics on how user data streams work.

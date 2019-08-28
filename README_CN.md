@@ -99,6 +99,8 @@
 [GET /api/v1/contract/bill  (HMAC SHA256)](./rest-api_CN.md#%E8%B4%A6%E6%88%B7%E5%90%88%E7%BA%A6%E8%B4%A6%E5%8D%95-user_data) | 合约账单
 [GET /api/v1/contract/historyRate](./rest-api_CN.md#%E5%90%88%E7%BA%A6%E8%B5%84%E9%87%91%E8%B4%B9%E7%8E%87) | 合约资金费率
 [GET /api/v1/contract/protectionFund](./rest-api_CN.md#%E5%90%88%E7%BA%A6%E4%BF%9D%E6%8A%A4%E5%9F%BA%E9%87%91) | 合约保护基金
+[POST /api/v1/contract/transferMargin  (HMAC SHA256)](./rest-api_CN.md#%E8%BD%AC%E7%A7%BB%E4%BF%9D%E8%AF%81%E9%87%91-user_data) | 转移保证金 
+
 
 
 
