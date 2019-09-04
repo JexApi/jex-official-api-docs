@@ -19,7 +19,7 @@
 * 具体的错误码及其解释在[错误代码汇总.md](./错误代码汇总.md)
 * `GET`方法的接口, 参数必须在`query string`中发送.
 * `POST`, `PUT`, 和 `DELETE` 方法的接口, 参数可以在 `query string`中发送，也可以在 `request body`中发送(content type `application/x-www-form-urlencoded`。允许混合这两种方式发送参数。但如果同一个参数名在query string和request body中都有，query string中的会被优先采用。
-* 对参数的顺序不做要求。
+
 
 # 访问限制
 * 在 `/api/v1/exchangeInfo`接口中`rateLimits`数组里包含有REST接口(不限于本篇的REST接口)的访问限制。包括带权重的访问频次限制、下单速率限制。本篇`枚举定义`章节有限制类型的进一步说明。
