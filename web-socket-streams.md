@@ -15,7 +15,7 @@
 
 ## Trade Streams
 
-> The Trade Streams push raw trade information; each trade has a unique buyer and seller.
+> Every 100 ms push, every single transaction in the last second is defined as a transaction between only one order taker and one bill holder.
 
 ### Stream Name: \<symbol\>@\<tradeType\>
 
