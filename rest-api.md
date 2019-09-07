@@ -2149,7 +2149,7 @@ timestamp | LONG | YES |
 
 ### Adjust contract leverage of the account(USER_DATA)
 ```
-GET /api/v1/contract/position/leverage  (HMAC SHA256)
+POST /api/v1/contract/position/leverage  (HMAC SHA256)
 ```
 
 **Weight:**

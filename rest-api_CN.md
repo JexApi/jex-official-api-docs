@@ -2140,7 +2140,7 @@ timestamp | LONG | YES |
 
 ### 调整账户合约杠杆 (USER_DATA)
 ```
-GET /api/v1/contract/position/leverage  (HMAC SHA256)
+POST /api/v1/contract/position/leverage  (HMAC SHA256)
 ```
 
 **权重:**
