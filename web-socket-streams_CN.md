@@ -2,7 +2,7 @@
 
 ## 基本信息
 
-- 本篇所列出的所有wss接口的baseurl为: wss://ws.jex.com
+- 本篇所列出的所有wss接口的baseurl为: wss://ws.jex.com 或者 wss://testnetws.jex.com
 - 所有stream均可以直接访问，或者作为组合streams的一部分。
 - 直接访问时URL格式为 /ws/\<streamName\>
 - 组合streams的URL格式为 /stream?streams=\<streamName1\>/\<streamName2\>/\<streamName3\>
@@ -248,11 +248,11 @@
 # 用户私有数据 User Data Streams
 
 ## 基本信息
-* 本篇所列出REST接口的baseurl **https://www.jex.com**
+* 本篇所列出REST接口的baseurl **https://www.jex.com** 或者 **https://testnet.jex.com**
 * 用于订阅账户数据的 `listenKey` 从创建时刻起有效期为60分钟
 * 可以通过`PUT`一个`listenKey`延长60分钟有效期
 * `DELETE`一个 `listenKey` 立即关闭当前数据流
-* 本篇所列出的websocket接口baseurl: **wss://ws.jex.com**
+* 本篇所列出的websocket接口baseurl: **wss://ws.jex.com** 或者 **wss://testnetws.jex.com**
 * 订阅账户数据流的stream名称为 **/ws/\<listenKey\>**
 * 每个到stream.jex.com的链接有效期不超过24小时，请妥善处理断线重连。
 * 账户数据流的消息**不保证**严格时间序; **请使用 E 字段进行排序**

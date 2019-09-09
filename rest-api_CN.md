@@ -1,5 +1,5 @@
 # 基本信息
-* 本篇列出REST接口的baseurl  https://www.jex.com
+* 本篇列出REST接口的baseurl  https://www.jex.com 或者 https://testnet.jex.com
 * 所有接口的响应都是JSON格式
 * 响应中如有数组，数组元素以时间升序排列，越早的数据越提前。
 * 所有时间、时间戳均为UNIX时间，单位为毫秒
