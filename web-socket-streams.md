@@ -2,7 +2,7 @@
 
 ## General WSS information
 
-- The base endpoint is:: wss://ws.jex.com
+- The base endpoint is:: wss://ws.jex.com or wss://testnetws.jex.com
 * Streams can be accessed either in a single raw stream or in a combined stream
 * Raw streams are accessed at **/ws/\<streamName\>**
 * Combined streams are accessed at **/stream?streams=\<streamName1\>/\<streamName2\>/\<streamName3\>**
@@ -248,12 +248,12 @@
 
 # User Data Streams for JEX
 
-## 基本信息
-* The base API endpoint is: **https://www.jex.com**
+## 基本信息 
+* The base API endpoint is: **https://www.jex.com** or **https://testnet.jex.com**
 * A User Data Stream `listenKey` is valid for 60 minutes after creation.
 * Doing a `PUT` on a `listenKey` will extend its validity for 60 minutes.
 * Doing a `DELETE` on a `listenKey` will close the stream.
-* The base websocket endpoint is: **wss://ws.jex.com**
+* The base websocket endpoint is: **wss://ws.jex.com**   or **wss://testnetws.jex.com**
 * User Data Streams are accessed at **/ws/\<listenKey\>**
 * A single connection to **stream.jex.com** is only valid for 24 hours; expect to be disconnected at the 24 hour mark
 * User data stream payloads are **not guaranteed** to be in order during heavy periods; **make sure to order your updates using E**
