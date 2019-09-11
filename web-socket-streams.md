@@ -277,6 +277,8 @@ When there is a change of asset, relevant event will be pushed
   "B": [                        // Balance
     {
       "a": "LTC",               // Asset name
+      "o": "1.57",              // Order Margin（Only Furtures）
+      "p":  "0"  ，             // Position Margin（Only Furtures ）
       "f": "17366.18538083",    // Free amount
       "l": "0.00000000",        // Locked amount  
       "T": true,                // Can trade
@@ -341,9 +343,7 @@ Possible executive type of contract(X field)
 {
   "E": 1499405658849,            // Event time
   "e": "execContractReport",     // Event type
-  "s": "ETHBTC",                 // Symbol   (Not exist if refused)
-  "q": "1.00000000",             // Original quantity of the order  (Not exist if refused)
-  "p": "0.10264410",             // Original price of the order (Not exist if refused)        
+  "s": "ETHBTC",                 // Symbol   (Not exist if refused)   
   "X": "NEW",                    // Current state of the order   
   "r": "NONE",                   // Refused reason of the order (Not exist if refused)
   "i": 4293153,                  // Order ID

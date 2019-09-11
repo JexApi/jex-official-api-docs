@@ -190,15 +190,27 @@ There is no & between "GTC" and "quantity=1".
 * OPTION 
 * CONTRACT 
 
-**Order status (status):**
+** spot and option Order status (status):**
 
 * NEW 
 * PARTIALLY_FILLED  
 * FILLED  
 * CANCELED  
 * PENDING_CANCEL (currently unused))
-* REJECTED 
-* EXPIRED
+* FAIL 
+* CANCLEFILLED
+* REJECTED  (currently unused)
+* EXPIRED  (currently unused)
+
+
+** contract status (status):**
+ 
+* ENTRUSTED 
+* ENTRUSTING 
+* FAIL 
+* PARTFILLED 
+* FILLED 
+* CANCEL 
 
 **Order types (orderTypes, type):**
 
@@ -2127,7 +2139,7 @@ timestamp | LONG | YES |
 ```javascript
 [
   {
-    "symbolName": "EOSUSDT",
+    "symbol": "EOSUSDT",
     "direction": "longs",
     "leverage": "10.00",
     "currentQuantity": "1.0000",
