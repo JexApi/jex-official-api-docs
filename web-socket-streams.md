@@ -329,13 +329,14 @@ Possible executive type of contract(X field)
   "Z": "0.00000000",             // Total transaction sum
 }
 ```
-#### Possible executive type of contract (X field):
+#### Possible executive type of spot and options (X field):
 
 * NEW 
-* PARTIALLY_FILLED   
+* PARTIALLY_FILLED  
 * FILLED  
 * CANCELED  
 * FAIL 
+* CANCLEFILLED
 
 
 ###  contract Playload:
@@ -354,11 +355,13 @@ Possible executive type of contract(X field)
 ```
 
 #### Possible executive type of contract(X field):
-* ENTRUSTED   
-* FAIL        
-* PARTFILLED  
-* FILLED      
-* CANCE       
+
+* ENTRUSTED 
+* ENTRUSTING 
+* FAIL 
+* PARTFILLED 
+* FILLED 
+* CANCEL    
 
 ### Contract positions
 
