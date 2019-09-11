@@ -190,7 +190,7 @@ There is no & between "GTC" and "quantity=1".
 * OPTION 
 * CONTRACT 
 
-** spot and option Order status (status):**
+**spot and option Order status (status):**
 
 * NEW 
 * PARTIALLY_FILLED  
@@ -203,7 +203,7 @@ There is no & between "GTC" and "quantity=1".
 * EXPIRED  (currently unused)
 
 
-** contract status (status):**
+**contract status (status):**
  
 * ENTRUSTED 
 * ENTRUSTING 
