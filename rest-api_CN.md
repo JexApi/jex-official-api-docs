@@ -174,15 +174,27 @@ There is no & between "GTC" and "quantity=1".
 * OPTION 期权
 * CONTRACT 合约
 
-**订单状态:**
+**币币和期权订单状态:**
 
 * NEW 新建订单
 * PARTIALLY_FILLED  部分成交
 * FILLED  全部成交
 * CANCELED  已撤销
 * PENDING_CANCEL 正在撤销中(目前不会遇到这个状态)
-* REJECTED 订单被拒绝
-* EXPIRED 订单过期(根据timeInForce参数规则)
+* FAIL 下单失败
+* CANCLEFILLED 撤单完成
+* REJECTED 订单被拒绝 (目前不会遇到这个状态)
+* EXPIRED 订单过期(目前不会遇到这个状态)
+
+**合约的订单状态:**
+ 
+* ENTRUSTED 下单完成
+* ENTRUSTING 下单中
+* FAIL 下单失败
+* PARTFILLED 部分成交
+* FILLED 订单完成
+* CANCEL 订单取消
+
 
 **订单种类:**
 
@@ -2118,7 +2130,7 @@ timestamp | LONG | YES |
 ```javascript
 [
   {
-    "symbolName": "EOSUSDT",
+    "symbol": "EOSUSDT",
     "direction": "longs",
     "leverage": "10.00",
     "currentQuantity": "1.0000",

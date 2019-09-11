@@ -277,6 +277,8 @@ When there is a change of asset, relevant event will be pushed
   "B": [                        // Balance
     {
       "a": "LTC",               // Asset name
+      "o": "1.57",              // Order Margin（Only Furtures）
+      "p":  "0"  ，             // Position Margin（Only Furtures ）
       "f": "17366.18538083",    // Free amount
       "l": "0.00000000",        // Locked amount  
       "T": true,                // Can trade
@@ -327,13 +329,14 @@ Possible executive type of contract(X field)
   "Z": "0.00000000",             // Total transaction sum
 }
 ```
-#### Possible executive type of contract (X field):
+#### Possible executive type of spot and options (X field):
 
 * NEW 
-* PARTIALLY_FILLED   
+* PARTIALLY_FILLED  
 * FILLED  
 * CANCELED  
 * FAIL 
+* CANCLEFILLED
 
 
 ###  contract Playload:
@@ -341,9 +344,7 @@ Possible executive type of contract(X field)
 {
   "E": 1499405658849,            // Event time
   "e": "execContractReport",     // Event type
-  "s": "ETHBTC",                 // Symbol   (Not exist if refused)
-  "q": "1.00000000",             // Original quantity of the order  (Not exist if refused)
-  "p": "0.10264410",             // Original price of the order (Not exist if refused)        
+  "s": "ETHBTC",                 // Symbol   (Not exist if refused)   
   "X": "NEW",                    // Current state of the order   
   "r": "NONE",                   // Refused reason of the order (Not exist if refused)
   "i": 4293153,                  // Order ID
@@ -354,11 +355,13 @@ Possible executive type of contract(X field)
 ```
 
 #### Possible executive type of contract(X field):
-* ENTRUSTED   
-* FAIL        
-* PARTFILLED  
-* FILLED      
-* CANCE       
+
+* ENTRUSTED 
+* ENTRUSTING 
+* FAIL 
+* PARTFILLED 
+* FILLED 
+* CANCEL    
 
 ### Contract positions
 

@@ -275,6 +275,8 @@
   "B": [                        // 余额
     {
       "a": "LTC",               // 资产名称
+      "o": "1.57",              // 委托保证金（仅合约资产存在）
+      "p":  "0"  ，             // 持仓保证金（仅合约资产存在）
       "f": "17366.18538083",    // 可用余额
       "l": "0.00000000",        // 冻结余额  
       "T": true,                // 是否允许交易
@@ -309,7 +311,7 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
 
 具体内容需要读取 `x`字段 判断执行类型
 
-### 现货 和 期权的Playload:
+### 现货和期权的Playload:
 ```javascript
 {
   "E": 1499405658849,            // 事件时间
@@ -325,13 +327,16 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
   "Z": "0.00000000",             // 订单累计已成交金额
 }
 ```
-#### 合约可能的执行类型(X字段):
+#### 现货和期权可能的执行类型(X字段):
 
-* NEW 等待成交
-* PARTIALLY_FILLED  部分成交 
-* FILLED 完全成交 
-* CANCELED 撤单 
+
+* NEW 新建订单
+* PARTIALLY_FILLED  部分成交
+* FILLED  全部成交
+* CANCELED  已撤销
 * FAIL 下单失败
+* CANCLEFILLED 撤单完成
+
 
 
 ### 合约的Playload:
@@ -340,8 +345,6 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
   "E": 1499405658849,            // 事件时间
   "e": "execContractReport",     // 事件类型
   "s": "ETHBTC",                 // 交易对           (被拒绝时不存在)
-  "q": "1.00000000",             // 订单原始数量      (被拒绝时不存在)
-  "p": "0.10264410",             // 订单原始价格      (被拒绝时不存在)    
   "X": "NEW",                    // 订单的当前状态   
   "r": "NONE",                   // 订单被拒绝的原因  (被拒绝才会存在)
   "i": 4293153,                  // 订单ID
@@ -351,11 +354,14 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
 ```
 
 #### 合约可能的执行类型(X字段):
-* ENTRUSTED   已委托
-* FAIL        下单失败
-* PARTFILLED  部分成交
-* FILLED      完全成交
-* CANCE       撤单
+
+* ENTRUSTED 下单完成
+* ENTRUSTING 下单中
+* FAIL 下单失败
+* PARTFILLED 部分成交
+* FILLED 订单完成
+* CANCEL 订单取消
+
 
 ### 合约持仓
 
