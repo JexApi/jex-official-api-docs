@@ -1,6 +1,6 @@
 # General API Information
 * The base endpoint is:  https://www.jex.com or https://testnet.jex.com
-* which the https://testnet.jex.com Simulation environment。
+* which the https://testnet.jex.com simulation environment。
 * All endpoints return either a JSON object or array.
 * Data is returned in ascending order. Oldest first, newest last。
 * All time and timestamp related fields are in milliseconds
