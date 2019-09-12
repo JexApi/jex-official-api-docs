@@ -121,18 +121,15 @@ JEX Rest接口(包括wapi)返回的错误包含两部分，错误码与错误信
 #### -1125 无效的listenKey
  * This listenKey does not exist.
 
-#### -1127 查询间隔过长
- * Lookup interval is too big.
- * More than %s hours between startTime and endTime.
+#### -1127 开始结束时间错误
  * endTime befor startTime or  More than '%s' between startTime and endTime.
  * endTime befor startTime 
 
 #### -1128 无效的可选参数组合
  * Combination of optional parameters invalid.
 
-#### -1130 无效参数(值)
- * Invalid data sent for a parameter.
- * Data sent for paramter '%s' is not valid.
+#### -1129 下单小数位错误
+ * error  scale  in parameter '%s',should be  scale no more than '%s'
 
 #### -2010 订单被拒绝
  * NEW_ORDER_REJECTED
