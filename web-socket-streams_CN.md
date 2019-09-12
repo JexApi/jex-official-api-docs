@@ -2,15 +2,15 @@
 
 ## 基本信息
 
-- 本篇所列出的所有wss接口的baseurl为: wss://ws.jex.com 或者 wss://testnetws.jex.com
+* 本篇所列出的所有wss接口的baseurl为: wss://ws.jex.com 或者 wss://testnetws.jex.com
 * 其中 wss://testnetws.jex.com 为模拟环境。
-- 所有stream均可以直接访问，或者作为组合streams的一部分。
-- 直接访问时URL格式为 /ws/\<streamName\>
-- 组合streams的URL格式为 /stream?streams=\<streamName1\>/\<streamName2\>/\<streamName3\>
-- 订阅组合streams时，事件payload会以这样的格式封装 {"stream":"\<streamName\>","data":\<rawPayload\>}
-- stream名称中所有交易对均为大写
-- 每个到stream.jex.com的链接有效期不超过24小时，请妥善处理断线重连。
-- 每3分钟，服务端会发送ping帧，客户端应当在10分钟内回复pong帧，否则服务端会主动断开链接。允许客户端发送不成对的pong帧(即客户端可以以高于10分钟每次的频率发送pong帧保持链接)。
+* 所有stream均可以直接访问，或者作为组合streams的一部分。
+* 直接访问时URL格式为 /ws/\<streamName\>
+* 组合streams的URL格式为 /stream?streams=\<streamName1\>/\<streamName2\>/\<streamName3\>
+* 订阅组合streams时，事件payload会以这样的格式封装 {"stream":"\<streamName\>","data":\<rawPayload\>}
+* stream名称中所有交易对均为大写
+* 每个到stream.jex.com的链接有效期不超过24小时，请妥善处理断线重连。
+* 每3分钟，服务端会发送ping帧，客户端应当在10分钟内回复pong帧，否则服务端会主动断开链接。允许客户端发送不成对的pong帧(即客户端可以以高于10分钟每次的频率发送pong帧保持链接)。
 
 ## 其他说明
 -  wss 的 contract 订单的sell数量统一为负数

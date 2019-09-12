@@ -1,8 +1,7 @@
 # Web Socket Streams for JEX 
 
 ## General WSS information
-
-- The base endpoint is:: wss://ws.jex.com or wss://testnetws.jex.com
+* The base endpoint is:: wss://ws.jex.com or wss://testnetws.jex.com
 * which the wss://testnetws.jex.com Simulation environment。
 * Streams can be accessed either in a single raw stream or in a combined stream
 * Raw streams are accessed at **/ws/\<streamName\>**
