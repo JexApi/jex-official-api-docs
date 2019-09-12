@@ -12,8 +12,8 @@
 - 每个到stream.jex.com的链接有效期不超过24小时，请妥善处理断线重连。
 - 每3分钟，服务端会发送ping帧，客户端应当在10分钟内回复pong帧，否则服务端会主动断开链接。允许客户端发送不成对的pong帧(即客户端可以以高于10分钟每次的频率发送pong帧保持链接)。
 
-## Other instructions
-- The WSS of the sell order quantity of the contract order is unified as a negative number
+## 其他说明
+- contract 订单的 sell订单数量的 wss 统一为负数
 
 ## Stream 详细定义
 
