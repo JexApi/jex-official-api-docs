@@ -1,5 +1,6 @@
 # General API Information
 * The base endpoint is:  https://www.jex.com or https://testnet.jex.com
+* which the https://testnet.jex.com simulation environment。
 * All endpoints return either a JSON object or array.
 * Data is returned in ascending order. Oldest first, newest last。
 * All time and timestamp related fields are in milliseconds
@@ -30,11 +31,14 @@
 
 
 # LIMITS
-* The `/api/v1/exchangeInfo` `rateLimits` array contains objects related to the exchange's `RAW_REQUEST`, `REQUEST_WEIGHT`, and `ORDER` rate limits. These are further defined in the `ENUM definitions` section under `Rate limiters (rateLimitType)`.
+* The `/api/v1/exchangeInfo` `rateLimits` array contains objects related to the exchange's `RAW_REQUEST`, symbol accuracy,`REQUEST_WEIGHT`, and `ORDER` rate limits. These are further defined in the `ENUM definitions` section under `Rate limiters (rateLimitType)`.
 * When a 429 is recieved, it's your obligation as an API to back off and not spam the API
 * Repeatedly violating rate limits and/or failing to back off after receiving 429s will result in an automated IP ban (http status 418).
 * IP bans are tracked and scale in duration for repeat offenders, from 2 minutes to 3 days
+* Wrong order accuracy does not allow ordering
 
+# Other instructions
+The number of contract orders sells for API is uniformly negative
 
 # Endpoint security type
 * Each endpoint has a security type that determines the how you will interact with it
