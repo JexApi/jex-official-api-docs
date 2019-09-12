@@ -38,7 +38,7 @@
 * Wrong order accuracy does not allow ordering
 
 # Other instructions
-The API for the number of sell orders for contract orders is uniformly negative
+The number of contract orders sells for API is uniformly negative
 
 # Endpoint security type
 * Each endpoint has a security type that determines the how you will interact with it
