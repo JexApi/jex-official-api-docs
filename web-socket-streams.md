@@ -108,6 +108,8 @@
     "h": "0.0025",               //  High  price
     "o": "0.0025",               // Open price
     "l": "0.0010",               // Low price
+    "m": "10000",                // mark price(Only  contractMiniTicker have)
+    "i": "10000",                // index price(Only contractMiniTicker have)
     "v": "10000",                // Base asset volume
     "q": "18"                    // Total traded quote asset volume
 }
@@ -164,7 +166,9 @@
   "h": "0.0025",          // Highest price in 24h
   "l": "0.0010",          // Lowest price in 24h
   "v": "10000",           // Trade volume in 24h
-  "q": "18",              //  Trade asset in 24h
+  "q": "18",              // Trade asset in 24h
+  "m": "10000",           // mark price(Only  contractMiniTicker have)
+  "i": "10000",           // index price(Only contractMiniTicker have)
   "O": 1234567890,        // TODO 0  Starting time
   "C": 86400000,          // TODO 3600*24*1000，milliseconds in 24h  ending time
 }
