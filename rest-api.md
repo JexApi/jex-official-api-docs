@@ -35,7 +35,9 @@
 * When a 429 is recieved, it's your obligation as an API to back off and not spam the API
 * Repeatedly violating rate limits and/or failing to back off after receiving 429s will result in an automated IP ban (http status 418).
 * IP bans are tracked and scale in duration for repeat offenders, from 2 minutes to 3 days
+* A `Retry-After` header is sent  responses and will give the number of seconds required to wait, until the ban is over。
 * Wrong order accuracy does not allow ordering
+
 
 # Other instructions
 The number of contract orders sells for API is uniformly negative
