@@ -23,7 +23,7 @@
 
 
 # 访问限制
-*  headers中的`X-MBX-USED-WEIGHT-?`中 `?`间隔字母是以下的含义:
+* headers中的`X-MBX-USED-WEIGHT-?`中 `?`间隔字母是以下的含义:
   - SECOND => S
   - MINUTE => M
   - HOUR => H
