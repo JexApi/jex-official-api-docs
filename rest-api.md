@@ -2611,7 +2611,6 @@ Contract bill of obtained account
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
------------- | ------------ | ------------ | ------------
 symbol | STRING | YES |
 endId | LONG | NO |Only orders after this orderID will be returned
 limit | INT | NO | Default 1000; max 1000.
