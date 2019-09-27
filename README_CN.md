@@ -100,6 +100,7 @@
 [GET /api/v1/contract/historyRate](./rest-api_CN.md#%E5%90%88%E7%BA%A6%E8%B5%84%E9%87%91%E8%B4%B9%E7%8E%87) | 合约资金费率
 [GET /api/v1/contract/protectionFund](./rest-api_CN.md#%E5%90%88%E7%BA%A6%E4%BF%9D%E6%8A%A4%E5%9F%BA%E9%87%91) | 合约保护基金
 [POST /api/v1/contract/transferMargin  (HMAC SHA256)](./rest-api_CN.md#%E8%BD%AC%E7%A7%BB%E4%BF%9D%E8%AF%81%E9%87%91-user_data) | 转移保证金 
+[GET /api/v1/contract/userHistoricalTrades  (HMAC SHA256)](./rest-api_CN.md#%E8%8E%B7%E5%8F%96%E5%8E%86%E5%8F%B2%E6%88%90%E4%BA%A4%E4%BF%A1%E6%81%AF%20(USER_DATA) | 获取历史成交信息 
 
 
 

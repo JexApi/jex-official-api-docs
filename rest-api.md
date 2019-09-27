@@ -31,10 +31,17 @@
 
 
 # LIMITS
+* The following `X-MBX-USED-WEIGHT-?` of `?` intervalLetter values for headers:
+  - SECOND => S
+  - MINUTE => M
+  - HOUR => H
+  - DAY => D
 * The `/api/v1/exchangeInfo` `rateLimits` array contains objects related to the exchange's `RAW_REQUEST`, symbol accuracy,`REQUEST_WEIGHT`, and `ORDER` rate limits. These are further defined in the `ENUM definitions` section under `Rate limiters (rateLimitType)`.
 * When a 429 is recieved, it's your obligation as an API to back off and not spam the API
 * Repeatedly violating rate limits and/or failing to back off after receiving 429s will result in an automated IP ban (http status 418).
 * IP bans are tracked and scale in duration for repeat offenders, from 2 minutes to 3 days
+* Every request will contain a `X-MBX-USED-WEIGHT` header which has the current used weight for the IP for the current minute
+* Every request will contain a`X-MBX-USED-WEIGHT-?` header which Tell the current user the maximum number of times to use。
 * A `Retry-After` header is sent  responses and will give the number of seconds required to wait, until the ban is over。
 * Wrong order accuracy does not allow ordering
 
@@ -2589,6 +2596,54 @@ timestamp | LONG | YES |
   }
 ]
 ```
+
+
+### Contract bill of the account(USER_DATA)
+```
+GET /api/v1/contract/userHistoricalTrades  (HMAC SHA256)
+```
+Contract bill of obtained account
+
+**Weight:**
+1
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+endId | LONG | NO |Only orders after this orderID will be returned
+limit | INT | NO | Default 1000; max 1000.
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+**Response:**
+```javascript
+[
+  {
+    "id": 854797,
+    "price":"10000.0",
+    "qty":"-0.1000",
+    "time":1569575228000
+    "feeRate":"0.00000",
+    "buyerMaker":false
+
+  },
+  {
+    "id":"461732",
+    "price":"10000.0",
+    "qty":"-1.0000",
+    "time":1569575147000,
+    "feeRate":"0.00000",
+     "buyerMaker":false
+  }
+]
+```
+
+
+
+
 
 ### Capital fee rate of contract
 ```
