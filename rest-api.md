@@ -31,7 +31,7 @@
 
 
 # LIMITS
-* The following `X-MBX-USED-WEIGHT-?` of `?` intervalLetter values for headers:
+* New intervalLetter values for headers:
   - SECOND => S
   - MINUTE => M
   - HOUR => H
@@ -40,9 +40,10 @@
 * When a 429 is recieved, it's your obligation as an API to back off and not spam the API
 * Repeatedly violating rate limits and/or failing to back off after receiving 429s will result in an automated IP ban (http status 418).
 * IP bans are tracked and scale in duration for repeat offenders, from 2 minutes to 3 days
-* Every request will contain a `X-MBX-USED-WEIGHT` header which has the current used weight for the IP for the current minute
-* Every request will contain a`X-MBX-USED-WEIGHT-?` header which Tell the current user the maximum number of times to use。
-* A `Retry-After` header is sent  responses and will give the number of seconds required to wait, until the ban is over。
+* New Headers  `X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter) ` will give your current used request weight for the (intervalNum)(intervalLetter) rate limiter. For example, if there is a one minute request rate weight limiter set, you will get a  `X-MBX-USED-WEIGHT-1M ` header in the response. The legacy header  `X-MBX-USED-WEIGHT ` will still be returned and will represent the current used weight for the one minute request rate weight limit
+* New Header `X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter)`that is updated on any valid order placement and tracks your current order count for the interval; rejected/unsuccessful orders are not guaranteed to have `X-MBX-ORDER-COUNT-**` headers in the response。
+  - Eg. `X-MBX-ORDER-COUNT-1S` for "orders per 1 second" and `X-MBX-ORDER-COUNT-1D` for orders per "one day"
+* A `Retry-After` header is sent with a 418 or 429 responses and will give the number of seconds required to wait, in the case of a 418, to prevent a ban, or, in the case of a 429, until the ban is over.。
 * Wrong order accuracy does not allow ordering
 
 
@@ -503,16 +504,11 @@ NONE
 ```javascript
 [
   {
-    "premiumIndex": 0,
     "fundingRate": 0.000002,
     "fundingInterval": 600000,
     "nextFundingTime": 1551337200000,
     "predictedFundingRate": 0.000002,
-    "fairBasis": 0,
-    "fairBasisRate": 0,
-    "openPositions": 0,
     "turnover24": 212921.712,
-    "totalVolume": 0,
     "markMethod": 2,
     "markPrice": 2300.0046,
     "lastPrice": 2300,

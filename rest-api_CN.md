@@ -23,7 +23,7 @@
 
 
 # 访问限制
-* headers中的`X-MBX-USED-WEIGHT-?`中 `?`间隔字母是以下的含义:
+* 在headers 以下字符代表下列意思:
   - SECOND => S
   - MINUTE => M
   - HOUR => H
@@ -34,8 +34,9 @@
 * 当收到429告警时，调用者应当降低访问频率或者停止访问。
 * **收到429后仍然继续违反访问限制，会被封禁IP，并收到418错误码**
 * 频繁违反限制，封禁时间会逐渐延长，**从最短2分钟到最长3天**.
-* 消息头header请求头会包含`X-MBX-USED-WEIGHT` 告诉当前用户已经使用的次数。
-* 消息头header请求头会包含`X-MBX-USED-WEIGHT-?` 告诉当前用户最大的使用次数。
+* Headers `X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter)` 会给你当前的请求权重 (intervalNum)(intervalLetter)频率的限制. 举个例子有分钟请求权重频率的设置, 在请求返回中含有  `X-MBX-USED-WEIGHT-1M `. 请求头header 中`X-MBX-USED-WEIGHT ` 仍然会返回并且已经使用的次数。
+* Header 中 `X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter)`在任何有效的订单上更新，并跟踪间隔的当前订单计数; 拒绝/不成功的订单不确保有`X-MBX-ORDER-COUNT-**` headers 在返回值中。
+  - 例子. `X-MBX-ORDER-COUNT-1S` 是 "这秒有多少单" and` X-MBX-ORDER-COUNT-1D` 是 ”这一天有多少单“
 * 消息头header上`Retry-After`会给出具体需要等待的时间,以秒为单位，直到解除封禁。
 * 错误的下单精度不允许下单
 
@@ -488,16 +489,11 @@ NONE
 ```javascript
 [
   {
-    "premiumIndex": 0,
     "fundingRate": 0.000002,
     "fundingInterval": 600000,
     "nextFundingTime": 1551337200000,
     "predictedFundingRate": 0.000002,
-    "fairBasis": 0,
-    "fairBasisRate": 0,
-    "openPositions": 0,
     "turnover24": 212921.712,
-    "totalVolume": 0,
     "markMethod": 2,
     "markPrice": 2300.0046,
     "lastPrice": 2300,
