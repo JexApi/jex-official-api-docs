@@ -488,16 +488,11 @@ NONE
 ```javascript
 [
   {
-    "premiumIndex": 0,
     "fundingRate": 0.000002,
     "fundingInterval": 600000,
     "nextFundingTime": 1551337200000,
     "predictedFundingRate": 0.000002,
-    "fairBasis": 0,
-    "fairBasisRate": 0,
-    "openPositions": 0,
     "turnover24": 212921.712,
-    "totalVolume": 0,
     "markMethod": 2,
     "markPrice": 2300.0046,
     "lastPrice": 2300,
