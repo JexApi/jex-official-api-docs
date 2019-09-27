@@ -23,12 +23,20 @@
 
 
 # 访问限制
+* headers中的`X-MBX-USED-WEIGHT-?`中 `?`间隔字母是以下的含义:
+  - SECOND => S
+  - MINUTE => M
+  - HOUR => H
+  - DAY => D
 * 在 `/api/v1/exchangeInfo`接口中`rateLimits`数组里包含有REST接口(不限于本篇的REST接口)的访问限制。包括带权重的访问频次限制、下单速率限制、交易对精度。本篇`枚举定义`章节有限制类型的进一步说明。
 * 违反上述任何一个访问限制都会收到HTTP 429，这是一个警告.
 * 每一个接口均有一个相应的权重(weight)，有的接口根据参数不同可能拥有不同的权重。越消耗资源的接口权重就会越大。
 * 当收到429告警时，调用者应当降低访问频率或者停止访问。
 * **收到429后仍然继续违反访问限制，会被封禁IP，并收到418错误码**
 * 频繁违反限制，封禁时间会逐渐延长，**从最短2分钟到最长3天**.
+* 消息头header请求头会包含`X-MBX-USED-WEIGHT` 告诉当前用户已经使用的次数。
+* 消息头header请求头会包含`X-MBX-USED-WEIGHT-?` 告诉当前用户最大的使用次数。
+* 消息头header上`Retry-After`会给出具体需要等待的时间,以秒为单位，直到解除封禁。
 * 错误的下单精度不允许下单
 
 
@@ -2577,6 +2585,50 @@ timestamp | LONG | YES |
     "createdDate": "2019-02-27 13:55:32",
     "symbol": "BTCUSDT",
     "type": "positionSize"
+  }
+]
+```
+
+
+
+### 获取历史成交信息 (USER_DATA)
+```
+GET /api/v1/contract/userHistoricalTrades  (HMAC SHA256)
+```
+获取历史成交信息
+
+**权重:**
+1
+
+**参数:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+endId | LONG | NO |返回该endId之前的成交
+limit | INT | NO | Default 1000; max 1000.
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+**响应:**
+```javascript
+[
+  {
+    "id": 854797,
+    "price":"10000.0",
+    "qty":"-0.1000",
+    "time":1569575228000
+    "feeRate":"0.00000",
+    "buyerMaker":false
+
+  },
+  {
+    "id":"461732",
+    "price":"10000.0",
+    "qty":"-1.0000",
+    "time":1569575147000,
+    "feeRate":"0.00000",
+     "buyerMaker":false
   }
 ]
 ```
