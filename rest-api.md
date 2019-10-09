@@ -2618,6 +2618,7 @@ timestamp | LONG | YES |
 [
   {
     "id": 854797,
+    "orderId":"4612604110637448048",
     "price":"10000.0",
     "qty":"-0.1000",
     "time":1569575228000
@@ -2627,11 +2628,12 @@ timestamp | LONG | YES |
   },
   {
     "id":"461732",
+    "orderId":"4612604110637448048",
     "price":"10000.0",
     "qty":"-1.0000",
     "time":1569575147000,
     "feeRate":"0.00000",
-     "buyerMaker":false
+    "buyerMaker":false
   }
 ]
 ```
