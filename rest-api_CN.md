@@ -2631,6 +2631,92 @@ timestamp | LONG | YES |
 ]
 ```
 
+### 批量撤单
+
+```
+DELETE /api/v1/contract/batchOrder
+```
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ordersJsonArray | String | YES | json 字符串 (1秒最多请求1次,1次最多10单)
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+### ordersJsonArray json 字符串规则示例：
+
+``` javascript
+[{"symbol":"btcusdt","orderId":"4612172002566865072"},{"symbol":"btcusdt","orderId":"4612170903055237327"},{"symbol":"EOSUSDT","orderId":"4612170903055237327"},{"symbol":"ETHUSDT","orderId":"4612168704031981750"}]
+```
+
+**响应:**
+
+``` javascript
+[{
+	"symbol": "BTCUSDT",
+	"orderId": "4612172002566865072",
+	"updateTime": 1570696952000,
+	"side": "buy",
+	"origQty": "1.0000",
+	"executedQty": "0.0000",
+	"price": "7548.7",
+	"executedPrice": "0.0",
+	"status": "entrusted",
+	"time": 1570696952000,
+	"type": "limit"
+}, {
+	"msg": "Order does not exist.",
+	"code": -2013
+}, {
+	"symbol": "EOSUSDT",
+	"orderId": "4612170903055237327",
+	"updateTime": 1570697170000,
+	"side": "buy",
+	"origQty": "1.0",
+	"executedQty": "0.0",
+	"price": "0.136",
+	"executedPrice": "0.000",
+	"status": "entrusted",
+	"time": 1570697170000,
+	"type": "limit"
+}, {
+	"symbol": "ETHUSDT",
+	"orderId": "4612168704031981750",
+	"updateTime": 1570697224000,
+	"side": "buy",
+	"origQty": "1.00",
+	"executedQty": "0.00",
+	"price": "90.96",
+	"executedPrice": "0.00",
+	"status": "entrusted",
+	"time": 1570697224000,
+	"type": "limit"
+}]
+```
+
+**注意事项及说明:**
+
+- 签名及请求注意事项:
+  
+  1. 先按照通用规则对参数进行签名
+  1. 对ordersJsonArray的参数进行urlEncode
+  1. 发送delete请求
+
+- 限制事项：
+  1. 1秒最多请求1次
+  1. 1次最多10单
+
+**返回值说明:**
+
+  - 如果签名通过，返回的是一个json数组。
+  - 数组对应入参的单
+  - 对应单撤单成功，数组元素为订单信息
+  - 对应单撤单失败，数组元素为一个错误信息
+
+
+
 ### 合约资金费率
 ```
 GET /api/v1/contract/historyRate  
