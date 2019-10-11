@@ -2638,8 +2638,88 @@ timestamp | LONG | YES |
 ]
 ```
 
+### cancel all orders
 
+```
+DELETE /api/v1/contract/batchOrder
+```
 
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ordersJsonArray | String | YES | json String (Request 1 time in 1 second, up to 10 orders in 1 time)
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+### ordersJsonArray json String rule example：
+
+``` javascript
+[{"symbol":"btcusdt","orderId":"4612172002566865072"},{"symbol":"btcusdt","orderId":"4612170903055237327"},{"symbol":"EOSUSDT","orderId":"4612170903055237327"},{"symbol":"ETHUSDT","orderId":"4612168704031981750"}]
+```
+
+**响应:**
+
+``` javascript
+[{
+	"symbol": "BTCUSDT",
+	"orderId": "4612172002566865072",
+	"updateTime": 1570696952000,
+	"side": "buy",
+	"origQty": "1.0000",
+	"executedQty": "0.0000",
+	"price": "7548.7",
+	"executedPrice": "0.0",
+	"status": "entrusted",
+	"time": 1570696952000,
+	"type": "limit"
+}, {
+	"msg": "Order does not exist.",
+	"code": -2013
+}, {
+	"symbol": "EOSUSDT",
+	"orderId": "4612170903055237327",
+	"updateTime": 1570697170000,
+	"side": "buy",
+	"origQty": "1.0",
+	"executedQty": "0.0",
+	"price": "0.136",
+	"executedPrice": "0.000",
+	"status": "entrusted",
+	"time": 1570697170000,
+	"type": "limit"
+}, {
+	"symbol": "ETHUSDT",
+	"orderId": "4612168704031981750",
+	"updateTime": 1570697224000,
+	"side": "buy",
+	"origQty": "1.00",
+	"executedQty": "0.00",
+	"price": "90.96",
+	"executedPrice": "0.00",
+	"status": "entrusted",
+	"time": 1570697224000,
+	"type": "limit"
+}]
+```
+**Precautions and instructions:**
+
+- Signature and request notes:
+  
+  1. First Signature the parameters according to the general rules
+  1. urlEncode on the parameters of ordersJsonArray
+  1. Send a delete request
+
+- Restrictions：
+  1. Request 1 time at most 1 second
+  1. 1 time up to 10 orders
+
+**Return value description:**
+
+  - If the signature passes, it returns a json array。
+  - The array corresponds to the single entry
+  - The corresponding single withdrawal is successful, the array element is the order information
+  - The corresponding single withdrawal failed, the array element is an error message
 
 
 ### Capital fee rate of contract
