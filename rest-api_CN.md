@@ -2591,7 +2591,7 @@ timestamp | LONG | YES |
 ```
 GET /api/v1/contract/userHistoricalTrades  (HMAC SHA256)
 ```
-获取历史成交信息
+获取历史成交信息(按id降序)
 
 **权重:**
 1
@@ -2630,6 +2630,122 @@ timestamp | LONG | YES |
   }
 ]
 ```
+
+
+
+### 获取历史成交信息 (USER_DATA)
+```
+GET /api/v1/contract/userHistoricalTradesLately  (HMAC SHA256)
+```
+获取历史成交信息(按time降序)
+
+**权重:**
+1
+
+**参数:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+endId | LONG | NO |返回该endId之前的成交
+limit | INT | NO | Default 1000; max 1000.
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+**响应:**
+```javascript
+[
+  {
+    "id": 854797,
+    "orderId":"4612604110637448048",
+    "price":"10000.0",
+    "qty":"-0.1000",
+    "time":1569575228000
+    "feeRate":"0.00000",
+    "buyerMaker":false
+
+  },
+  {
+    "id":"461732",
+    "orderId":"4612604110637448048",
+    "price":"10000.0",
+    "qty":"-1.0000",
+    "time":1569575147000,
+    "feeRate":"0.00000",
+    "buyerMaker":false
+  }
+]
+```
+
+
+### 批量查询订单
+
+```
+GET /api/v1/contract/batchOrder
+```
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ordersJsonArray | String | YES | json 字符串 (最多500个订单)
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+#### ordersJsonArray json 字符串规则示例：
+
+``` javascript
+ordersJsonArray=[4612610707706592606,4612610707706592614,123]
+```
+
+**响应:**
+
+``` javascript
+[
+{
+"orderId": "4612610707706592606",
+"order": {
+"symbol": "BTCUSDT",
+"orderId": "4612610707706592606",
+"updateTime": 1570676106000,
+"side": "BUY",
+"origQty": "0.0",
+"executedQty": "0.0010",
+"price": "9000.0000",
+"executedPrice": "9000.0",
+"status": "FILLED",
+"time": 1570614457000,
+"triggerPrice": "0.0000",
+"type": "LIMIT"
+}
+},
+{
+"orderId": "4612610707706592614",
+"order": {
+"symbol": "BTCUSDT",
+"orderId": "4612610707706592614",
+"updateTime": 1570676193000,
+"side": "BUY",
+"origQty": "0.0",
+"executedQty": "0.0010",
+"price": "9000.0000",
+"executedPrice": "9000.0",
+"status": "FILLED",
+"time": 1570614457000,
+"triggerPrice": "0.0000",
+"type": "LIMIT"
+}
+},
+{
+"orderId": "123",
+"order": null
+}
+]
+```
+
+
+
+
 
 ### 批量撤单
 

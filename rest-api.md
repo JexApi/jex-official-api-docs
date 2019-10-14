@@ -2594,11 +2594,11 @@ timestamp | LONG | YES |
 ```
 
 
-### Contract bill of the account(USER_DATA)
+### contract historical transaction information(USER_DATA)
 ```
 GET /api/v1/contract/userHistoricalTrades  (HMAC SHA256)
 ```
-Contract bill of obtained account
+contract historical transaction information(Descending by ID)
 
 **Weight:**
 1
@@ -2638,6 +2638,189 @@ timestamp | LONG | YES |
 ]
 ```
 
+
+
+
+### contract historical transaction information(USER_DATA)
+```
+GET /api/v1/contract/userHistoricalTradesLately  (HMAC SHA256)
+```
+contract historical transaction information(Descending by time)
+
+**Weight:**
+1
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+symbol | STRING | YES |
+endId | LONG | NO |Only orders after this orderID will be returned
+limit | INT | NO | Default 1000; max 1000.
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+**响应:**
+```javascript
+[
+  {
+    "id": 854797,
+    "orderId":"4612604110637448048",
+    "price":"10000.0",
+    "qty":"-0.1000",
+    "time":1569575228000
+    "feeRate":"0.00000",
+    "buyerMaker":false
+
+  },
+  {
+    "id":"461732",
+    "orderId":"4612604110637448048",
+    "price":"10000.0",
+    "qty":"-1.0000",
+    "time":1569575147000,
+    "feeRate":"0.00000",
+    "buyerMaker":false
+  }
+]
+```
+
+
+### 批量查询订单
+
+```
+DELETE /api/v1/contract/batchOrder
+```
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ordersJsonArray | String | YES | json 字符串 (最多500个订单)
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+#### ordersJsonArray json 字符串规则示例：
+
+``` javascript
+ordersJsonArray=[4612610707706592606,4612610707706592614,123]
+```
+
+**响应:**
+
+``` javascript
+[
+{
+"orderId": "4612610707706592606",
+"order": {
+"symbol": "BTCUSDT",
+"orderId": "4612610707706592606",
+"updateTime": 1570676106000,
+"side": "BUY",
+"origQty": "0.0",
+"executedQty": "0.0010",
+"price": "9000.0000",
+"executedPrice": "9000.0",
+"status": "FILLED",
+"time": 1570614457000,
+"triggerPrice": "0.0000",
+"type": "LIMIT"
+}
+},
+{
+"orderId": "4612610707706592614",
+"order": {
+"symbol": "BTCUSDT",
+"orderId": "4612610707706592614",
+"updateTime": 1570676193000,
+"side": "BUY",
+"origQty": "0.0",
+"executedQty": "0.0010",
+"price": "9000.0000",
+"executedPrice": "9000.0",
+"status": "FILLED",
+"time": 1570614457000,
+"triggerPrice": "0.0000",
+"type": "LIMIT"
+}
+},
+{
+"orderId": "123",
+"order": null
+}
+]
+```
+
+
+### query contract all orders
+
+```
+GET /api/v1/contract/batchOrder
+```
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ordersJsonArray | String | YES | json String (Up to 500 orders)
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+#### ordersJsonArray json String rule example：
+
+``` javascript
+ordersJsonArray=[4612610707706592606,4612610707706592614,123]
+```
+
+**Response:**
+
+``` javascript
+[
+{
+"orderId": "4612610707706592606",
+"order": {
+"symbol": "BTCUSDT",
+"orderId": "4612610707706592606",
+"updateTime": 1570676106000,
+"side": "BUY",
+"origQty": "0.0",
+"executedQty": "0.0010",
+"price": "9000.0000",
+"executedPrice": "9000.0",
+"status": "FILLED",
+"time": 1570614457000,
+"triggerPrice": "0.0000",
+"type": "LIMIT"
+}
+},
+{
+"orderId": "4612610707706592614",
+"order": {
+"symbol": "BTCUSDT",
+"orderId": "4612610707706592614",
+"updateTime": 1570676193000,
+"side": "BUY",
+"origQty": "0.0",
+"executedQty": "0.0010",
+"price": "9000.0000",
+"executedPrice": "9000.0",
+"status": "FILLED",
+"time": 1570614457000,
+"triggerPrice": "0.0000",
+"type": "LIMIT"
+}
+},
+{
+"orderId": "123",
+"order": null
+}
+]
+```
+
+
+
+
+
 ### cancel all orders
 
 ```
@@ -2658,7 +2841,7 @@ timestamp | LONG | YES |
 [{"symbol":"btcusdt","orderId":"4612172002566865072"},{"symbol":"btcusdt","orderId":"4612170903055237327"},{"symbol":"EOSUSDT","orderId":"4612170903055237327"},{"symbol":"ETHUSDT","orderId":"4612168704031981750"}]
 ```
 
-**响应:**
+**Response:**
 
 ``` javascript
 [{
