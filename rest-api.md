@@ -46,6 +46,13 @@
 * A `Retry-After` header is sent with a 418 or 429 responses and will give the number of seconds required to wait, in the case of a 418, to prevent a ban, or, in the case of a 429, until the ban is over.。
 * Wrong order accuracy does not allow ordering
 
+# Order Count Limits
+* To keep an orderly market, jex imposes limits on the number of open orders per account. These limits are:
+* Maximum 200 open orders per contract per account;
+* Maximum 10 stop profit or stop  orders per contract per account;
+* When placing a new order that causes these caps to be exceeded, it will be rejected with the message “has reach max order number [200|10]”.
+
+
 
 # Other instructions
 The number of contract orders sells for API is uniformly negative
