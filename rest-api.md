@@ -48,7 +48,6 @@
 
 # Order Count Limits
 * To keep an orderly market, jex imposes limits on the number of open orders per account. These limits are:
-
 * Maximum 200 open orders per contract per account;
 * Maximum 10 stop profit or stop  orders per contract per account;
 * When placing a new order that causes these caps to be exceeded, it will be rejected with the message “has reach max order number [200|10]”.
