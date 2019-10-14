@@ -97,8 +97,10 @@ API | Description
 [GET /api/v1/contract/historyRate](./rest-api.md#capital-fee-rate-of-contract) | Contract capital fee
 [GET /api/v1/contract/protectionFund](./rest-api.md#contract-protection-fund) | Contract protection fund
 [POST /api/v1/contract/transferMargin  (HMAC SHA256)](./rest-api.md#transfer-marginuser_data) | Transfer margin 
-[GET /api/v1/contract/userHistoricalTrades (HMAC SHA256)](./rest-api.md#contract-bill-of-the-accountuser_data-1) | Contract bill of obtained account
+[GET /api/v1/contract/userHistoricalTrades (HMAC SHA256)](./rest-api.md#contract-bill-of-the-accountuser_data-1) | contract historical transaction information(Descending by ID)
+[GET /api/v1/contract/userHistoricalTradesLately (HMAC SHA256)](./rest-api.md#contract-bill-of-the-accountuser_data-1) | contract historical transaction information(Descending by time)
 [DELETE /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api.md#cancel-all-orders) | cancel all orders
+[GET /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api.md#query-contract-all-orders) | query contract all orders
 
 
 ### WebSocket Common Data
