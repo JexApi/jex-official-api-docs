@@ -218,6 +218,14 @@
   ]
 }
 ```
+- depthType 支持的类型
+  - spotDepth
+  - optionDepth
+  - contractDepth
+- levels 支持的类型
+  - 5
+  - 10
+  - 15
 
 ## 增量深度信息stream
 > 每秒推送orderbook的变化部分（如果有）

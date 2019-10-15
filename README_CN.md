@@ -7,6 +7,8 @@
 [rest-api.md](./rest-api_CN.md) | 通用Rest接口定义 (/api)
 [errors.md](./errors_CN.md) |错误代码及含义 
 [web-socket-streams_cn.md](./web-socket-streams_CN.md) |行情数据流接口的描述
+[problem-solving_CN.md](./problem-solving_CN.md) |常见问题及回答
+[CHANGELOG_CN.md](./CHANGELOG_CN.md) |更新日志
 
 ## Public API for JEX Exchange
 

@@ -1,8 +1,8 @@
 # Web Socket Streams for JEX 
 
 ## General WSS information
-* The base endpoint is:: wss://ws.jex.com or wss://testnetws.jex.com
-* which the wss://testnetws.jex.com simulation environment。
+* The base endpoint is: **wss://ws.jex.com** or **wss://testnetws.jex.com**
+* which the **wss://testnetws.jex.com** simulation environment。
 * Streams can be accessed either in a single raw stream or in a combined stream
 * Raw streams are accessed at **/ws/\<streamName\>**
 * Combined streams are accessed at **/stream?streams=\<streamName1\>/\<streamName2\>/\<streamName3\>**
@@ -217,6 +217,16 @@
   ]
 }
 ```
+
+
+- depthType 
+  - spotDepth
+  - optionDepth
+  - contractDepth
+- levels 
+  - 5
+  - 10
+  - 15
 
 ## Diff. Depth Stream
 > Order book price and quantity depth updates used to locally manage an order book pushed every second.

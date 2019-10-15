@@ -151,6 +151,8 @@ JEX Rest接口(包括wapi)返回的错误包含两部分，错误码与错误信
 
 #### -2016 NO_TRADING_WINDOW
  * No trading window could be found for the symbol. Try ticker/24hrs instead.
+### -2019 ORDER_NUMBER_MAX 达到此订单类型的最大的当前委托
+ * reach max order number
 
 ## -1010 收到了错误消息
 这个错误代码是由撮合引擎抛出的，引擎还会抛出2010和2011，具体原因需要参考下面列出的具体消息
