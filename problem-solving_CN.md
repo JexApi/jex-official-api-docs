@@ -9,16 +9,17 @@
 
 ### -1021 Timestamp for this request is outside of the recvWindow
 * 先获取服务器时间的接口 `/api/v1/time`
-* 防止本地时间和服务器时间不一致，拿到服务器时间和本地时间的差值，计算修正参数传`timestamp`
+* 防止本地时间和服务器时间不一致，拿到服务器时间和本地时间的差值，计算修正参数 `timestamp`
 * 时间同步安全在文档上地址为[查看时间同步](./rest-api_CN.md#%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E5%AE%89%E5%85%A8) 
 ### -1121 Invalid symbol 
 * 确保交易对是从 `/api/v1/exchangeInfo` 接口中获取。
 * 交易对的拼写是`symbol`.大写字母是`SYMBOL`
 
 ### -1003 Too many requests; current limit is %d requests %s.
+* 已经超过此接口的频率限制，此接口暂时不能访问。
 * 尽量用websocket的方式连接行情 
 * 降低接口的使用频率，并按照接口的限制请求
-* 访问限制的文档在  [ 查看访问限制](./rest-api_CN.md#%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6)
+* 访问限制的文档在  [查看访问限制](./rest-api_CN.md#%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6)
 
 ## 疑问
 
@@ -30,7 +31,7 @@
 
 
 ### 怎么连接websocket
-* websocket的baseurl为: wss://ws.jex.com ，直接访问时URL格式为  `/ws/<streamName> ` 或者组合streams的URL格式为  `/stream?streams=<streamName1>/<streamName2>/<streamName3> `
+* websocket的baseurl为:  `wss://ws.jex.com` ，直接访问时URL格式为  `/ws/<streamName> ` 或者组合streams的URL格式为  `/stream?streams=<streamName1>/<streamName2>/<streamName3> `
 * 例子：以直接访问的url 格式，javascript 在web 游览器的以 币币交易对的btcusdt为例子：
     - 最近成交 `new WebSocket('wss://ws.jex.com/ws/btcusdt@spotTrade')`
     - k 线 `new WebSocket('wss://ws.jex.com/ws/btcusdt@spotKline_1M')`
