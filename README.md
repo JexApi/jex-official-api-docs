@@ -7,8 +7,8 @@ Name | Description
 [rest-api.md](./rest-api.md) | Details on the Rest API (/api)
 [errors.md](./errors_CN.md) | Descriptions of possible error messages from the Rest API
 [web-socket-streams.md](./web-socket-streams.md) | Details on available streams and payloads
-[problem-solving_CN.md](./problem-solving_CN.md) | Common Questions and Answers
-[CHANGELOG_CN.md](./CHANGELOG_CN.md) | Update log
+[problem-solving.md](./problem-solving.md) | Common Questions and Answers
+[CHANGELOG.md](./CHANGELOG.md) | Update log
 
 ## Public API for JEX Exchange
 ### General API
