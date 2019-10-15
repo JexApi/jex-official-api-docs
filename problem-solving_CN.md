@@ -10,7 +10,7 @@
 ### -1021 Timestamp for this request is outside of the recvWindow
 * 先获取服务器时间的接口 `/api/v1/time`
 * 防止本地时间和服务器时间不一致，拿到服务器时间和本地时间的差值，计算修正参数传`timestamp`
-* 时间同步安全在文档上地址为  (./rest-api_CN.md#%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E5%AE%89%E5%85%A8) | 查看时间同步
+* 时间同步安全在文档上地址为[查看时间同步](./rest-api_CN.md#%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E5%AE%89%E5%85%A8) 
 ### -1121 Invalid symbol 
 * 确保交易对是从 `/api/v1/exchangeInfo` 接口中获取。
 * 交易对的拼写是`symbol`.大写字母是`SYMBOL`
@@ -18,7 +18,7 @@
 ### -1003 Too many requests; current limit is %d requests %s.
 * 尽量用websocket的方式连接行情 
 * 降低接口的使用频率，并按照接口的限制请求
-* 访问限制的文档在  (./rest-api_CN.md#%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6) | 查看访问限制
+* 访问限制的文档在  [ 查看访问限制](./rest-api_CN.md#%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6)
 
 ## 疑问
 
@@ -39,7 +39,7 @@
     - 深度信息 `new WebSocket('wss://ws.jex.com/ws/btcusdt@spotDepth5')`
 
 ### 合约下单时返回订单状态是entrusting 通过orderId 在当前委托中查询该订单 返回不存在
-* entrusting 是下单中，还没有下在当前委托中，当前委托没有次订单，可能等待一下变为下单成功。 也可能过一会可能因为某些杠杆或者保证金等等原因，会变成下单失败，可以用过查询订单信息查看该订单  [GET /api/v1/contract/order (HMAC SHA256)](./rest-api_CN.md#%E5%90%88%E7%BA%A6%E6%9F%A5%E8%AF%A2%E8%AE%A2%E5%8D%95-user_data) | 合约查询订单 (USER_DATA)
+* entrusting 是下单中，还没有在当前委托中，可能等待一下变为下单成功。 也可能过一会可能因为某些杠杆或者保证金等等原因，会变成下单失败，可以用过查询订单信息查看该订单  [GET /api/v1/contract/order (HMAC SHA256)](./rest-api_CN.md#%E5%90%88%E7%BA%A6%E6%9F%A5%E8%AF%A2%E8%AE%A2%E5%8D%95-user_data) | 合约查询订单 (USER_DATA)
 
  
 
