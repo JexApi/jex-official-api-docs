@@ -226,7 +226,7 @@
 - levels 
   - 5
   - 10
-  - 15
+  - 20
 
 ## Diff. Depth Stream
 > Order book price and quantity depth updates used to locally manage an order book pushed every second.
@@ -365,13 +365,35 @@ Possible executive type of contract(X field)
   "e": "execContractReport",     // Event type
   "s": "ETHBTC",                 // Symbol   (Not exist if refused)   
   "X": "NEW",                    // Current state of the order   
-  "r": "NONE",                   // Refused reason of the order (Not exist if refused)
+  "r": "NONE",                   // Refused reason of the order ( exist if refused)
   "i": 4293153,                  // Order ID
   "z": "0.00000000",             // Cumulative filled quantity (Not exist if refused)
   "Z": "0.00000000",             // Cumulative filled sum(Not exist if refused)
 
 }
 ```
+
+### example if refused:
+``` javascript
+{
+  E: 1571225843289
+  X: "FAIL"
+  e: "execContractReport"
+  i: "4612616205276108403"
+  r: "insufficient Available"  //Refused reason of the order ( exist if refused)
+}
+```
+- r types
+  - insufficient Available
+  - too many pending requests
+  - position is being liquidated
+  - position is being closed
+  - closing empty position
+  - closing order is enough
+  - contract is disabled
+  - reach liquidation price
+  - reach risk limit
+
 
 #### Possible executive type of contract(X field):
 
