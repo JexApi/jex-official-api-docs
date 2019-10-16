@@ -388,7 +388,7 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
   X: "FAIL"
   e: "execContractReport"
   i: "4612616205276108403"
-  r: "insufficient Available"  //Refused reason of the order ( exist if refused)
+  r: "insufficient Available"  
 }
 ```
 ####  失败的原因(R字段)

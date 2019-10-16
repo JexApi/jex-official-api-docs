@@ -392,7 +392,7 @@ Possible executive type of contract(X field)
   X: "FAIL"
   e: "execContractReport"
   i: "4612616205276108403"
-  r: "insufficient Available"  //Refused reason of the order ( exist if refused)
+  r: "insufficient Available"  
 }
 ```
 #### if refused(R field) 
