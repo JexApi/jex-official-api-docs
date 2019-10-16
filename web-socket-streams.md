@@ -395,7 +395,7 @@ Possible executive type of contract(X field)
   r: "insufficient Available"  //Refused reason of the order ( exist if refused)
 }
 ```
-#### if refused(r field) 
+#### if refused(R field) 
   *  insufficient Available
   *  too many pending requests
   *  position is being liquidated

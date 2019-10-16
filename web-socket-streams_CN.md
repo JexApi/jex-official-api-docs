@@ -391,7 +391,7 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
   r: "insufficient Available"  //Refused reason of the order ( exist if refused)
 }
 ```
-####  失败的原因(r字段)
+####  失败的原因(R字段)
   * insufficient Available
   * too many pending requests
   * position is being liquidated
