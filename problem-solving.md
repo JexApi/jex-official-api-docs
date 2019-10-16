@@ -40,7 +40,7 @@
     - Partial Book Depth Streams `new WebSocket('wss://ws.jex.com/ws/btcusdt@spotDepth5')`
 
 ### The order status returned when the contract is placed is  entrusting. The order is queried in the current order by orderId. The return does not exist
-* entrusting Not yet in the current commission，May wait for it to become a successful order。 It may also be that after a while, it may become a failure to place an order due to certain leverage or margin.You can view the order with the inquiry order information  [GET /api/v1/contract/order (HMAC SHA256)](./rest-api.md#place-order-in-contract-transactiontrade) | 合约查询订单 (USER_DATA)
+* entrusting Not yet in the current commission，May wait for it to become a successful order。 It may also be that after a while, it may become a failure to place an order due to certain leverage or margin.You can view the order with the inquiry order information  [GET /api/v1/contract/order (HMAC SHA256)](./rest-api.md#place-order-in-contract-transactiontrade) | Place order in contract transaction (USER_DATA)
 
  
 

@@ -225,7 +225,7 @@
 - levels 支持的类型
   - 5
   - 10
-  - 15
+  - 20
 
 ## 增量深度信息stream
 > 每秒推送orderbook的变化部分（如果有）
@@ -380,6 +380,28 @@ event type统一为 `execSpotReport` AND `execOptionReport` AND `execContractRep
 * PARTFILLED 部分成交
 * FILLED 订单完成
 * CANCEL 订单取消
+
+#### 被拒绝的例子:
+``` javascript
+{
+  E: 1571225843289
+  X: "FAIL"
+  e: "execContractReport"
+  i: "4612616205276108403"
+  r: "insufficient Available"  
+}
+```
+####  失败的原因(R字段)
+  * insufficient Available
+  * too many pending requests
+  * position is being liquidated
+  * position is being closed
+  * closing empty position
+  * closing order is enough
+  * contract is disabled
+  * reach liquidation price
+  * reach risk limit
+
 
 
 ### 合约持仓
