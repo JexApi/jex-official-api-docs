@@ -373,26 +373,6 @@ Possible executive type of contract(X field)
 }
 ```
 
-### example if refused:
-``` javascript
-{
-  E: 1571225843289
-  X: "FAIL"
-  e: "execContractReport"
-  i: "4612616205276108403"
-  r: "insufficient Available"  //Refused reason of the order ( exist if refused)
-}
-```
-- r types
-  - insufficient Available
-  - too many pending requests
-  - position is being liquidated
-  - position is being closed
-  - closing empty position
-  - closing order is enough
-  - contract is disabled
-  - reach liquidation price
-  - reach risk limit
 
 
 #### Possible executive type of contract(X field):
@@ -403,6 +383,28 @@ Possible executive type of contract(X field)
 * PARTFILLED 
 * FILLED 
 * CANCEL    
+
+
+#### example if refused:
+``` javascript
+{
+  E: 1571225843289
+  X: "FAIL"
+  e: "execContractReport"
+  i: "4612616205276108403"
+  r: "insufficient Available"  //Refused reason of the order ( exist if refused)
+}
+```
+#### if refused(r field) 
+  *  insufficient Available
+  *  too many pending requests
+  *  position is being liquidated
+  *  position is being closed
+  *  closing empty position
+  *  closing order is enough
+  *  contract is disabled
+  *  reach liquidation price
+  *  reach risk limit
 
 ### Contract positions
 
