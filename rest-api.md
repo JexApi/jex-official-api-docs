@@ -1635,7 +1635,7 @@ Other info:
 
 Trigger order price rules against market price for both MARKET and LIMIT versions:
 
-*  Take Profit
+* Take Profit
 
   * Long: when it's bullish, set the trigger price higher than the latest price (or mark price, index), you can set the sell Take profit order;
 
