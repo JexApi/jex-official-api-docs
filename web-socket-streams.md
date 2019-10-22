@@ -11,7 +11,7 @@
 * A single connection to **stream.jex.com** is only valid for 24 hours; expect to be disconnected at the 24 hour mark
 * The websocket server will send a `ping frame` every 3 minutes. If the websocket server does not receive a `pong frame` back from the connection within a 10 minute period, the connection will be disconnected. Unsolicited `pong frames` are allowed.
 
-## 其他说明
+## other infos
 - WSS contract order sells are uniformly negative
 
 ## Stream Detailed Stream information

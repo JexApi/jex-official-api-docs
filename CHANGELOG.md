@@ -1,4 +1,26 @@
 # CHANGELOG for jex's API  (2019-10-15)
+
+## 2019-10-22
+### Rest API
+* New contract order type: `stopLimit`,`profitLimit`
+* User can preset the Take profit/Stop command with the trigger price, commission price, and commission quantity in advance. When the corresponding “indicator” satisfies the trigger price set by the user, the order will be triggered, then the system will submit an order according to the price and quantity set by the user
+
+
+* Trigger order price rules against market price for both MARKET and LIMIT versions:
+
+*  Take Profit
+
+  * Long: when it's bullish, set the trigger price higher than the latest price (or mark price, index), you can set the sell Take profit order;
+
+  * Short: If it's bearish, set the trigger price below the latest price (or mark price, index), you can set the buy Take profit order;
+
+* Stop
+
+   * Long: when it's bearish, set the trigger price below the latest price (or mark the price, index),  you can set the sell Stop order;
+
+   *  Short: If it's bullish, set the trigger price higher than the latest price (or mark the price, index),you can set the buy Stop order;
+
+*  When the trigger price = the latest price (or mark price, index), or no position, the Take profit/Stop order can not be set;
 ## 2019-10-15
 ### Document update
 * Increase the log of document updates
