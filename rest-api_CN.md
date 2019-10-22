@@ -1597,12 +1597,48 @@ Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 side | ENUM | YES |
-type | ENUM | YES | `LIMIT`
+type | ENUM | YES |`LIMIT`,`stopLimit`,`profitLimit`
 quantity | DECIMAL | YES |
 price | DECIMAL | YES |
+triggerType | ENUM | No | `lastPrice`,`markPrice`,`indexPrice` (仅 `stopLimit`, `profitLimit` 需要此参数)
+triggerPrice | DECIMAL | YES | 仅 `stopLimit`, `profitLimit` 需要此参数
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
+
+
+
+根据 order `type`的不同，某些参数强制要求，具体如下:
+
+Type | 强制要求的参数
+------------ | ------------
+`LIMIT` | `quantity`, `price`
+`stopLimit` | `quantity`, `price`,`triggerType`,`triggerPrice`
+`profitLimit` |  `quantity`, `price`,`triggerType`,`triggerPrice`
+
+其他:
+
+* 用户预设止盈止损指令（`stopLimit`,`profitLimit`），提前设置 触发价格（`triggerPrice`）、委托价格(`price`)、委托数量(`quantity`)。当对应 “指标” 满足用户设置的 触发价（`triggerPrice`）格 条件时，止盈止损订单将被触发，系统将按照用户设置的 委托价格(`price`)，委托数量(`quantity`) 提交一笔限价委托订单。
+
+
+条件单的触发价格必须:
+
+* 止盈
+
+         多仓： 对未来价格看涨，设置触发价格高于最新价格（或标记价格、指数），可以设置卖出止盈指令；
+
+         空仓： 对未来价格看跌，设置触发价格低于最新价格（或标记价格、指数），可以设置买入止盈指令；
+
+* 止损
+
+         多仓： 对未来价格看跌，设置触发价格低于最新价格（或标记价格、指数），可以设置卖出止损指令；
+
+         空仓： 对未来价格看涨，设置触发价格高于最新价格（或标记价格、指数），可以设置买入止损指令；
+
+* 当触发价格 = 最新价格（或标记价格、指数），或者无持仓时候，不可发起止盈止损委托指令；
+
+
+
 
 
 **Response ACK:**
