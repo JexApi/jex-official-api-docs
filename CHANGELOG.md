@@ -6,7 +6,7 @@
 * User can preset the Take profit/Stop command with the trigger price, commission price, and commission quantity in advance. When the corresponding “indicator” satisfies the trigger price set by the user, the order will be triggered, then the system will submit an order according to the price and quantity set by the user
 
 
-####  * New order type: `stopLimit`,`profitLimit`:
+#### Trigger price of condition order must be:
 
 * Take Profit
 
