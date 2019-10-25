@@ -5,7 +5,8 @@
  * 参数一定要按照接口文档的顺序
  * 请确保使用HMACSHA256方式对参数进行签名
  * Request Method 中 get或者post的方式注意，不同的请求方式，对应不同的接口
- * Content-type: application/x-www-form-urlencoded 的请求方式
+ * Content-type: `application/x-www-form-urlencoded` 的请求方式
+ * 在HTTP头中以`X-JEX-APIKEY`字段传递
 
 ### -1021 Timestamp for this request is outside of the recvWindow
 * 先获取服务器时间的接口 `/api/v1/time`

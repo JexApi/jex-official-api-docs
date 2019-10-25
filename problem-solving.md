@@ -5,7 +5,8 @@
  * The parameters must be in the order of the interface document
  * Please ensure that the parameters are signed using the HMACSHA256 method
  * The method of get or post in the Request Method Note that different request methods correspond to different interfaces.
- * Content-type: application/x-www-form-urlencoded 
+ * Content-type: `application/x-www-form-urlencoded`
+ * API-keys are passed into the Rest API via the `X-JEX-APIKEY` header
 
 ### -1021 Timestamp for this request is outside of the recvWindow
 * First get the interface of the server time `/api/v1/time`
