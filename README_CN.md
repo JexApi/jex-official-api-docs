@@ -26,11 +26,6 @@
 [POST /api/v1/userDataStream](./rest-api_CN.md#%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%B5%81-user_stream) | 新建用户数据流
 [PUT /api/v1/userDataStream](./rest-api_CN.md#keepalive-user_stream) | 延长用户数据流有效期
 [DELETE /api/v1/userDataStream](./rest-api_CN.md#%E5%85%B3%E9%97%AD%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%B5%81-user_stream) | 关闭用户数据流
-[GET /wapi/v1/assetDetail](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E8%B5%84%E4%BA%A7%E8%AF%A6%E6%83%85-user_data) | 用户资产详情
-[GET /wapi/v1/depositAddress](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E5%85%85%E5%80%BC%E5%9C%B0%E5%9D%80-user_data) | 用户充值地址
-[GET /wapi/v1/depositHistory](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E5%85%85%E5%80%BC%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95-user_data) | 充值历史记录 
-[GET /wapi/v1/tradeFee](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E4%BA%A4%E6%98%93%E6%89%8B%E7%BB%AD%E8%B4%B9-user_data) | 交易手续费 
-[GET /wapi/v1/withdrawHistory](./rest-api_CN.md#%E7%94%A8%E6%88%B7%E6%8F%90%E7%8E%B0%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95-user_data) | 提现历史记录 
 
 ### 币币接口
 接口 | 说明
