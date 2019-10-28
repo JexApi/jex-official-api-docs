@@ -1,4 +1,10 @@
 # CHANGELOG for jex's API  (2019-10-15)
+## 2019-10-28
+### websocket
+* For each stream connection, only 10 channels can be connected at most。
+* Up to 100 streams per IP connection
+
+
 ## 2019-10-15
 ### Document update
 * Increase the log of document updates

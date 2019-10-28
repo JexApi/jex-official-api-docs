@@ -23,11 +23,7 @@ API | Description
 [POST /api/v1/userDataStream](./rest-api.md#start-user-data-stream-user_stream) | Create user data stream
 [PUT /api/v1/userDataStream](./rest-api.md#keepalive-user_stream) | Extend the period of validity of user data stream
 [DELETE /api/v1/userDataStream](./rest-api.md#close-user-data-stream-user_stream) | Close user data stream
-[GET /wapi/v1/assetDetail](./rest-api.md#users-assets-user_data) | Details of user assets
-[GET /wapi/v1/depositAddress](./rest-api.md#depositing-address-of-the-useruser_data) | User's deposit address
-[GET /wapi/v1/depositHistory](./rest-api.md#historical-depositing-records-of-the-user-user_data) | Deposit history 
-[GET /wapi/v1/tradeFee](./rest-api.md#service-fee-of-the-trading-user_data) | Transaction fee 
-[GET /wapi/v1/withdrawHistory](./rest-api.md#historical-withdrawal-records-of-the-useruser_data) | Withdraw History 
+
 
 ### Coins Transaction API
 API | Description
