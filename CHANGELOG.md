@@ -1,8 +1,9 @@
 # CHANGELOG for jex's API  (2019-10-15)
 ## 2019-10-28
 ### websocket
-* For each stream connection, only 10 channels can be connected at most。
-* Up to 100 streams per IP connection
+* Optimize websocket to make connections more stable
+* It is recommended to use the combined streams method for connection. Each combined stream can subscribe to a maximum of 10 streams
+
 
 
 ## 2019-10-15

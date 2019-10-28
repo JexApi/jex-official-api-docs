@@ -1,8 +1,8 @@
 # 更新日志 (2019-10-15)
 ## 2019-10-28
 ### websocket
-* 每个stream连接，最多只能连接10个channel。
-* 每个ip 最多连接100个stream
+* 优化websocket，让连接更稳定
+* 推荐使用组合streams方式进行连接，每个组合streams可最多订阅10个stream
 
 ## 2019-10-15
 ### 文档更新
