@@ -1601,7 +1601,7 @@ type | ENUM | YES |`LIMIT`,`stopLimit`,`profitLimit`
 quantity | DECIMAL | YES |
 price | DECIMAL | YES |
 triggerType | ENUM | No | `lastPrice`,`markPrice`,`indexPrice` (仅 `stopLimit`, `profitLimit` 需要此参数)
-triggerPrice | DECIMAL | YES | 仅 `stopLimit`, `profitLimit` 需要此参数
+triggerPrice | DECIMAL | NO | 仅 `stopLimit`, `profitLimit` 需要此参数
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |

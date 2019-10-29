@@ -1611,7 +1611,7 @@ type | ENUM | YES | `LIMIT`,`stopLimit`,`profitLimit`
 quantity | DECIMAL | YES |
 price | DECIMAL | YES |
 triggerType | ENUM | No | `lastPrice`,`markPrice`,`indexPrice`( Used with `stopLimit`, `profitLimit` orders)
-triggerPrice | DECIMAL | YES |  Used with `stopLimit`, `profitLimit` orders.
+triggerPrice | DECIMAL | NO |  Used with `stopLimit`, `profitLimit` orders.
 newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
