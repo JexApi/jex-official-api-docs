@@ -237,11 +237,10 @@ There is no & between "GTC" and "quantity=1".
 
 * LIMIT 
 * MARKET  
-* STOP_LOSS 
-* STOP_LOSS_LIMIT 
-* TAKE_PROFIT 
-* TAKE_PROFIT_LIMIT 
-* LIMIT_MAKER 
+* STOPLIMIT 
+* STOPMARKET 
+* PROFITLIMIT 
+* PROFITMARKET 
 
 **Order side (side):**
 

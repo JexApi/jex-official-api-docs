@@ -220,11 +220,11 @@ There is no & between "GTC" and "quantity=1".
 
 * LIMIT 限价单
 * MARKET  市价单
-* STOP_LOSS 止损单
-* STOP_LOSS_LIMIT 限价止损单
-* TAKE_PROFIT 止盈单
-* TAKE_PROFIT_LIMIT 限价止盈单
-* LIMIT_MAKER 限价做市单
+* STOPLIMIT 限价止损
+* STOPMARKET 市价止损
+* PROFITLIMIT 限价止盈
+* PROFITMARKET 市价止盈单
+
 
 **订单方向:**
 
