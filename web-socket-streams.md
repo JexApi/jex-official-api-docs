@@ -13,7 +13,7 @@
 * It is recommended to use the combined streams method for connection. Each combined stream can subscribe to a maximum of 10 streams
 
 
-## 其他说明
+## other infos
 - WSS contract order sells are uniformly negative
 
 ## Stream Detailed Stream information
