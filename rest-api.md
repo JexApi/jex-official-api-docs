@@ -237,11 +237,10 @@ There is no & between "GTC" and "quantity=1".
 
 * LIMIT 
 * MARKET  
-* STOP_LOSS 
-* STOP_LOSS_LIMIT 
-* TAKE_PROFIT 
-* TAKE_PROFIT_LIMIT 
-* LIMIT_MAKER 
+* STOPLIMIT 
+* STOPMARKET 
+* PROFITLIMIT 
+* PROFITMARKET 
 
 **Order side (side):**
 
@@ -1607,13 +1606,47 @@ POST /api/v1/contract/order  (HMAC SHA256)
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-side | ENUM | YES |
-type | ENUM | YES | `LIMIT`
+side | ENUM | YES | `BUY` or `SELL`
+type | ENUM | YES | `LIMIT`,`stopLimit`,`profitLimit`
 quantity | DECIMAL | YES |
 price | DECIMAL | YES |
+triggerType | ENUM | No | `lastPrice`,`markPrice`,`indexPrice`( Used with `stopLimit`, `profitLimit` orders)
+triggerPrice | DECIMAL | NO |  Used with `stopLimit`, `profitLimit` orders.
 newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
+
+
+
+
+Additional mandatory parameters based on `type`:
+
+Type | Additional mandatory parameters
+------------ | ------------
+`LIMIT` | `quantity`, `price`
+`stopLimit` | `quantity`, `price`,`triggerType`,`triggerPrice`
+`profitLimit` |  `quantity`, `price`,`triggerType`,`triggerPrice`
+
+Other info:
+
+* User can preset the Take profit/Stop command with the trigger price, commission price, and commission quantity in advance. When the corresponding “indicator” satisfies the trigger price set by the user, the order will be triggered, then the system will submit an order according to the price and quantity set by the user
+
+
+Trigger price of condition sheet must be:
+
+* Take Profit
+
+  * Long: when it's bullish, set the trigger price higher than the latest price (or mark price, index), you can set the sell Take profit order;
+
+  * Short: If it's bearish, set the trigger price below the latest price (or mark price, index), you can set the buy Take profit order;
+
+* Stop
+
+   * Long: when it's bearish, set the trigger price below the latest price (or mark the price, index),  you can set the sell Stop order;
+
+   *  Short: If it's bullish, set the trigger price higher than the latest price (or mark the price, index),you can set the buy Stop order;
+
+*  When the trigger price = the latest price (or mark price, index), or no position, the Take profit/Stop order can not be set;
 
 
 **Response ACK:**
