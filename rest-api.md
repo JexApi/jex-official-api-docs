@@ -1101,7 +1101,11 @@ symbol | STRING | NO |
   "volume": "8.00000000",
   "quoteVolume": "15.00000000",
   "openTime": 1551174049782,
-  "closeTime": 1551173957144
+  "closeTime": 1551173957144，
+  "exertionTime": 1574841600000,    //Expiry Date
+  "performPrice": "0.0000",         //Performance Price
+  "referencePrice": "9279.5200",    //Spot Price
+  "exertionPrice": "7958.7100"      //Strike Price
 }
 ```
 OR
@@ -1123,7 +1127,11 @@ OR
     "volume": "8.00000000",
     "quoteVolume": "15.00000000",
     "openTime": 1551174049782,
-    "closeTime": 1551173957144
+    "closeTime": 1551173957144，
+    "exertionTime": 1574841600000,    //Expiry Date
+    "performPrice": "0.0000",         //Performance Price
+    "referencePrice": "9279.5200",    //Spot Price
+    "exertionPrice": "7958.7100"      //Strike Price
   }
 ]
 ```
