@@ -1086,7 +1086,12 @@ symbol | STRING | NO |
   "volume": "8.00000000",
   "quoteVolume": "15.00000000",
   "openTime": 1551174049782,
-  "closeTime": 1551173957144
+  "closeTime": 1551173957144，
+  "exertionTime": 1574841600000,    //行权时间
+  "performPrice": "0.0000",         //预估履约价
+  "referencePrice": "9279.5200",    //现货参考价
+  "exertionPrice": "7958.7100"      //行权价
+  
 }
 ```
 OR
@@ -1109,6 +1114,10 @@ OR
     "quoteVolume": "15.00000000",
     "openTime": 1551174049782,
     "closeTime": 1551173957144
+    "exertionTime": 1574841600000,    //行权时间
+    "performPrice": "0.0000",         //预估履约价
+    "referencePrice": "9279.5200",    //现货参考价
+    "exertionPrice": "7958.7100"      //行权价
   }
 ]
 ```
