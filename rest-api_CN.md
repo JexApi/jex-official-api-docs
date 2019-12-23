@@ -2691,7 +2691,7 @@ DELETE /api/v1/contract/batchOrder
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-ordersJsonArray | String | YES | json 字符串 (1秒最多请求1次,1次最多10单)
+ordersJsonArray | String | YES | json 字符串 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -2746,24 +2746,80 @@ timestamp | LONG | YES |
 }]
 ```
 
+
+
+### 批量查询
+
+```
+GET /api/v1/contract/batchOrder
+```
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ordersJsonArray | String | YES | json 字符串 
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+### ordersJsonArray json 字符串规则示例：
+``` javascript
+[{"orderId":4611993881683165185},{"orderId":4611993881683165185,"symbol":"btcusdt"},{"orderId":4611993881683165185,"symbol":"eosusdt"},{"orderId":123,"symbol":"btcusdt"}]
+```
+
+**响应:**
+
+``` javascript
+[{
+  "symbol":"BTCUSDT",
+  "orderId":"4611993881683165185",
+  "updateTime":1576749391000,
+  "side":"buy",
+  "origQty":"1.0000",
+  "executedQty":"1.0000",
+  "price":"9990.0",
+  "executedPrice":"9990.0",
+  "status":"filled",
+  "time":1576749391000,
+  "type":"limit"
+  },{
+  "symbol":"BTCUSDT",
+  "orderId":"4611993881683165185",
+  "updateTime":1576749391000,
+  "side":"buy",
+  "origQty":"1.0000",
+  "executedQty":"1.0000",
+  "price":"9990.0",
+  "executedPrice":"9990.0",
+  "status":"filled",
+  "time":1576749391000,
+  "type":"limit"
+  },{
+  "msg":"Order does not exist.","code":-2013
+  },{
+  "msg":"Order does not exist.","code":-2013
+  }]
+```
+
 **注意事项及说明:**
 
 - 签名及请求注意事项:
   
   1. 先按照通用规则对参数进行签名
   1. 对ordersJsonArray的参数进行urlEncode
-  1. 发送delete请求
+  1. 发送get请求
+  1. symbol 可以不用传
 
 - 限制事项：
-  1. 1秒最多请求1次
-  1. 1次最多10单
+  1. 1分钟1200,5分钟5000
+  1. 1次最多100单
 
 **返回值说明:**
 
   - 如果签名通过，返回的是一个json数组。
   - 数组对应入参的单
-  - 对应单撤单成功，数组元素为订单信息
-  - 对应单撤单失败，数组元素为一个错误信息
+  - 对应单查询成功，数组元素为订单信息
+  - 对应单查询失败，数组元素为一个错误信息
 
 
 

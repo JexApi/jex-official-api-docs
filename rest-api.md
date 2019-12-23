@@ -2697,7 +2697,7 @@ DELETE /api/v1/contract/batchOrder
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-ordersJsonArray | String | YES | json String (Request 1 time in 1 second, up to 10 orders in 1 time)
+ordersJsonArray | String | YES | json String 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
@@ -2762,7 +2762,87 @@ timestamp | LONG | YES |
 - Restrictions：
   1. Request 1 time at most 1 second
   1. 1 time up to 10 orders
+**Return value description:**
 
+- If the signature passes, a JSON array is returned.
+- List of input parameters corresponding to array
+- The corresponding document is queried successfully. The array element is order information
+- Failed to query corresponding doc, array element is an error message
+
+
+
+### get all orders
+
+```
+GET /api/v1/contract/batchOrder
+```
+
+**Parameters:**
+
+Name | Type | Mandatory | Description
+------------ | ------------ | ------------ | ------------
+ordersJsonArray | String | YES | json String 
+recvWindow | LONG | NO |
+timestamp | LONG | YES |
+
+### ordersJsonArray json String rule example：
+
+``` javascript
+[{"orderId":4611993881683165185},{"orderId":4611993881683165185,"symbol":"btcusdt"},{"orderId":4611993881683165185,"symbol":"eosusdt"},{"orderId":123,"symbol":"btcusdt"}]
+```
+
+**Response:**
+
+``` javascript
+[{
+  "symbol":"BTCUSDT",
+  "orderId":"4611993881683165185",
+  "updateTime":1576749391000,
+  "side":"buy",
+  "origQty":"1.0000",
+  "executedQty":"1.0000",
+  "price":"9990.0",
+  "executedPrice":"9990.0",
+  "status":"filled",
+  "time":1576749391000,
+  "type":"limit"
+  },{
+  "symbol":"BTCUSDT",
+  "orderId":"4611993881683165185",
+  "updateTime":1576749391000,
+  "side":"buy",
+  "origQty":"1.0000",
+  "executedQty":"1.0000",
+  "price":"9990.0",
+  "executedPrice":"9990.0",
+  "status":"filled",
+  "time":1576749391000,
+  "type":"limit"
+  },{
+  "msg":"Order does not exist.","code":-2013
+  },{
+  "msg":"Order does not exist.","code":-2013
+  }]
+
+```
+**Precautions and instructions:**
+
+- Signature and request notes:
+  
+  1. First Signature the parameters according to the general rules
+  1. urlEncode on the parameters of ordersJsonArray
+  1. Send a delete request
+  1. The symbol can not be transmitted
+
+- Restrictions：
+  1. Request 1200 times at most 1 Minute,Request 5000 times at most 5 Minute
+  1. 1 time up to 100 orders
+**Return value description:**
+
+- If the signature passes, a JSON array is returned.
+- List of input parameters corresponding to array
+- The corresponding document is queried successfully. The array element is order information
+- Failed to query corresponding doc, array element is an error message
 
 
 ### Capital fee rate of contract
