@@ -2762,12 +2762,12 @@ timestamp | LONG | YES |
 - Restrictions：
   1. Request 1 time at most 1 second
   1. 1 time up to 10 orders
-**Return value description:**
 
-- If the signature passes, a JSON array is returned.
-- List of input parameters corresponding to array
-- The corresponding document is queried successfully. The array element is order information
-- Failed to query corresponding doc, array element is an error message
+- Return value description:
+  1. If the signature passes, a JSON array is returned.
+  1. List of input parameters corresponding to array
+  1. The corresponding document is queried successfully. The array element is order information
+  1. Failed to query corresponding doc, array element is an error message
 
 
 
@@ -2837,12 +2837,12 @@ timestamp | LONG | YES |
 - Restrictions：
   1. Request 1200 times at most 1 Minute,Request 5000 times at most 5 Minute
   1. 1 time up to 100 orders
-**Return value description:**
 
-- If the signature passes, a JSON array is returned.
-- List of input parameters corresponding to array
-- The corresponding document is queried successfully. The array element is order information
-- Failed to query corresponding doc, array element is an error message
+- Return value description:
+  1. If the signature passes, a JSON array is returned.
+  1. List of input parameters corresponding to array
+  1. The corresponding document is queried successfully. The array element is order information
+  1. Failed to query corresponding doc, array element is an error message
 
 
 ### Capital fee rate of contract
