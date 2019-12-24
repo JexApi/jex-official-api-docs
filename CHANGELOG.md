@@ -1,5 +1,9 @@
 # CHANGELOG for jex's API  
 
+## 2019-12-23
+### Rest API
+[GET /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api.md#get-all-ordersuser_data) | get all orders
+
 ## 2019-10-28
 ### websocket
 * Optimize websocket to make connections more stable
@@ -41,7 +45,7 @@
 * When placing a new order that causes these caps to be exceeded, it will be rejected with the message “has reach max order number [200|10]
 ## 2019-10-11
 ### Rest API
-* Add interface cancel all orders [DELETE /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api.md#cancel-all-orders) | cancel all orders
+* Add interface cancel all orders [DELETE /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api.md#cancel-all-orderstrade) | cancel all orders
 * Add interface Contract bill of obtained account [GET /api/v1/contract/userHistoricalTrades (HMAC SHA256)](./rest-api.md#contract-bill-of-the-accountuser_data-1) | Contract bill of obtained account
 
 ## 2019-09-27

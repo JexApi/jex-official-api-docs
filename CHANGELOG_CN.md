@@ -1,5 +1,10 @@
 # 更新日志 
 
+## 2019-12-23
+### Rest API
+[GET /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api_CN.md#%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2-user_data) |批量查询
+
+
 ## 2019-10-28
 ### websocket
 * 优化websocket，让连接更稳定
@@ -37,7 +42,7 @@
 * 当发出超过这些上限的新交易委托时，该交易将被拒绝，并显示“has reach max order number 200或者10”
 ## 2019-10-11
 ### Rest API
-* 增加批量撤单的接口，接口为 [DELETE /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api_CN.md#%E6%89%B9%E9%87%8F%E6%92%A4%E5%8D%95) |批量撤单
+* 增加批量撤单的接口，接口为 [DELETE /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api_CN.md#%E6%89%B9%E9%87%8F%E6%92%A4%E5%8D%95user_data) |批量撤单
 * 增加获取历史成交信息，接口为 [GET /api/v1/contract/userHistoricalTrades (HMAC SHA256)](./rest-api_CN.md#%E8%8E%B7%E5%8F%96%E5%8E%86%E5%8F%B2%E6%88%90%E4%BA%A4%E4%BF%A1%E6%81%AF-user_data) |获取历史成交信息 
 
 ## 2019-09-27
