@@ -2687,7 +2687,7 @@ timestamp | LONG | YES |
 ```
 
 
-### cancel all orders
+### cancel all orders(TRADE)
 
 ```
 DELETE /api/v1/contract/batchOrder
@@ -2771,7 +2771,10 @@ timestamp | LONG | YES |
 
 
 
-### get all orders
+
+
+
+### get all orders(USER_DATA)
 
 ```
 GET /api/v1/contract/batchOrder

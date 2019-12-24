@@ -2681,7 +2681,7 @@ timestamp | LONG | YES |
 ]
 ```
 
-### 批量撤单
+### 批量撤单(USER_DATA)
 
 ```
 DELETE /api/v1/contract/batchOrder
@@ -2767,7 +2767,7 @@ timestamp | LONG | YES |
 
 
 
-### 批量查询
+### 批量查询 ((USER_DATA)
 
 ```
 GET /api/v1/contract/batchOrder
