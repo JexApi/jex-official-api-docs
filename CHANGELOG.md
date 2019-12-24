@@ -2,7 +2,7 @@
 
 ## 2019-12-23
 ### Rest API
-[DELETE /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api.md#get-all-orders) | get all orders
+[GET /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api.md#get-all-orders) | get all orders
 
 ## 2019-10-28
 ### websocket

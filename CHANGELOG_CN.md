@@ -2,7 +2,7 @@
 
 ## 2019-12-23
 ### Rest API
-[DELETE /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api_CN.md#%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2) |批量查询
+[GET /api/v1/contract/batchOrder (HMAC SHA256)](./rest-api_CN.md#%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2) |批量查询
 
 
 ## 2019-10-28
